@@ -1,0 +1,55 @@
+# Recommended `src` Folder Structure for Next.js App
+
+```
+src/
+├── app/             # Next.js app directory for routing and pages
+│   ├── api/         # API routes
+│   │   └── ...
+│   ├── layout.tsx   # Root layout for the entire application
+│   ├── page.tsx     # Home page
+│   └── ...
+├── components/      # Reusable UI components
+│   ├── ui/          # Primitive UI components (buttons, inputs, etc.)
+│   │   └── ...
+│   ├── shared/      # Shared components used across multiple features
+│   │   └── ...
+│   └── feature/     # Feature-specific components
+│       └── ...
+├── contexts/        # React contexts for managing global state
+│   └── ...
+├── hooks/           # Custom React hooks
+│   └── ...
+├── lib/             # Utility functions and helper modules
+│   ├── utils.ts     # General utility functions
+│   ├── api.ts       # API client
+│   └── ...
+├── styles/          # Global styles and CSS modules
+│   ├── globals.scss # Global styles
+│   └── ...
+├── types/           # TypeScript type definitions
+│   └── ...
+└── utils/           # Utility functions and helper modules
+    └── ...
+```
+
+## Explanation:
+
+-   **`app/`**: This directory is managed by Next.js and is used for defining routes and pages.
+    -   `api/`: Contains API route handlers.
+    -   `layout.tsx`: The root layout for the entire application.
+    -   `page.tsx`: The home page component.
+-   **`components/`**: This directory holds all reusable UI components.
+    -   `ui/`: Contains primitive UI components like buttons, inputs, and other basic building blocks.
+    -   `shared/`: Contains components that are shared across multiple features.
+    -   `feature/`: Contains components that are specific to a particular feature.
+-   **`contexts/`**: This directory stores React contexts for managing global state.
+-   **`hooks/`**: This directory contains custom React hooks.
+-   **`lib/`**: This directory houses utility functions and helper modules.
+    -   `utils.ts`: General utility functions.
+    -   `api.ts`: An API client for making requests to external APIs.
+-   **`styles/`**: This directory contains global styles and CSS modules.
+    -   `globals.scss`: Global styles for the application.
+-   **`types/`**: This directory holds TypeScript type definitions.
+-   **`utils/`**: This directory contains utility functions and helper modules.
+
+This structure promotes modularity, reusability, and maintainability, making it easier to scale and manage the application over time.
