@@ -1,6 +1,6 @@
 # ParagonAI | Frontier Tech Addis Ababa
 
-The official landing page for ParagonAI, a research and deployment company based in Addis Ababa, Ethiopia, focused on building safe and beneficial AGI.
+The official landing page for ParagonAI, a technology research and development company based in Addis Ababa, Ethiopia, focused on building innovative technical solutions and cutting-edge AI products to drive progress.
 
 ## Key Features
 
