@@ -69,7 +69,7 @@ export default buildConfig({
   globals: [Navigation, Footer, Hero, Announcements],
   sharp,
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, 'src/payload-types.ts'),
   },
   admin: {
     user: Users.slug,

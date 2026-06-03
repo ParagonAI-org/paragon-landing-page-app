@@ -1,97 +1,115 @@
-const ContentSection = () => (
-  <section className="relative z-10 bg-[#030303] border-t border-[rgba(255,255,255,0.08)] pt-32 pb-24 px-8">
-    <div className="max-w-[1200px] mx-auto">
-      <div className="grid lg:grid-cols-2 gap-20 mb-32">
-        {/* Primary Story */}
-        <div className="group cursor-pointer">
-          <div className="aspect-video bg-zinc-900 rounded-xl mb-10 overflow-hidden relative border border-white/5">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20"></div>
-            <div className="absolute inset-0 aurora-texture opacity-20"></div>
+import { getPayload } from '@/lib/payload'
+import Link from 'next/link'
+import Image from 'next/image'
+
+const ContentSection = async () => {
+  const payload = await getPayload()
+  
+  // Fetch latest posts with image data populated
+  const postsResult = await payload.find({
+    collection: 'posts',
+    limit: 3,
+    sort: '-publishedDate',
+    depth: 1,
+  })
+  
+  // Fetch featured post with image data populated
+  const featuredPostResult = await payload.find({
+    collection: 'posts',
+    limit: 1,
+    depth: 1,
+    where: {
+      featured: {
+        equals: true,
+      },
+    },
+  })
+  const featuredPost = featuredPostResult.docs[0] || postsResult.docs[0]
+  
+  // Fetch announcements
+  const announcementsResult = await payload.findGlobal({
+    slug: 'announcements',
+  })
+  const announcements = announcementsResult.items || []
+
+  return (
+    <section className="relative z-10 bg-[#030303] border-t border-[rgba(255,255,255,0.08)] pt-32 pb-24 px-8">
+      <div className="max-w-[1200px] mx-auto">
+        <div className="grid lg:grid-cols-2 gap-20 mb-32">
+          {/* Primary Story */}
+          {featuredPost && (
+            <Link href={`/blog/${featuredPost.slug}`} className="group cursor-pointer">
+              <div className="aspect-video bg-zinc-900 rounded-xl mb-10 overflow-hidden relative border border-white/5">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20"></div>
+                {featuredPost.heroImage && typeof featuredPost.heroImage === 'object' && 'url' in featuredPost.heroImage && (
+                  <Image
+                    src={featuredPost.heroImage.url || ''}
+                    alt={featuredPost.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                )}
+              </div>
+              <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest">
+                {featuredPost.category}
+              </span>
+              <h2 className="text-4xl font-bold mt-4 mb-6 leading-tight group-hover:underline">
+                {featuredPost.title}
+              </h2>
+              <span className="inline-block font-bold border-b-2 border-white pb-1 text-sm">
+                Read the story
+              </span>
+            </Link>
+          )}
+
+          {/* News Feed */}
+          <div>
+            <h3 className="text-2xl font-bold mb-10">Latest releases</h3>
+            <div className="space-y-12">
+              {postsResult.docs.length > 0 ? (
+                postsResult.docs.map((post, i) => (
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    key={i}
+                    className="block group cursor-pointer border-b border-white/5 pb-8"
+                  >
+                    <div className="flex gap-4 mb-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                      {post.publishedDate && (
+                        <span>{new Date(post.publishedDate).toLocaleDateString()}</span>
+                      )}
+                      <span>•</span>
+                      <span>{post.category}</span>
+                    </div>
+                    <h4 className="text-xl font-bold group-hover:text-blue-400 transition-colors mb-2">
+                      {post.title}
+                    </h4>
+                  </Link>
+                ))
+              ) : (
+                <p className="text-gray-500 text-sm italic">No posts yet. Add some in the CMS!</p>
+              )}
+            </div>
           </div>
-          <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest">
-            Project Glasswing
-          </span>
-          <h2 className="text-4xl font-bold mt-4 mb-6 leading-tight group-hover:underline">
-            Securing critical software for the AI era
-          </h2>
-          <p className="text-gray-400 text-lg mb-8 font-light">
-            At ParagonAI, we build AI to serve humanity’s long-term well-being.
-          </p>
-          <span className="inline-block font-bold border-b-2 border-white pb-1 text-sm">
-            Read the story
-          </span>
         </div>
 
-        {/* News Feed */}
-        <div>
-          <h3 className="text-2xl font-bold mb-10">Latest releases</h3>
-          <div className="space-y-12">
-            {[
-              {
-                title: 'Paragon Opus 4.7',
-                desc: 'Introducing a smarter, more capable Opus for coding, agents, and complex vision.',
-                date: 'April 16, 2026',
-                cat: 'Announcements',
-                link: '/blog/blog-slug',
-              },
-              {
-                title: 'Paragon is a space to think',
-                desc: 'No ads. No sponsored content. Just helpful conversations.',
-                date: 'Feb 4, 2026',
-                cat: 'Announcements',
-                link: '/blog/blog-slug',
-              },
-              {
-                title: 'Paragon on Mars',
-                desc: 'The first AI-assisted drive on another planet. 400m traveled with NASA.',
-                date: 'Jan 30, 2026',
-                cat: 'Announcements',
-                link: '/blog/blog-slug',
-              },
-            ].map((news, i) => (
-              <a
-                href={news.link}
-                key={i}
-                className="block group cursor-pointer border-b border-white/5 pb-8"
-              >
-                <div className="flex gap-4 mb-3 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                  <span>{news.date}</span>
-                  <span>•</span>
-                  <span>{news.cat}</span>
-                </div>
-                <h4 className="text-xl font-bold group-hover:text-blue-400 transition-colors mb-2">
-                  {news.title}
-                </h4>
-                <p className="text-sm text-gray-400 leading-relaxed">
-                  {news.desc}
-                </p>
-              </a>
-            ))}
-          </div>
+        {/* Bottom Action Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {announcements.map((item, i) => (
+            <div
+              key={i}
+              className="p-10 rounded-xl bg-zinc-900/50 border border-white/5 hover:bg-white/5 transition-all cursor-pointer flex flex-col justify-between aspect-square"
+            >
+              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+                {item.category}
+              </span>
+              <h5 className="text-xl font-bold leading-tight">{item.title}</h5>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* Bottom Action Cards */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          { t: 'Core views on AI safety', c: 'Announcements' },
-          { t: 'Responsible Scaling Policy', c: 'Alignment Science' },
-          { t: 'Paragon Academy: Build', c: 'Education' },
-          { t: 'Economic Index 2026', c: 'Research' },
-        ].map((card, i) => (
-          <div
-            key={i}
-            className="p-10 rounded-xl bg-zinc-900/50 border border-white/5 hover:bg-white/5 transition-all cursor-pointer flex flex-col justify-between aspect-square"
-          >
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-              {card.c}
-            </span>
-            <h5 className="text-xl font-bold leading-tight">{card.t}</h5>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-)
+    </section>
+  )
+}
 
 export default ContentSection
