@@ -1,35 +1,17 @@
-import { getPayload } from '@/lib/payload'
+import { getCachedPosts, getCachedFeaturedPost, getCachedAnnouncements } from '@/lib/data'
 import Link from 'next/link'
 import Image from 'next/image'
 
 const ContentSection = async () => {
-  const payload = await getPayload()
-  
   // Fetch latest posts with image data populated
-  const postsResult = await payload.find({
-    collection: 'posts',
-    limit: 3,
-    sort: '-publishedDate',
-    depth: 1,
-  })
+  const postsResult = await getCachedPosts()
   
   // Fetch featured post with image data populated
-  const featuredPostResult = await payload.find({
-    collection: 'posts',
-    limit: 1,
-    depth: 1,
-    where: {
-      featured: {
-        equals: true,
-      },
-    },
-  })
+  const featuredPostResult = await getCachedFeaturedPost()
   const featuredPost = featuredPostResult.docs[0] || postsResult.docs[0]
   
   // Fetch announcements
-  const announcementsResult = await payload.findGlobal({
-    slug: 'announcements',
-  })
+  const announcementsResult = await getCachedAnnouncements()
   const announcements = announcementsResult.items || []
 
   return (

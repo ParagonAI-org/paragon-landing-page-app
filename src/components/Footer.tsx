@@ -1,11 +1,8 @@
 import Link from 'next/link'
-import { getPayload } from '@/lib/payload'
+import { getCachedFooter } from '@/lib/data'
 
 const Footer = async () => {
-  const payload = await getPayload()
-  const footer = await payload.findGlobal({
-    slug: 'footer',
-  })
+  const footer = await getCachedFooter()
 
   const columns = footer.columns || []
   const socialLinks = footer.socialLinks || []

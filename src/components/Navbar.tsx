@@ -1,17 +1,14 @@
 import Link from 'next/link'
-import { getPayload } from '@/lib/payload'
+import { getCachedNavigation } from '@/lib/data'
 
 const Navbar = async () => {
-  const payload = await getPayload()
-  const navigation = await payload.findGlobal({
-    slug: 'navigation',
-  })
+  const navigation = await getCachedNavigation()
 
   const navItems = navigation.items || []
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[110] flex justify-center p-6">
-      <nav className="w-full max-w-[1200px] flex items-center bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl h-[60px] relative px-6">
+      <nav className="w-full max-w-[1200px] flex items-center bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl h-[64px] relative px-8">
         {/* Logo Section */}
         <Link
           href="/"
@@ -72,7 +69,7 @@ const Navbar = async () => {
         <div className="flex items-center space-x-5 shrink-0 ml-auto">
           <Link
             href="/try"
-            className="text-[11px] font-extrabold bg-white text-black px-4 py-2 rounded-xl hover:bg-gray-200 transition-colors uppercase tracking-tight flex items-center gap-2 cursor-pointer"
+            className="text-[11px] font-extrabold bg-white text-black px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors uppercase tracking-tight flex items-center gap-2 cursor-pointer"
           >
             try LevelUP
             <svg
