@@ -6,8 +6,21 @@ export const Navigation: GlobalConfig = {
     afterChange: [
       async () => {
         try {
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+          const secret = process.env.REVALIDATE_SECRET
+          
+          if (!siteUrl) {
+            console.error('Revalidation failed: NEXT_PUBLIC_SITE_URL is undefined')
+            return
+          }
+          
+          if (!secret) {
+            console.error('Revalidation failed: REVALIDATE_SECRET is undefined')
+            return
+          }
+          
           await fetch(
-            `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`,
+            `${siteUrl}/api/revalidate?secret=${secret}`,
             {
               method: 'POST',
               headers: {
