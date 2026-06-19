@@ -6,6 +6,26 @@ export const Posts: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'category', 'publishedDate'],
   },
+  hooks: {
+    afterChange: [
+      async () => {
+        try {
+          await fetch(
+            `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ tag: 'posts' }),
+            }
+          )
+        } catch (err) {
+          console.error('Error revalidating posts:', err)
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',

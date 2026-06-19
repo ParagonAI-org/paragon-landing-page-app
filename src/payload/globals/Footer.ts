@@ -2,6 +2,26 @@ import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  hooks: {
+    afterChange: [
+      async () => {
+        try {
+          await fetch(
+            `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.REVALIDATE_SECRET}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ tag: 'footer' }),
+            }
+          )
+        } catch (err) {
+          console.error('Error revalidating footer:', err)
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: 'columns',
