@@ -1,6 +1,6 @@
-import type { Metadata } from 'next'
-import { NotFoundPage, generatePageMetadata } from '@payloadcms/next/views'
 import config from '@payload-config'
+import { generatePageMetadata, NotFoundPage } from '@payloadcms/next/views'
+import type { Metadata } from 'next'
 import { importMap } from '../../importMap.js'
 
 type Args = {
@@ -12,7 +12,10 @@ type Args = {
   }>
 }
 
-export const generateMetadata = ({ params, searchParams }: Args): Promise<Metadata> =>
+export const generateMetadata = ({
+  params,
+  searchParams,
+}: Args): Promise<Metadata> =>
   generatePageMetadata({ config, params, searchParams })
 
 export default async function NotFound({ params, searchParams }: Args) {
