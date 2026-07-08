@@ -2,6 +2,7 @@ import ContentSection from '@/components/ContentSection'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import Navbar from '@/components/Navbar'
+import ProductsSection from '@/components/ProductsSection'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
           with the section's content instead of the viewport. */}
       <Navbar />
       <Hero />
+      <ProductsSection />
 
       <div className="relative z-10 w-full">
         <ContentSection />
