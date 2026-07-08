@@ -50,7 +50,7 @@ const Hero = async () => {
         />
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-10 px-6 py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-stretch lg:gap-14 lg:px-8 lg:py-28">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-10 px-6 pt-32 pb-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)] lg:items-stretch lg:gap-14 lg:px-8 lg:py-28">
         <div className="flex flex-col justify-center">
           <div className="mb-6 inline-flex w-fit items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur">
             <AnimatedShinyText className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/85">
