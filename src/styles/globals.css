@@ -44,22 +44,40 @@
   --radius-xl: calc(var(--radius) + 4px);
   --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
   --animate-aurora-flow: aurora-flow 20s infinite alternate linear;
+  --animate-shiny-text: shiny-text 8s infinite;
 
   @keyframes orbit {
     0% {
-      transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px))
-        rotate(calc(var(--angle) * -1deg));
+      transform: rotate(calc(var(--angle) * 1deg))
+        translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
     }
 
     100% {
-      transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px))
+      transform: rotate(calc(var(--angle) * 1deg + 360deg))
+        translateY(calc(var(--radius) * 1px))
         rotate(calc((var(--angle) * -1deg) - 360deg));
     }
   }
 
   @keyframes aurora-flow {
-    0% { transform: translateX(0%) scale(1) }
-    100% { transform: translateX(-5%) scale(1.05) }
+    0% {
+      transform: translateX(0%) scale(1);
+    }
+    100% {
+      transform: translateX(-5%) scale(1.05);
+    }
+  }
+
+  @keyframes shiny-text {
+    0%,
+    90%,
+    100% {
+      background-position: calc(-100% - var(--shiny-width)) 0;
+    }
+    30%,
+    60% {
+      background-position: calc(100% + var(--shiny-width)) 0;
+    }
   }
 
   --font-heading: var(--font-playfair);
@@ -68,7 +86,7 @@
 
   --radius-3xl: calc(var(--radius) * 2.2);
 
-  --radius-4xl: calc(var(--radius) * 2.6)
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
@@ -114,7 +132,9 @@
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0); /* Updated primary-foreground for better contrast */
+  --primary-foreground: oklch(
+    0.205 0 0
+  ); /* Updated primary-foreground for better contrast */
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
@@ -175,5 +195,6 @@
     z-index: 60;
   }
   html {
-    @apply font-sans;}
+    @apply font-sans;
+  }
 }

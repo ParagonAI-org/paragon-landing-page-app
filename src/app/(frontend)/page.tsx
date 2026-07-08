@@ -1,4 +1,3 @@
-import AuroraEffect from '@/components/AuroraEffect'
 import ContentSection from '@/components/ContentSection'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
@@ -6,16 +5,19 @@ import Navbar from '@/components/Navbar'
 
 const Home = () => {
   return (
-    <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-500 selection:text-white bg-[#030303]">
-      <div className="noise-bg"></div>
-      <div className="relative h-screen">
-        <AuroraEffect />
-        <Navbar />
-        <Hero />
+    <main className="relative flex min-h-screen flex-col bg-black font-sans selection:bg-blue-500 selection:text-white">
+      <div className="noise-bg" />
+
+      {/* Hero owns its own background (see Hero.tsx) so the bg sizes
+          with the section's content instead of the viewport. */}
+      <Navbar />
+      <Hero />
+
+      <div className="relative z-10 w-full">
+        <ContentSection />
+        <Footer />
       </div>
-      <ContentSection />
-      <Footer />
-    </div>
+    </main>
   )
 }
 

@@ -6,12 +6,26 @@ const Footer = async () => {
 
   const columns = footer.columns || []
   const socialLinks = footer.socialLinks || []
-  const copyright = footer.copyright || `© ${new Date().getFullYear()} ParagonAI PBC. Addis Ababa, Ethiopia.`
+  const copyright =
+    footer.copyright ||
+    `© ${new Date().getFullYear()} ParagonAI PBC. Addis Ababa, Ethiopia.`
+
+  // Dynamically adjust grid columns depending on how many columns are configured
+  const getGridColsClass = (count: number) => {
+    if (count <= 1) return 'grid-cols-1'
+    if (count === 2) return 'grid-cols-2'
+    if (count === 3) return 'grid-cols-2 md:grid-cols-3'
+    if (count === 4) return 'grid-cols-2 md:grid-cols-4'
+    if (count === 5) return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
+    return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6'
+  }
+
+  const gridClass = getGridColsClass(columns.length)
 
   return (
     <footer className="relative z-10 bg-black pt-32 pb-16 px-8 border-t border-[rgba(255,255,255,0.08)]">
       <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 mb-24">
+        <div className={`grid ${gridClass} gap-12 mb-24`}>
           {columns.map((column, index) => (
             <div key={index}>
               <h6 className="text-[13px] font-bold text-white mb-6 uppercase tracking-wider">
