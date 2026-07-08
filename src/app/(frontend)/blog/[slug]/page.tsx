@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import { PayloadImage } from '@/components/PayloadImage'
 import RichText from '@/components/RichText'
@@ -238,9 +239,7 @@ const BlogPost = async ({ params }: Args) => {
         </section>
       )}
 
-      <footer className="border-t border-white/5 py-12 text-center text-gray-600 text-xs">
-        © {new Date().getFullYear()} ParagonAI Research. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   )
 }
