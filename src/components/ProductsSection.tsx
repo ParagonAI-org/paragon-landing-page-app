@@ -29,7 +29,7 @@ const ProductsSection = async () => {
   return (
     <section
       id="products"
-      className="relative z-10 overflow-hidden border-t border-white/[0.08] bg-[#050505] px-6 py-24 sm:py-32"
+      className="relative z-10 overflow-hidden border-t border-white/[0.08] px-6 py-24 sm:py-32"
     >
       {/* Decorative radial gradient backdrop */}
       <div
