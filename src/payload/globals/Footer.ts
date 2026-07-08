@@ -4,22 +4,20 @@ export const Footer: GlobalConfig = {
   slug: 'footer',
   hooks: {
     afterChange: [
-      async () => {
+      async ({ req }) => {
         try {
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+          const host = req?.headers?.get('host')
+          const siteUrl = host
+            ? `${host.includes('localhost') ? 'http' : 'https'}://${host}`
+            : process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
           const secret = process.env.REVALIDATE_SECRET
-          
-          if (!siteUrl) {
-            console.error('Revalidation failed: NEXT_PUBLIC_SITE_URL is undefined')
-            return
-          }
-          
+
           if (!secret) {
             console.error('Revalidation failed: REVALIDATE_SECRET is undefined')
             return
           }
-          
-          await fetch(
+
+          const res = await fetch(
             `${siteUrl}/api/revalidate?secret=${secret}`,
             {
               method: 'POST',
@@ -27,8 +25,14 @@ export const Footer: GlobalConfig = {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ tag: 'footer' }),
-            }
+            },
           )
+
+          if (!res.ok) {
+            console.error(
+              `Revalidation failed with status ${res.status}: ${await res.text()}`,
+            )
+          }
         } catch (err) {
           console.error('Error revalidating footer:', err)
         }
