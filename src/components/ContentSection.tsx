@@ -83,7 +83,9 @@ const ContentSection = async () => {
                         </span>
                       )}
                       <span>•</span>
-                      <span>{categoryLabels[post.category] || post.category}</span>
+                      <span>
+                        {categoryLabels[post.category] || post.category}
+                      </span>
                     </div>
                     <h4 className="text-xl font-bold group-hover:text-blue-400 transition-colors mb-2">
                       {post.title}
