@@ -1,11 +1,14 @@
 {
-  "name": "origin-next-boilerplate",
+  "name": "paragonai-landing-page",
   "version": "0.1.0",
   "type": "module",
   "private": true,
   "scripts": {
     "postinstall": "husky",
     "dev": "next dev --turbopack",
+    "admin:status": "tsx scripts/payload-admin.ts status",
+    "admin:create": "tsx scripts/payload-admin.ts create",
+    "admin:reset-password": "tsx scripts/payload-admin.ts reset-password",
     "build": "next build",
     "start": "next start",
     "check": "biome check --write .",
@@ -21,6 +24,9 @@
     "@payloadcms/next": "^3.85.0",
     "@payloadcms/richtext-lexical": "^3.85.0",
     "@payloadcms/storage-s3": "^3.85.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
     "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -30,12 +36,14 @@
     "next": "^16.2.6",
     "next-themes": "^0.4.6",
     "payload": "^3.85.0",
+    "postprocessing": "^6.39.2",
     "radix-ui": "^1.4.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "shadcn": "^4.10.0",
     "sharp": "^0.34.5",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
@@ -48,6 +56,7 @@
     "@types/node": "^20",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0",
     "@vitejs/plugin-react": "^4.3.4",
     "dotenv": "^17.4.2",
     "husky": "^9.1.7",
@@ -64,8 +73,6 @@
   },
   "packageManager": "yarn@4.15.0",
   "lint-staged": {
-    "*": [
-      "biome check --write --no-errors-on-unmatched"
-    ]
+    "*": ["biome check --write --no-errors-on-unmatched"]
   }
 }
