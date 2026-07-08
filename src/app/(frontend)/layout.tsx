@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
+import { defaultMetadata } from '@/lib/metadata'
 import '@/styles/globals.css'
-import { ThemeProvider } from 'next-themes'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -14,10 +15,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-  title: 'ParagonAI | Frontier Tech Addis Ababa',
-  description: 'AI-powered SEO solutions for the modern era.',
-}
+export const metadata: Metadata = defaultMetadata
 
 export default function RootLayout({
   children,
