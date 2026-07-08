@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next';
-import { withPayload } from '@payloadcms/next/withPayload';
+import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: 'bdumpauwjdfbrgzaeywh.supabase.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'bdumpauwjdfbrgzaeywh.storage.supabase.co',
+        pathname: '/**',
+      },
     ],
     localPatterns: [
       {
@@ -23,6 +28,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+}
 
-export default withPayload(nextConfig);
+export default withPayload(nextConfig)
