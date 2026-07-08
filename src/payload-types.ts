@@ -71,6 +71,11 @@ export interface Config {
     media: Media;
     pages: Page;
     posts: Post;
+    products: Product;
+    'help-articles': HelpArticle;
+    faqs: Faq;
+    careers: Career;
+    'legal-pages': LegalPage;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +87,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
+    'help-articles': HelpArticlesSelect<false> | HelpArticlesSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
+    careers: CareersSelect<false> | CareersSelect<true>;
+    'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -251,7 +261,15 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  category: 'research' | 'engineering' | 'safety' | 'company' | 'announcements';
+  category:
+    | 'insights'
+    | 'product-updates'
+    | 'engineering'
+    | 'research'
+    | 'company'
+    | 'student-success'
+    | 'safety'
+    | 'announcements';
   publishedDate?: string | null;
   heroImage: number | Media;
   author: {
@@ -266,6 +284,226 @@ export interface Post {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: number;
+  name: string;
+  /**
+   * URL segment, e.g. "levelup" => /products/levelup
+   */
+  slug: string;
+  /**
+   * Short one-liner shown on cards.
+   */
+  tagline: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category: 'ai-systems' | 'robotics' | 'infrastructure' | 'research' | 'developer-tools';
+  /**
+   * Square logo or icon for the product.
+   */
+  logo?: (number | null) | Media;
+  coverImage?: (number | null) | Media;
+  features?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * External URL (e.g. product website).
+   */
+  link?: string | null;
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first.
+   */
+  order?: number | null;
+  status?: ('active' | 'coming-soon' | 'archived') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help-articles".
+ */
+export interface HelpArticle {
+  id: number;
+  title: string;
+  slug: string;
+  category: 'getting-started' | 'account' | 'billing' | 'technical' | 'security' | 'integrations' | 'troubleshooting';
+  /**
+   * Short summary shown in lists and search results.
+   */
+  summary: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category: 'general' | 'account-billing' | 'products' | 'technical' | 'security' | 'support';
+  /**
+   * Lower numbers appear first within a category.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "careers".
+ */
+export interface Career {
+  id: number;
+  title: string;
+  slug: string;
+  department: 'engineering' | 'research' | 'product' | 'design' | 'operations' | 'sales-marketing' | 'people';
+  /**
+   * e.g. "Addis Ababa, Ethiopia" or "Remote".
+   */
+  location: string;
+  type: 'full-time' | 'part-time' | 'contract' | 'internship';
+  /**
+   * One-paragraph teaser shown in the job list.
+   */
+  summary: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  requirements?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * External ATS / form URL.
+   */
+  applyLink?: string | null;
+  /**
+   * Optional, e.g. "$120k - $160k".
+   */
+  salaryRange?: string | null;
+  /**
+   * Uncheck to hide this role from the public list.
+   */
+  active?: boolean | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages".
+ */
+export interface LegalPage {
+  id: number;
+  title: string;
+  /**
+   * Use "privacy-policy" or "terms-of-service".
+   */
+  slug: string;
+  type: 'privacy-policy' | 'terms-of-service' | 'cookie-policy' | 'acceptable-use' | 'data-processing' | 'other';
+  /**
+   * Optional short summary shown above the body.
+   */
+  summary?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * When this version became effective.
+   */
+  effectiveDate?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -308,6 +546,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null)
+    | ({
+        relationTo: 'help-articles';
+        value: number | HelpArticle;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'careers';
+        value: number | Career;
+      } | null)
+    | ({
+        relationTo: 'legal-pages';
+        value: number | LegalPage;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -462,6 +720,92 @@ export interface PostsSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  tagline?: T;
+  description?: T;
+  category?: T;
+  logo?: T;
+  coverImage?: T;
+  features?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  link?: T;
+  featured?: T;
+  order?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help-articles_select".
+ */
+export interface HelpArticlesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  summary?: T;
+  content?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "careers_select".
+ */
+export interface CareersSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  department?: T;
+  location?: T;
+  type?: T;
+  summary?: T;
+  description?: T;
+  requirements?: T;
+  applyLink?: T;
+  salaryRange?: T;
+  active?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages_select".
+ */
+export interface LegalPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  type?: T;
+  summary?: T;
+  content?: T;
+  effectiveDate?: T;
   updatedAt?: T;
   createdAt?: T;
 }
