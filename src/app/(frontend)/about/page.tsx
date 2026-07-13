@@ -51,25 +51,21 @@ const AboutPage = () => {
         {/* Bottom Marquee */}
         <div className="relative z-10 w-full mt-auto pt-12 max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-[10px] uppercase tracking-[0.3em] text-[#94A3B8] font-bold mb-8 text-center opacity-50">
-            Pioneering intelligence across key hubs
+            Working with...
           </p>
           <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]">
             <div className="flex w-max animate-scroll">
               <div className="flex items-center gap-24 pr-24 opacity-40">
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
-                <span className="text-4xl font-medium text-white">Lagos</span>
-                <span className="text-4xl font-medium text-white">Kigali</span>
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian AIE</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian Ministry of Education</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">UN unipod</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">GOOGLE</span>
               </div>
               <div className="flex items-center gap-24 pr-24 opacity-40">
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
-                <span className="text-4xl font-medium text-white">Lagos</span>
-                <span className="text-4xl font-medium text-white">Kigali</span>
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian AIE</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian Ministry of Education</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">UN unipod</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">GOOGLE</span>
               </div>
             </div>
           </div>
@@ -203,7 +199,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Leadership Section */}
+      {/* Leadership Section
       <section className="py-32 lg:py-40 bg-[#0B0F1A] text-white relative z-10 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 transition-all duration-900 ease-out-expo">
@@ -220,7 +216,6 @@ const AboutPage = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {/* Member 1 */}
             <div className="group transition-all duration-900 ease-out-expo">
               <div className="aspect-[4/5] bg-[#161B29] rounded-2xl mb-4 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 flex items-center justify-center relative">
                 <div className="w-12 h-12 rounded-full bg-[#4F46E5]/20 flex items-center justify-center text-[#818CF8] font-bold">P</div>
@@ -229,7 +224,6 @@ const AboutPage = () => {
               <p className="text-xs font-mono text-[#94A3B8]">Addis Ababa</p>
             </div>
 
-            {/* Member 2 */}
             <div className="group transition-all duration-900 ease-out-expo">
               <div className="aspect-[4/5] bg-[#161B29] rounded-2xl mb-4 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 flex items-center justify-center relative">
                 <div className="w-12 h-12 rounded-full bg-[#4F46E5]/20 flex items-center justify-center text-[#818CF8] font-bold">P</div>
@@ -238,7 +232,6 @@ const AboutPage = () => {
               <p className="text-xs font-mono text-[#94A3B8]">NLP & LLMs</p>
             </div>
 
-            {/* Member 3 */}
             <div className="group transition-all duration-900 ease-out-expo">
               <div className="aspect-[4/5] bg-[#161B29] rounded-2xl mb-4 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 flex items-center justify-center relative">
                 <div className="w-12 h-12 rounded-full bg-[#4F46E5]/20 flex items-center justify-center text-[#818CF8] font-bold">P</div>
@@ -247,7 +240,6 @@ const AboutPage = () => {
               <p className="text-xs font-mono text-[#94A3B8]">LevelUP Lead</p>
             </div>
 
-            {/* Member 4 */}
             <div className="group transition-all duration-900 ease-out-expo">
               <div className="aspect-[4/5] bg-[#161B29] rounded-2xl mb-4 border border-white/5 overflow-hidden transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 flex items-center justify-center relative">
                 <div className="w-12 h-12 rounded-full bg-[#4F46E5]/20 flex items-center justify-center text-[#818CF8] font-bold">P</div>
@@ -258,6 +250,7 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* CTA Section */}
       <section className="py-32 lg:py-40 bg-[#0B0F1A] text-white relative z-10 overflow-hidden border-t border-white/5">
