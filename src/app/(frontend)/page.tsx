@@ -219,14 +219,16 @@ export default async function Home() {
               </Link>
             </Reveal>
 
-            {posts.docs[0] && (
+            {posts.docs[0] && (() => {
+              const heroImage = typeof posts.docs[0].heroImage === 'object' ? (posts.docs[0].heroImage as Media) : null
+              return (
               <Reveal className="lg:col-span-6 lg:col-start-7" delay={200}>
                 <div className="relative overflow-hidden transition-all duration-500 ease-out-expo bg-surface-2 border border-white/5 hover:-translate-y-[6px] hover:border-[#818CF8]/30 rounded-3xl group">
                   <div className="aspect-[4/3] bg-gradient-to-br from-[#4F46E5]/20 via-surface-2 to-surface relative overflow-hidden">
-                    {posts.docs[0].heroImage?.url ? (
+                    {heroImage?.url ? (
                       <PayloadImage
-                        media={posts.docs[0].heroImage as Media}
-                        alt={(posts.docs[0].heroImage as Media).alt || posts.docs[0].title}
+                        media={heroImage}
+                        alt={heroImage.alt || posts.docs[0].title}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -270,41 +272,48 @@ export default async function Home() {
                   </div>
                 </div>
               </Reveal>
-            )}
+            )
+          })()}
           </div>
 
           {/* Secondary Articles Grid */}
           <div className="grid md:grid-cols-3 gap-8">
-            {posts.docs.slice(1).map((post, index) => (
-              <Reveal key={post.id} delay={index * 100}>
-                <Link href={`/blog/${post.slug}`} className="group cursor-pointer block">
-                  <div className="aspect-video rounded-2xl overflow-hidden bg-surface-2 border border-white/5 mb-6 transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 relative">
-                    {post.heroImage?.url ? (
-                      <PayloadImage
-                        media={post.heroImage as Media}
-                        alt={(post.heroImage as Media).alt || post.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-tr from-[#2563EB]/10 to-transparent flex items-center justify-center">
-                        <svg className="w-8 h-8 text-dim/20 group-hover:text-[#818CF8]/40 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" />
-                          <path d="M3.6 9h16.8M3.6 15h16.8" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#818CF8]">{post.category}</span>
-                  </div>
-                  <h4 className="font-display text-lg text-cream/90 group-hover:text-[#818CF8] transition-colors leading-snug">
-                    {post.title}
-                  </h4>
-                </Link>
-              </Reveal>
-            ))}
+            {posts.docs.slice(1).map((post, index) => {
+              const heroImage =
+                typeof post.heroImage === 'object' && post.heroImage !== null
+                  ? (post.heroImage as Media)
+                  : null
+              return (
+                <Reveal key={post.id} delay={index * 100}>
+                  <Link href={`/blog/${post.slug}`} className="group cursor-pointer block">
+                    <div className="aspect-video rounded-2xl overflow-hidden bg-surface-2 border border-white/5 mb-6 transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 relative">
+                      {heroImage?.url ? (
+                        <PayloadImage
+                          media={heroImage}
+                          alt={heroImage.alt || post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-tr from-[#2563EB]/10 to-transparent flex items-center justify-center">
+                          <svg className="w-8 h-8 text-dim/20 group-hover:text-[#818CF8]/40 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" />
+                            <path d="M3.6 9h16.8M3.6 15h16.8" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-[#818CF8]">{post.category}</span>
+                    </div>
+                    <h4 className="font-display text-lg text-cream/90 group-hover:text-[#818CF8] transition-colors leading-snug">
+                      {post.title}
+                    </h4>
+                  </Link>
+                </Reveal>
+              )
+            })}
           </div>
         </div>
       </section>
