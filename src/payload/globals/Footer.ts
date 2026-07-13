@@ -2,6 +2,9 @@ import type { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
+  admin: {
+    group: 'Site Config',
+  },
   hooks: {
     afterChange: [
       async ({ req }) => {
@@ -43,35 +46,59 @@ export const Footer: GlobalConfig = {
     {
       name: 'columns',
       type: 'array',
-      required: true,
+      minRows: 1,
+      maxRows: 4, // Enforce our 4-column UI
       fields: [
         {
           name: 'title',
           type: 'text',
           required: true,
+          admin: { description: 'e.g., Company, Resources, Legal' }
         },
         {
           name: 'links',
           type: 'array',
           fields: [
             {
+              name: 'linkType',
+              type: 'radio',
+              options: [
+                { label: 'Internal Page', value: 'internal' },
+                { label: 'External URL', value: 'external' }
+              ],
+              defaultValue: 'internal',
+              admin: { layout: 'horizontal' }
+            },
+            // For External Links (e.g., https://levelup.et)
+            {
               name: 'label',
               type: 'text',
-              required: true,
+              admin: { condition: (_, siblingData) => siblingData?.linkType === 'external' }
             },
             {
-              name: 'link',
+              name: 'url',
               type: 'text',
-              required: true,
+              admin: { condition: (_, siblingData) => siblingData?.linkType === 'external' }
             },
-          ],
-        },
-      ],
+            // For Internal Links (Creates inline relationships)
+            {
+              name: 'reference',
+              type: 'relationship',
+              relationTo: ['pages', 'posts', 'products', 'legal-pages', 'help-articles'],
+              hasMany: false,
+              admin: {
+                condition: (_, siblingData) => siblingData?.linkType === 'internal',
+                description: 'Select an existing page or click the "+" icon to create a new one right here.'
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       name: 'copyright',
       type: 'text',
-      defaultValue: '© 2026 ParagonAI PBC. Addis Ababa, Ethiopia.',
+      defaultValue: '© 2026 Paragon AI PLC. Addis Ababa, Ethiopia.',
     },
     {
       name: 'socialLinks',
@@ -89,5 +116,5 @@ export const Footer: GlobalConfig = {
         },
       ],
     },
-  ],
+  ]
 }

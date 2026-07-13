@@ -477,15 +477,29 @@ export interface LegalPage {
   id: number;
   title: string;
   /**
-   * Use "privacy-policy" or "terms-of-service".
+   * Small text shown above the title (e.g., "IP Protection", "Legal Ecosystem").
+   */
+  label?: string | null;
+  /**
+   * Use "privacy-policy", "terms-of-service", or "copyright".
    */
   slug: string;
-  type: 'privacy-policy' | 'terms-of-service' | 'cookie-policy' | 'acceptable-use' | 'data-processing' | 'other';
+  type:
+    | 'privacy-policy'
+    | 'terms-of-service'
+    | 'copyright'
+    | 'cookie-policy'
+    | 'acceptable-use'
+    | 'data-processing'
+    | 'other';
   /**
    * Optional short summary shown above the body.
    */
   summary?: string | null;
-  content: {
+  /**
+   * Lead paragraphs shown at the top of the content area.
+   */
+  intro?: {
     root: {
       type: string;
       children: {
@@ -499,7 +513,72 @@ export interface LegalPage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
+  /**
+   * Sidebar navigation links. Anchor should match the section ID in the content.
+   */
+  tableOfContents?:
+    | {
+        /**
+         * Display text (e.g., "1. Ownership of Assets").
+         */
+        label: string;
+        /**
+         * URL anchor without the # (e.g., "ownership").
+         */
+        anchor: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Structured content sections. Each section appears as a separate block with a heading.
+   */
+  sections?:
+    | {
+        /**
+         * Section heading (e.g., "1. Ownership of Assets").
+         */
+        title: string;
+        /**
+         * URL anchor without the #. Leave empty to auto-generate from title.
+         */
+        anchor?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional fallback content. Used if no sections are defined.
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When this version became effective.
    */
@@ -801,9 +880,26 @@ export interface CareersSelect<T extends boolean = true> {
  */
 export interface LegalPagesSelect<T extends boolean = true> {
   title?: T;
+  label?: T;
   slug?: T;
   type?: T;
   summary?: T;
+  intro?: T;
+  tableOfContents?:
+    | T
+    | {
+        label?: T;
+        anchor?: T;
+        id?: T;
+      };
+  sections?:
+    | T
+    | {
+        title?: T;
+        anchor?: T;
+        content?: T;
+        id?: T;
+      };
   content?: T;
   effectiveDate?: T;
   updatedAt?: T;
@@ -877,17 +973,47 @@ export interface Navigation {
  */
 export interface Footer {
   id: number;
-  columns: {
-    title: string;
-    links?:
-      | {
-          label: string;
-          link: string;
-          id?: string | null;
-        }[]
-      | null;
-    id?: string | null;
-  }[];
+  columns?:
+    | {
+        /**
+         * e.g., Company, Resources, Legal
+         */
+        title: string;
+        links?:
+          | {
+              linkType?: ('internal' | 'external') | null;
+              label?: string | null;
+              url?: string | null;
+              /**
+               * Select an existing page or click the "+" icon to create a new one right here.
+               */
+              reference?:
+                | ({
+                    relationTo: 'pages';
+                    value: number | Page;
+                  } | null)
+                | ({
+                    relationTo: 'posts';
+                    value: number | Post;
+                  } | null)
+                | ({
+                    relationTo: 'products';
+                    value: number | Product;
+                  } | null)
+                | ({
+                    relationTo: 'legal-pages';
+                    value: number | LegalPage;
+                  } | null)
+                | ({
+                    relationTo: 'help-articles';
+                    value: number | HelpArticle;
+                  } | null);
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   copyright?: string | null;
   socialLinks?:
     | {
@@ -966,8 +1092,10 @@ export interface FooterSelect<T extends boolean = true> {
         links?:
           | T
           | {
+              linkType?: T;
               label?: T;
-              link?: T;
+              url?: T;
+              reference?: T;
               id?: T;
             };
         id?: T;

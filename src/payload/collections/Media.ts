@@ -2,6 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: {
+    singular: 'Media',
+    plural: 'Media',
+  },
+  admin: {
+    group: 'Content',
+  },
   upload: {
     staticDir: 'media',
     imageSizes: [

@@ -27,6 +27,8 @@ import { Pages } from './src/payload/collections/Pages'
 import { Posts } from './src/payload/collections/Posts'
 import { Products } from './src/payload/collections/Products'
 import { Users } from './src/payload/collections/Users'
+
+import { About } from './src/payload/globals/About'
 import { Announcements } from './src/payload/globals/Announcements'
 import { Footer } from './src/payload/globals/Footer'
 import { Hero } from './src/payload/globals/Hero'

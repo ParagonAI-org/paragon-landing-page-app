@@ -2,8 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
+  labels: {
+    singular: 'FAQ',
+    plural: 'FAQs',
+  },
   admin: {
     useAsTitle: 'question',
+    group: 'Support',
     defaultColumns: ['question', 'category', 'order', 'updatedAt'],
   },
   hooks: {

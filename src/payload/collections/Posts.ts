@@ -2,8 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  labels: {
+    singular: 'Insight',
+    plural: 'Insights',
+  },
   admin: {
     useAsTitle: 'title',
+    group: 'Content',
     defaultColumns: ['title', 'slug', 'category', 'publishedDate'],
   },
   hooks: {

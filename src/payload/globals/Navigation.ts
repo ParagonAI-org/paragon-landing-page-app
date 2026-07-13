@@ -2,6 +2,10 @@ import type { GlobalConfig } from 'payload'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
+  label: 'Navigation',
+  admin: {
+    group: 'Site Config',
+  },
   hooks: {
     afterChange: [
       async () => {

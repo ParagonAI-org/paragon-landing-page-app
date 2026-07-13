@@ -2,6 +2,10 @@ import type { GlobalConfig } from 'payload'
 
 export const Announcements: GlobalConfig = {
   slug: 'announcements',
+  label: 'Announcements',
+  admin: {
+    group: 'Promotions',
+  },
   hooks: {
     afterChange: [
       async () => {

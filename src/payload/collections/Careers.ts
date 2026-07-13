@@ -2,8 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const Careers: CollectionConfig = {
   slug: 'careers',
+  labels: {
+    singular: 'Career',
+    plural: 'Careers',
+  },
   admin: {
     useAsTitle: 'title',
+    group: 'Company',
     defaultColumns: ['title', 'department', 'location', 'type', 'active'],
   },
   hooks: {
