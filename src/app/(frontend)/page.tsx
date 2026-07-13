@@ -1,6 +1,8 @@
 import RichText from '@/components/RichText';
 import { getCachedProducts, getCachedBlogPosts } from '@/lib/data';
 import Link from 'next/link';
+import { PayloadImage } from '@/components/PayloadImage';
+import type { Media } from '@/payload-types';
 
 // Reveal Component
 const Reveal = ({
@@ -32,7 +34,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="h-[90vh] min-h-[700px] max-h-[950px] relative flex flex-col justify-between pt-32 pb-12 overflow-visible w-full">
         {/* Aurora Background */}
-        <div className="absolute top-0 right-0 w-[80%] h-full z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
           <div className="absolute blur-[120px] opacity-50 mix-blend-screen rounded-full -rotate-[15deg] w-[800px] h-[250px] bg-[#2563EB] -right-[200px] top-[20%] animate-drift-1" />
           <div className="absolute blur-[120px] opacity-40 mix-blend-screen rounded-full -rotate-[15deg] w-[900px] h-[300px] bg-[#4F46E5] -right-[300px] top-[40%] animate-drift-2" />
         </div>
@@ -81,25 +83,21 @@ export default async function Home() {
         {/* Bottom Logo Marquee */}
         <div className="relative z-10 w-full mt-auto pt-12 max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-[10px] uppercase tracking-[0.3em] text-dim font-bold mb-8 text-center opacity-50">
-            Pioneering intelligence across key hubs
+            Working with...
           </p>
           <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]">
             <div className="flex w-max animate-scroll">
               <div className="flex items-center gap-24 pr-24 opacity-40">
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
-                <span className="text-4xl font-medium text-white">Lagos</span>
-                <span className="text-4xl font-medium text-white">Kigali</span>
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian AIE</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian Ministry of Education</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">UN unipod</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">GOOGLE</span>
               </div>
               <div className="flex items-center gap-24 pr-24 opacity-40">
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
-                <span className="text-4xl font-medium text-white">Lagos</span>
-                <span className="text-4xl font-medium text-white">Kigali</span>
-                <span className="text-4xl font-medium text-white">Addis Ababa</span>
-                <span className="text-4xl font-medium text-white">Nairobi</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian AIE</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">Ethiopian Ministry of Education</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">UN unipod</span>
+                <span className="text-4xl font-medium text-white whitespace-nowrap">GOOGLE</span>
               </div>
             </div>
           </div>
@@ -223,21 +221,34 @@ export default async function Home() {
 
             {posts.docs[0] && (
               <Reveal className="lg:col-span-6 lg:col-start-7" delay={200}>
-                <div className="relative overflow-hidden transition-all duration-500 ease-out-expo bg-surface-2 border border-white/5 hover:-translate-y-[6px] hover:border-[#818CF8]/30 rounded-3xl">
+                <div className="relative overflow-hidden transition-all duration-500 ease-out-expo bg-surface-2 border border-white/5 hover:-translate-y-[6px] hover:border-[#818CF8]/30 rounded-3xl group">
                   <div className="aspect-[4/3] bg-gradient-to-br from-[#4F46E5]/20 via-surface-2 to-surface relative overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-48 h-48 rounded-full bg-[#2563EB]/20 blur-3xl" />
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg className="w-24 h-24 text-[#818CF8]/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2a10 10 0 0 1 0 20" />
-                        <path d="M2 12h20" />
-                        <path d="M4.93 4.93l14.14 14.14" />
-                        <path d="M19.07 4.93L4.93 19.07" />
-                      </svg>
-                    </div>
-                    <div className="absolute bottom-6 left-6 right-6">
+                    {posts.docs[0].heroImage?.url ? (
+                      <PayloadImage
+                        media={posts.docs[0].heroImage as Media}
+                        alt={(posts.docs[0].heroImage as Media).alt || posts.docs[0].title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-48 h-48 rounded-full bg-[#2563EB]/20 blur-3xl" />
+                        </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <svg className="w-24 h-24 text-[#818CF8]/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.5">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 2a10 10 0 0 1 0 20" />
+                            <path d="M2 12h20" />
+                            <path d="M4.93 4.93l14.14 14.14" />
+                            <path d="M19.07 4.93L4.93 19.07" />
+                          </svg>
+                        </div>
+                      </>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute bottom-6 left-6 right-6 z-20">
                       <div className="flex items-center gap-3 mb-3">
                         <span className="px-2 py-1 rounded bg-white/5 text-[10px] font-mono uppercase tracking-wider text-dim">
                           {posts.docs[0].category}
@@ -246,7 +257,7 @@ export default async function Home() {
                       <p className="font-display text-xl text-cream/80">{posts.docs[0].title}</p>
                     </div>
                   </div>
-                  <div className="p-6 flex items-center justify-between border-t border-white/5">
+                  <div className="p-6 flex items-center justify-between border-t border-white/5 relative z-20 bg-surface-2">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-[#4F46E5]/20 flex items-center justify-center">
                         <span className="text-xs font-semibold text-[#818CF8]">P</span>
@@ -267,13 +278,23 @@ export default async function Home() {
             {posts.docs.slice(1).map((post, index) => (
               <Reveal key={post.id} delay={index * 100}>
                 <Link href={`/blog/${post.slug}`} className="group cursor-pointer block">
-                  <div className="aspect-video rounded-2xl overflow-hidden bg-surface-2 border border-white/5 mb-6 transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1">
-                    <div className="w-full h-full bg-gradient-to-tr from-[#2563EB]/10 to-transparent flex items-center justify-center">
-                      <svg className="w-8 h-8 text-dim/20 group-hover:text-[#818CF8]/40 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" />
-                        <path d="M3.6 9h16.8M3.6 15h16.8" />
-                      </svg>
-                    </div>
+                  <div className="aspect-video rounded-2xl overflow-hidden bg-surface-2 border border-white/5 mb-6 transition-all duration-500 group-hover:border-[#818CF8]/30 group-hover:-translate-y-1 relative">
+                    {post.heroImage?.url ? (
+                      <PayloadImage
+                        media={post.heroImage as Media}
+                        alt={(post.heroImage as Media).alt || post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-tr from-[#2563EB]/10 to-transparent flex items-center justify-center">
+                        <svg className="w-8 h-8 text-dim/20 group-hover:text-[#818CF8]/40 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" />
+                          <path d="M3.6 9h16.8M3.6 15h16.8" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="font-mono text-[9px] uppercase tracking-wider text-[#818CF8]">{post.category}</span>
