@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { PayloadImage } from '@/components/PayloadImage'
 import { getCachedProducts } from '@/lib/data'
 import { createPageMetadata } from '@/lib/metadata'
@@ -32,10 +33,11 @@ const ProductsPage = async () => {
   return (
     <>
       {/* Product Hero */}
-      <section className="min-h-[90vh] relative flex flex-col justify-center pt-40 pb-20 overflow-visible z-10 w-full">
-        {/* Sleek Aurora Background */}
-        <div className="absolute top-0 right-0 w-[80%] h-full z-0 pointer-events-none overflow-hidden">
-          <div className="absolute blur-[120px] opacity-30 mix-blend-screen rounded-full -rotate-[15deg] w-[700px] h-[250px] bg-[#2563EB] -right-[150px] top-[15%] animate-drift-1"></div>
+      <section className="h-[90vh] min-h-[700px] max-h-[950px] relative flex flex-col justify-center pt-40 pb-20 overflow-visible z-10 w-full">
+        {/* Aurora Background */}
+        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+          <div className="absolute blur-[120px] opacity-50 mix-blend-screen rounded-full -rotate-[15deg] w-[800px] h-[250px] bg-[#2563EB] -right-[200px] top-[20%] animate-drift-1" />
+          <div className="absolute blur-[120px] opacity-40 mix-blend-screen rounded-full -rotate-[15deg] w-[900px] h-[300px] bg-[#4F46E5] -right-[300px] top-[40%] animate-drift-2" />
         </div>
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10">
@@ -58,78 +60,53 @@ const ProductsPage = async () => {
 
               <div className="flex flex-col sm:flex-row items-center gap-5">
                 <a href="https://levelup.et" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-full font-bold hover:bg-[#818CF8] hover:text-white transition-all text-center">
-                  Launch Web App
+                  Try LevelUP
                 </a>
-                <Link href="#" className="w-full sm:w-auto group px-8 py-4 font-semibold text-white hover:text-[#818CF8] transition-all text-center flex items-center justify-center gap-3">
-                  Try on Telegram
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="m22 2-7 20-4-9-9-4Z" />
-                    <path d="M22 2 11 13" />
-                  </svg>
-                </Link>
               </div>
             </div>
 
-            {/* Showcase Interface Mockup */}
+            {/* Samsung Mobile Mockup */}
             <div className="lg:col-span-6 relative w-full flex justify-center lg:justify-end transition-all duration-900 ease-out-expo">
-              <div className="relative w-full max-w-[440px] h-[550px] bg-[#0B0F1A]/60 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] shadow-2xl shadow-[#4F46E5]/10 p-6 flex flex-col justify-between overflow-hidden">
-                {/* Top Bar */}
-                <div className="flex items-center justify-between border-b border-white/5 pb-4 relative z-10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#4F46E5]/40 to-[#818CF8]/10 flex items-center justify-center text-sm font-bold text-white">
-                      L
+              <div className="relative group">
+                {/* Device Frame */}
+                <div className="relative w-[280px] sm:w-[320px] aspect-[9/19] rounded-[2.5rem] border-[8px] border-[#1a1a1f] bg-[#1a1a1f] shadow-2xl shadow-[#4F46E5]/20 overflow-visible transition-transform duration-700 group-hover:scale-[1.02]">
+                  
+                  {/* Samsung Hardware Buttons (Power & Volume) */}
+                  <div className="absolute -right-[11px] top-[100px] w-[3px] h-[50px] bg-[#2a2a35] rounded-r-md border-r border-white/10" />
+                  <div className="absolute -right-[11px] top-[170px] w-[3px] h-[30px] bg-[#2a2a35] rounded-r-md border-r border-white/10" />
+                  
+                  {/* Inner Screen Container */}
+                  <div className="relative w-full h-full rounded-[2.1rem] overflow-hidden bg-[#0B0F1A] border border-white/5">
+                    
+                    {/* Punch-Hole Camera */}
+                    <div className="absolute top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#050505] rounded-full z-20 flex items-center justify-center shadow-[inset_0_-1px_2px_rgba(255,255,255,0.1)]">
+                      <div className="w-1.5 h-1.5 bg-[#0e0e11] rounded-full" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white/90">LevelUP Tutor</h4>
-                      <p className="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-emerald-400/80 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>Socratic Mode</p>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-md bg-white/[0.03] text-[10px] font-mono text-[#94A3B8]">Amharic</span>
-                </div>
 
-                {/* Chat Messages */}
-                <div className="flex-1 py-6 space-y-6 overflow-y-auto relative z-10 text-sm">
-                  {/* Tutor Message 1 */}
-                  <div className="space-y-1.5 max-w-[85%]">
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#94A3B8]/50 ml-1">Tutor</span>
-                    <div className="bg-white/[0.02] border border-white/5 p-4 rounded-2xl rounded-tl-sm text-white/80 font-light leading-relaxed">
-                      Let&apos;s find the derivative of <code className="bg-white/5 text-[#818CF8] px-1.5 py-0.5 rounded font-mono text-xs">f(x) = x² + 3x</code>. Where do you think we should start?
-                    </div>
-                  </div>
-
-                  {/* Student Message */}
-                  <div className="space-y-1.5 max-w-[80%] ml-auto text-right">
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#94A3B8]/50 mr-1">You</span>
-                    <div className="bg-[#818CF8]/10 border border-[#818CF8]/20 p-4 rounded-2xl rounded-tr-sm text-white font-light leading-relaxed text-left">
-                      I think it is <code className="bg-white/5 px-1.5 py-0.5 rounded font-mono text-xs">2x</code>.
-                    </div>
-                  </div>
-
-                  {/* Tutor Message 2 */}
-                  <div className="space-y-1.5 max-w-[85%]">
-                    <span className="text-[9px] font-mono uppercase tracking-widest text-[#94A3B8]/50 ml-1">Tutor</span>
-                    <div className="bg-white/[0.02] border border-white/5 p-4 rounded-2xl rounded-tl-sm text-white/80 font-light leading-relaxed">
-                      Close! You applied the Power Rule to <code className="bg-white/5 text-[#818CF8] px-1.5 py-0.5 rounded font-mono text-xs">x²</code> perfectly. What happens to the <code className="bg-white/5 text-[#818CF8] px-1.5 py-0.5 rounded font-mono text-xs">3x</code> term when we derive it?
-                    </div>
+                    {/* Screenshot */}
+                    <Image
+                      src="/assets/screenshot-1.png"
+                      alt="LevelUP Mobile App Screenshot"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 320px"
+                      className="object-cover"
+                      priority
+                    />
+                    
+                    {/* Screen Glare Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none z-10" />
                   </div>
                 </div>
 
-                {/* Input */}
-                <div className="pt-2 relative z-10">
-                  <div className="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-4 pr-2 py-2 flex items-center justify-between">
-                    <span className="text-[#94A3B8]/40 text-sm font-light">Type your logic here...</span>
-                    <div className="w-9 h-9 rounded-xl bg-white text-black flex items-center justify-center">
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
+                {/* Decorative Bottom Glow */}
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-2/3 h-10 bg-[#4F46E5]/20 blur-3xl rounded-full" />
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      
 
       {/* Technical Specifications */}
       <section className="py-32 relative z-10">
@@ -189,7 +166,7 @@ const ProductsPage = async () => {
         </div>
       </section>
 
-      {/* Traction / Numerical Milestones */}
+      {/* Traction / Numerical Milestones
       <section className="py-32 bg-[#0B0F1A]/40 relative z-10 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center divide-x divide-transparent">
@@ -212,6 +189,7 @@ const ProductsPage = async () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* Other Products (if any) */}
       {otherProducts.length > 0 && (
@@ -302,14 +280,11 @@ const ProductsPage = async () => {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 transition-all duration-900 ease-out-expo">
             <a href="https://levelup.et" target="_blank" rel="noopener noreferrer" className="bg-white text-black transition-all duration-400 ease-out-expo hover:bg-[#818CF8] hover:text-white px-10 py-4 rounded-full font-bold inline-flex items-center gap-3">
-              Access Free Tier
+              Try LevelUP
               <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M3 8h10M9 4l4 4-4 4" />
               </svg>
             </a>
-            <Link href="#" className="px-10 py-4 font-semibold text-white hover:text-[#818CF8] transition-colors">
-              Institutional Licensing
-            </Link>
           </div>
         </div>
       </section>
