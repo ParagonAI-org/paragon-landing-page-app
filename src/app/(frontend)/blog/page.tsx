@@ -165,7 +165,7 @@ const BlogIndexPage = async () => {
         <div className="max-w-3xl mx-auto px-6 lg:px-10 text-center relative z-10">
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#818CF8] mb-6 block reveal opacity-0 translate-y-[40px] transition-all duration-900 ease-out-expo [&.visible]:opacity-100 [&.visible]:translate-y-0">Subscribe</span>
           <h2 className="font-display text-4xl lg:text-5xl leading-[1.05] tracking-tight mb-6 text-white reveal opacity-0 translate-y-[40px] transition-all duration-900 ease-out-expo delay-100 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-            Get our latest research delivered.
+            Get our latest articles delivered.
           </h2>
           <p className="text-[#94A3B8] leading-relaxed mb-10 max-w-xl mx-auto reveal opacity-0 translate-y-[40px] transition-all duration-900 ease-out-expo delay-200 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             Join engineers, researchers, and educators receiving our monthly updates on AI development in Africa. No spam, just signal.
