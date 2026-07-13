@@ -3,8 +3,108 @@
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
+const FAVICON_SETS = {
+  light: {
+    icon: '/favicon-light.svg',
+    png: '/favicon-light-96x96.png',
+    apple: '/apple-touch-icon-light.png',
+    manifest: '/site-light.webmanifest',
+    themeColor: '#ffffff',
+  },
+  dark: {
+    icon: '/favicon-dark.svg',
+    png: '/favicon-dark-96x96.png',
+    apple: '/apple-touch-icon-dark.png',
+    manifest: '/site-dark.webmanifest',
+    themeColor: '#000000',
+  },
+} as const;
+
+type Theme = keyof typeof FAVICON_SETS;
+
+const getResolvedTheme = (): Theme => {
+  if (typeof document === 'undefined') return 'light';
+  const root = document.documentElement;
+  if (root.classList.contains('dark')) return 'dark';
+  if (root.classList.contains('light')) return 'light';
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
+};
+
+const applyFaviconTheme = (theme: Theme) => {
+  const set = FAVICON_SETS[theme];
+  const head = document.head;
+  if (!head) return;
+
+  // Replace the primary SVG icon
+  let iconLink = document.querySelector<HTMLLinkElement>('link#dynamic-favicon-icon');
+  if (!iconLink) {
+    iconLink = document.createElement('link');
+    iconLink.id = 'dynamic-favicon-icon';
+    iconLink.rel = 'icon';
+    iconLink.type = 'image/svg+xml';
+    head.appendChild(iconLink);
+  }
+  iconLink.href = set.icon;
+
+  // Replace the PNG fallback
+  let pngLink = document.querySelector<HTMLLinkElement>('link#dynamic-favicon-png');
+  if (!pngLink) {
+    pngLink = document.createElement('link');
+    pngLink.id = 'dynamic-favicon-png';
+    pngLink.rel = 'alternate icon';
+    pngLink.type = 'image/png';
+    pngLink.sizes = '96x96';
+    head.appendChild(pngLink);
+  }
+  pngLink.href = set.png;
+
+  // Replace the apple touch icon
+  let appleLink = document.querySelector<HTMLLinkElement>('link#dynamic-favicon-apple');
+  if (!appleLink) {
+    appleLink = document.createElement('link');
+    appleLink.id = 'dynamic-favicon-apple';
+    appleLink.rel = 'apple-touch-icon';
+    appleLink.sizes = '180x180';
+    head.appendChild(appleLink);
+  }
+  appleLink.href = set.apple;
+
+  // Update theme-color meta
+  let themeMeta = document.querySelector<HTMLMetaElement>('meta#dynamic-theme-color');
+  if (!themeMeta) {
+    themeMeta = document.createElement('meta');
+    themeMeta.id = 'dynamic-theme-color';
+    themeMeta.name = 'theme-color';
+    head.appendChild(themeMeta);
+  }
+  themeMeta.content = set.themeColor;
+};
+
 const LayoutScripts = () => {
   const pathname = usePathname();
+
+  // Theme-aware favicon swap (browsers don't respect media queries on favicon <link>s)
+  useEffect(() => {
+    applyFaviconTheme(getResolvedTheme());
+
+    const observer = new MutationObserver(() => {
+      applyFaviconTheme(getResolvedTheme());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const onSystemChange = () => applyFaviconTheme(getResolvedTheme());
+    mql.addEventListener('change', onSystemChange);
+
+    return () => {
+      observer.disconnect();
+      mql.removeEventListener('change', onSystemChange);
+    };
+  }, []);
 
   // Setup ambient canvas (only once)
   useEffect(() => {

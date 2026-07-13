@@ -27,22 +27,40 @@ const nextConfig: NextConfig = {
         pathname: '/assets/**',
       },
       {
-        pathname: '/favicon.ico',
+        pathname: '/favicon-light.ico',
       },
       {
-        pathname: '/favicon.svg',
+        pathname: '/favicon-light.svg',
       },
       {
-        pathname: '/favicon-96x96.png',
+        pathname: '/favicon-light-96x96.png',
       },
       {
-        pathname: '/apple-touch-icon.png',
+        pathname: '/favicon-dark.ico',
       },
       {
-        pathname: '/web-app-manifest-192x192.png',
+        pathname: '/favicon-dark.svg',
       },
       {
-        pathname: '/web-app-manifest-512x512.png',
+        pathname: '/favicon-dark-96x96.png',
+      },
+      {
+        pathname: '/apple-touch-icon-light.png',
+      },
+      {
+        pathname: '/apple-touch-icon-dark.png',
+      },
+      {
+        pathname: '/web-app-manifest-light-192x192.png',
+      },
+      {
+        pathname: '/web-app-manifest-light-512x512.png',
+      },
+      {
+        pathname: '/web-app-manifest-dark-192x192.png',
+      },
+      {
+        pathname: '/web-app-manifest-dark-512x512.png',
       },
     ],
   },

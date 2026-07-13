@@ -66,13 +66,53 @@ export const defaultMetadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      // Light mode favicons
+      {
+        url: '/favicon-light-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/favicon-light.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/favicon-light.ico',
+        rel: 'icon',
+        media: '(prefers-color-scheme: light)',
+      },
+      // Dark mode favicons
+      {
+        url: '/favicon-dark-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/favicon-dark.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/favicon-dark.ico',
+        rel: 'icon',
+        media: '(prefers-color-scheme: dark)',
+      },
     ],
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    apple: [
+      {
+        url: '/apple-touch-icon-light.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/apple-touch-icon-dark.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+    ],
   },
-  manifest: '/site.webmanifest',
+  manifest: '/site-light.webmanifest',
 }
 
 type PageMetadataOptions = {

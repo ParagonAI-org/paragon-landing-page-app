@@ -28,12 +28,70 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#000000" />
+        {/* Light mode favicons */}
+        <link
+          rel="icon"
+          type="image/png"
+          href="/favicon-light-96x96.png"
+          sizes="96x96"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/favicon-light.svg"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="alternate icon"
+          href="/favicon-light.ico"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon-light.png"
+          media="(prefers-color-scheme: light)"
+        />
+
+        {/* Dark mode favicons */}
+        <link
+          rel="icon"
+          type="image/png"
+          href="/favicon-dark-96x96.png"
+          sizes="96x96"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/favicon-dark.svg"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="alternate icon"
+          href="/favicon-dark.ico"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon-dark.png"
+          media="(prefers-color-scheme: dark)"
+        />
+
+        <link
+          rel="manifest"
+          href="/site-light.webmanifest"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="manifest"
+          href="/site-dark.webmanifest"
+          media="(prefers-color-scheme: dark)"
+        />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
       </head>
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
