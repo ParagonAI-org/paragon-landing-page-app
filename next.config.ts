@@ -24,7 +24,25 @@ const nextConfig: NextConfig = {
         pathname: '/api/media/**',
       },
       {
-        pathname: '/assets/images/**',
+        pathname: '/assets/**',
+      },
+      {
+        pathname: '/favicon.ico',
+      },
+      {
+        pathname: '/favicon.svg',
+      },
+      {
+        pathname: '/favicon-96x96.png',
+      },
+      {
+        pathname: '/apple-touch-icon.png',
+      },
+      {
+        pathname: '/web-app-manifest-192x192.png',
+      },
+      {
+        pathname: '/web-app-manifest-512x512.png',
       },
     ],
   },
