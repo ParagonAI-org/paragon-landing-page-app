@@ -14,7 +14,7 @@ const AboutPage = () => {
       {/* Hero Section */}
       <section className="h-[90vh] min-h-[700px] max-h-[950px] relative flex flex-col justify-between pt-32 pb-12 overflow-visible z-10 w-full">
         {/* Aurora Background */}
-        <div className="absolute top-0 right-0 w-[80%] h-full z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
           <div className="absolute blur-[120px] opacity-50 mix-blend-screen rounded-full -rotate-[15deg] w-[800px] h-[250px] bg-[#2563EB] -right-[200px] top-[20%] animate-drift-1"></div>
           <div className="absolute blur-[120px] opacity-40 mix-blend-screen rounded-full -rotate-[15deg] w-[900px] h-[300px] bg-[#4F46E5] -right-[300px] top-[40%] animate-drift-2"></div>
         </div>

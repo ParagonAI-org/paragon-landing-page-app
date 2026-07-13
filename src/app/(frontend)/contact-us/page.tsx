@@ -4,7 +4,12 @@ const ContactUsPage = () => {
   return (
     <>
       {/* Contact Hero */}
-      <section className="relative pt-48 pb-24 overflow-hidden z-10 w-full">
+      <section className="h-[90vh] min-h-[700px] max-h-[950px] relative flex flex-col justify-center pt-32 pb-12 overflow-visible z-10 w-full">
+        {/* Aurora Background */}
+        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
+          <div className="absolute blur-[120px] opacity-50 mix-blend-screen rounded-full -rotate-[15deg] w-[800px] h-[250px] bg-[#2563EB] -right-[200px] top-[20%] animate-drift-1" />
+          <div className="absolute blur-[120px] opacity-40 mix-blend-screen rounded-full -rotate-[15deg] w-[900px] h-[300px] bg-[#4F46E5] -right-[300px] top-[40%] animate-drift-2" />
+        </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
           <div className="max-w-3xl reveal opacity-0 translate-y-[30px] transition-all duration-900 ease-out-expo [&.visible]:opacity-100 [&.visible]:translate-y-0" suppressHydrationWarning>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] uppercase tracking-[0.3em] text-[#818CF8] font-bold mb-8">
