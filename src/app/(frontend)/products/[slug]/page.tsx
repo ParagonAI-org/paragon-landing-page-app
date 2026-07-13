@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
 import { PayloadImage } from '@/components/PayloadImage'
 import RichText from '@/components/RichText'
 import { getCachedProduct, getCachedProducts } from '@/lib/data'
@@ -49,9 +47,7 @@ const ProductDetailPage = async ({ params }: Args) => {
   const others = all.filter((p) => p.slug !== product.slug).slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <Navbar />
-
+    <div className="min-h-screen text-white">
       <main className="relative max-w-[1100px] mx-auto px-6 pt-32 pb-24">
         <Link
           href="/products"
@@ -205,8 +201,6 @@ const ProductDetailPage = async ({ params }: Args) => {
           </section>
         ) : null}
       </main>
-
-      <Footer />
     </div>
   )
 }

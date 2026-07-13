@@ -60,6 +60,7 @@ export const getCachedFooter = unstable_cache(
     const payload = await getPayload()
     return await payload.findGlobal({
       slug: 'footer',
+      depth: 2,
     })
   },
   ['footer'],
@@ -97,23 +98,24 @@ export const getCachedFeaturedProducts = unstable_cache(
   { tags: ['products'] },
 )
 
-export const getCachedProduct = unstable_cache(
-  async (slug: string) => {
-    const payload = await getPayload()
-    const result = await payload.find({
-      collection: 'products',
-      depth: 1,
-      where: {
-        slug: {
-          equals: slug,
+export const getCachedProduct = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'products',
+        depth: 1,
+        where: {
+          slug: {
+            equals: slug,
+          },
         },
-      },
-    })
-    return result.docs[0] || null
-  },
-  ['product-by-slug'],
-  { tags: ['products'] },
-)
+      })
+      return result.docs[0] || null
+    },
+    ['product-by-slug', slug],
+    { tags: ['products'] },
+  )()
 
 export const getCachedHelpArticles = unstable_cache(
   async () => {
@@ -128,22 +130,23 @@ export const getCachedHelpArticles = unstable_cache(
   { tags: ['help'] },
 )
 
-export const getCachedHelpArticle = unstable_cache(
-  async (slug: string) => {
-    const payload = await getPayload()
-    const result = await payload.find({
-      collection: 'help-articles',
-      where: {
-        slug: {
-          equals: slug,
+export const getCachedHelpArticle = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'help-articles',
+        where: {
+          slug: {
+            equals: slug,
+          },
         },
-      },
-    })
-    return result.docs[0] || null
-  },
-  ['help-article-by-slug'],
-  { tags: ['help'] },
-)
+      })
+      return result.docs[0] || null
+    },
+    ['help-article-by-slug', slug],
+    { tags: ['help'] },
+  )()
 
 export const getCachedFaqs = unstable_cache(
   async () => {
@@ -176,48 +179,50 @@ export const getCachedCareers = unstable_cache(
   { tags: ['careers'] },
 )
 
-export const getCachedCareer = unstable_cache(
-  async (slug: string) => {
-    const payload = await getPayload()
-    const result = await payload.find({
-      collection: 'careers',
-      where: {
-        and: [
-          {
-            slug: {
-              equals: slug,
+export const getCachedCareer = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'careers',
+        where: {
+          and: [
+            {
+              slug: {
+                equals: slug,
+              },
             },
-          },
-          {
-            active: {
-              equals: true,
+            {
+              active: {
+                equals: true,
+              },
             },
-          },
-        ],
-      },
-    })
-    return result.docs[0] || null
-  },
-  ['career-by-slug'],
-  { tags: ['careers'] },
-)
-
-export const getCachedLegalPage = unstable_cache(
-  async (slug: string) => {
-    const payload = await getPayload()
-    const result = await payload.find({
-      collection: 'legal-pages',
-      where: {
-        slug: {
-          equals: slug,
+          ],
         },
-      },
-    })
-    return result.docs[0] || null
-  },
-  ['legal-page-by-slug'],
-  { tags: ['legal'] },
-)
+      })
+      return result.docs[0] || null
+    },
+    ['career-by-slug', slug],
+    { tags: ['careers'] },
+  )()
+
+export const getCachedLegalPage = (slug: string) =>
+  unstable_cache(
+    async () => {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'legal-pages',
+        where: {
+          slug: {
+            equals: slug,
+          },
+        },
+      })
+      return result.docs[0] || null
+    },
+    ['legal-page-by-slug', slug],
+    { tags: ['legal'] },
+  )()
 
 export const getCachedBlogPosts = unstable_cache(
   async (limit?: number) => {
@@ -232,3 +237,5 @@ export const getCachedBlogPosts = unstable_cache(
   ['blog-posts'],
   { tags: ['posts'] },
 )
+
+

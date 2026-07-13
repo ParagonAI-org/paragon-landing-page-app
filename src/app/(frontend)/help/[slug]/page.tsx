@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
 import RichText from '@/components/RichText'
 import { getCachedHelpArticle, getCachedHelpArticles } from '@/lib/data'
 import type { HelpArticle } from '@/payload-types'
@@ -37,9 +35,7 @@ const HelpArticlePage = async ({ params }: Args) => {
     .slice(0, 4)
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <Navbar />
-
+    <div className="min-h-screen text-white">
       <main className="relative max-w-[900px] mx-auto px-6 pt-32 pb-24">
         <Link
           href="/help"
@@ -98,8 +94,6 @@ const HelpArticlePage = async ({ params }: Args) => {
           </section>
         ) : null}
       </main>
-
-      <Footer />
     </div>
   )
 }

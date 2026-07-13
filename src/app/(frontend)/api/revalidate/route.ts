@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       revalidateTag('faq', { expire: 0 })
       revalidateTag('careers', { expire: 0 })
       revalidateTag('legal', { expire: 0 })
+      revalidateTag('research', { expire: 0 })
     }
 
     // Purge the client-side router cache and layout cache so the UI updates immediately

@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
 import { getCachedHelpArticles } from '@/lib/data'
 import { createPageMetadata } from '@/lib/metadata'
 import type { HelpArticle } from '@/payload-types'
@@ -39,9 +37,7 @@ const HelpCenterPage = async () => {
   )
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white">
-      <Navbar />
-
+    <div className="min-h-screen text-white">
       <main className="relative max-w-[1100px] mx-auto px-6 pt-40 pb-24">
         <div className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white/70 backdrop-blur">
           Help Center
@@ -98,8 +94,6 @@ const HelpCenterPage = async () => {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   )
 }
