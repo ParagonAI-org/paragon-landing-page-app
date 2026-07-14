@@ -9853,12 +9853,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^1.17.0":
-  version: 1.17.0
-  resolution: "lucide-react@npm:1.17.0"
+"lucide-react@npm:^1.24.0":
+  version: 1.24.0
+  resolution: "lucide-react@npm:1.24.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/a600d882afceffa5d3479666549e801e201ff5a95c19961648e45fc288cf3d2248a345e563cd3891f3ff3dbc052730121feeb54aa75628b663810159246b9468
+  checksum: 10c0/8bc2a7c6cfa33bfc6df5533cec12454197f9182b98da0dcb79c6f167ca99710d9360e68b4ba7959953b4c501a48a100713e1b047a18c326c955920f72b9207ee
   languageName: node
   linkType: hard
 
@@ -10854,7 +10854,7 @@ __metadata:
     graphql: "npm:^16.14.1"
     husky: "npm:^9.1.7"
     jsdom: "npm:^26.1.0"
-    lucide-react: "npm:^1.17.0"
+    lucide-react: "npm:^1.24.0"
     next: "npm:^16.2.6"
     next-themes: "npm:^0.4.6"
     payload: "npm:^3.85.0"
@@ -10862,6 +10862,7 @@ __metadata:
     radix-ui: "npm:^1.4.3"
     react: "npm:^19.2.6"
     react-dom: "npm:^19.2.6"
+    react-icons: "npm:^5.7.0"
     sass: "npm:^1.87.0"
     shadcn: "npm:^4.10.0"
     sharp: "npm:^0.34.5"
@@ -11656,6 +11657,15 @@ __metadata:
   peerDependencies:
     react: ^18.0.0 || ^19.0.0
   checksum: 10c0/592205d5bbf6f5bad792c8e5f68ec781775bb4abd2e96585f7b45016b3ed8f2697569d16bb3c0df95e2ef7c334be163c8477af9c511ec91c3984fdfbed9d186d
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^5.7.0":
+  version: 5.7.0
+  resolution: "react-icons@npm:5.7.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/cc5ae92e61ef9d8fc83cb3f3ac2710deab9174c5831bdaf2a94b099acfc91074a60d4b3adfd3165dcb9b21799ca6c760b3f4f6596d75198c1ed2ea44240818c8
   languageName: node
   linkType: hard
 
