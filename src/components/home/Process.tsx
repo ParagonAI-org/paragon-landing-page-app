@@ -1,6 +1,23 @@
 import { BIG_STATS, PROCESS } from '@/lib/home-content'
 
-export default function Process() {
+export type ProcessStep = {
+  num: string
+  title: string
+  copy: string
+  image?: string
+  highlight?: boolean
+}
+export type BigStat = { value: number; suffix?: string; label: string }
+
+export default function Process({
+  sub = PROCESS.sub,
+  steps = PROCESS.steps,
+  bigStats = BIG_STATS,
+}: {
+  sub?: string
+  steps?: readonly ProcessStep[]
+  bigStats?: readonly BigStat[]
+}) {
   return (
     <>
       <section
@@ -24,12 +41,12 @@ export default function Process() {
               className="text-paper/40 text-sm max-w-xs leading-relaxed md:text-right"
               data-rv
             >
-              {PROCESS.sub}
+              {sub}
             </p>
           </div>
 
           <div id="procCards" className="relative">
-            {PROCESS.steps.map((step) => (
+            {steps.map((step) => (
               <div
                 key={step.num}
                 className={`stack-card sticky mb-8 md:mb-12 rounded-3xl overflow-hidden border shadow-2xl ${
@@ -82,7 +99,7 @@ export default function Process() {
         className="coal-sec pb-24 md:pb-32 px-5 md:px-10 section-zoom"
       >
         <div className="max-w-[1500px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-14 border-t border-paper/10 pt-16">
-          {BIG_STATS.map((stat) => (
+          {bigStats.map((stat) => (
             <div key={stat.label} className="text-center md:text-left" data-rv>
               <p className="disp font-semibold text-5xl md:text-7xl tnum">
                 <span data-count={stat.value}>0</span>

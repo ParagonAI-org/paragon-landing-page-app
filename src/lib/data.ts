@@ -237,3 +237,12 @@ export const getCachedBlogPosts = unstable_cache(
   ['blog-posts'],
   { tags: ['posts'] },
 )
+
+export const getCachedHomepage = unstable_cache(
+  async () => {
+    const payload = await getPayload()
+    return await payload.findGlobal({ slug: 'homepage' })
+  },
+  ['homepage'],
+  { tags: ['homepage'] },
+)

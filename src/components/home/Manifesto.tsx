@@ -1,6 +1,18 @@
 import { MANIFESTO } from '@/lib/home-content'
 
-export default function Manifesto() {
+export type ManifestoStat = { value: string; suffix?: string; label: string }
+
+export default function Manifesto({
+  label = MANIFESTO.label,
+  textPre = MANIFESTO.textPre,
+  textEm = MANIFESTO.textEm,
+  stats = MANIFESTO.stats,
+}: {
+  label?: string
+  textPre?: string
+  textEm?: string
+  stats?: readonly ManifestoStat[]
+}) {
   return (
     <section
       id="manifesto"
@@ -10,20 +22,20 @@ export default function Manifesto() {
       <div className="max-w-[1100px] mx-auto relative z-10">
         <p className="label text-lime mb-10 flex items-center gap-3" data-rv>
           <span className="w-8 h-px bg-lime" />
-          {MANIFESTO.label}
+          {label}
         </p>
         <p
           id="mtext"
           className="disp font-medium text-[clamp(1.6rem,4.2vw,3.4rem)] leading-[1.25] tracking-[-.02em]"
         >
-          {MANIFESTO.textPre}
-          <em className="serif-it text-lime">{MANIFESTO.textEm}</em>
+          {textPre}
+          <em className="serif-it text-lime">{textEm}</em>
         </p>
         <div
           className="grid grid-cols-3 gap-6 mt-20 pt-10 border-t border-paper/10"
           data-rv
         >
-          {MANIFESTO.stats.map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label}>
               <p className="disp font-semibold text-3xl md:text-5xl tnum">
                 {stat.value}

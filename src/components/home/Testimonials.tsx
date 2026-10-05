@@ -55,7 +55,11 @@ function Card({ t }: { t: Testimonial }) {
   )
 }
 
-export default function Testimonials() {
+export default function Testimonials({
+  testimonials = TESTIMONIALS,
+}: {
+  testimonials?: readonly Testimonial[]
+}) {
   return (
     <section
       id="stories"
@@ -79,7 +83,7 @@ export default function Testimonials() {
       <div className="mq relative z-10" id="tmMq">
         {[0, 1, 2].map((copy) => (
           <div key={copy} className="flex gap-6 px-3" aria-hidden={copy > 0}>
-            {TESTIMONIALS.map((t) => (
+            {testimonials.map((t) => (
               <Card key={`${copy}-${t.name}`} t={t} />
             ))}
           </div>

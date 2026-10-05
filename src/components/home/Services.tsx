@@ -1,6 +1,18 @@
 import { SERVICES } from '@/lib/home-content'
 
-export default function Services() {
+export type ServiceItem = {
+  index: string
+  title: string
+  copy: string
+  image: string
+  href?: string
+}
+
+export default function Services({
+  services = SERVICES,
+}: {
+  services?: readonly ServiceItem[]
+}) {
   return (
     <>
       <section
@@ -28,10 +40,10 @@ export default function Services() {
           </div>
 
           <div id="svcList">
-            {SERVICES.map((svc) => (
+            {services.map((svc) => (
               <a
                 key={svc.index}
-                href="/#contact"
+                href={svc.href ?? '/#contact'}
                 className="svc block"
                 data-img={svc.image}
                 data-cursor-text="Explore"

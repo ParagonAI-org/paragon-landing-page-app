@@ -1,6 +1,14 @@
 import { PRINCIPLES } from '@/lib/home-content'
 
-export default function Principles() {
+export type PrincipleItem = { num: string; title: string; copy: string }
+
+export default function Principles({
+  sub = PRINCIPLES.sub,
+  items = PRINCIPLES.items,
+}: {
+  sub?: string
+  items?: readonly PrincipleItem[]
+}) {
   return (
     <section
       id="principles"
@@ -23,12 +31,12 @@ export default function Principles() {
             className="text-paper/40 text-sm max-w-xs leading-relaxed md:text-right"
             data-rv
           >
-            {PRINCIPLES.sub}
+            {sub}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="prinGrid">
-          {PRINCIPLES.items.map((item) => (
+          {items.map((item) => (
             <div key={item.num} className="pcard" data-rv>
               <div className="flex items-start justify-between mb-10">
                 <span className="pnum disp font-semibold text-4xl text-paper/15 tnum">

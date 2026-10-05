@@ -1,7 +1,25 @@
 import Link from 'next/link'
 import { LEVELUP } from '@/lib/home-content'
 
-export default function LevelUp() {
+export type LevelUpChapter = { title: string; copy: string }
+
+export default function LevelUp({
+  label = LEVELUP.label,
+  image = LEVELUP.image,
+  imageAlt = LEVELUP.imageAlt,
+  imageTag = LEVELUP.imageTag,
+  chapters = LEVELUP.chapters,
+  cta = LEVELUP.cta,
+  ctaHref = LEVELUP.ctaHref,
+}: {
+  label?: string
+  image?: string
+  imageAlt?: string
+  imageTag?: string
+  chapters?: readonly LevelUpChapter[]
+  cta?: string
+  ctaHref?: string
+}) {
   return (
     <section id="levelup" className="pt-24 md:pt-0 section-zoom">
       <div
@@ -17,14 +35,14 @@ export default function LevelUp() {
               {/* biome-ignore lint/performance/noImgElement: art-directed design image */}
               <img
                 id="lvlImg"
-                src={LEVELUP.image}
-                alt={LEVELUP.imageAlt}
+                src={image}
+                alt={imageAlt}
                 loading="lazy"
                 className="w-full h-full object-cover will-change-transform"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent" />
               <p className="absolute bottom-5 left-6 label text-[10px]! text-paper/80">
-                {LEVELUP.imageTag}
+                {imageTag}
               </p>
             </div>
           </div>
@@ -32,7 +50,7 @@ export default function LevelUp() {
           <div className="relative order-1 md:order-2 md:h-[60vh]">
             <p className="label text-brand-600 mb-5 flex items-center gap-3">
               <span className="w-8 h-px bg-brand-600" />
-              {LEVELUP.label}
+              {label}
             </p>
             <h2 className="disp font-semibold text-[clamp(2.3rem,4.5vw,4.2rem)] leading-[.98] mb-8">
               LevelUP.
@@ -43,7 +61,7 @@ export default function LevelUp() {
             </h2>
 
             <div className="relative md:h-[34vh]" id="lvlChapters">
-              {LEVELUP.chapters.map((ch, i) => (
+              {chapters.map((ch, i) => (
                 <div key={ch.title} className="lvl-ch" data-ch={i}>
                   <h3 className="disp font-semibold text-2xl md:text-3xl mb-3">
                     {ch.title}
@@ -59,7 +77,7 @@ export default function LevelUp() {
               className="hidden md:flex items-center gap-2 mt-6"
               id="lvlDots"
             >
-              {LEVELUP.chapters.map((ch, i) => (
+              {chapters.map((ch, i) => (
                 <span
                   key={ch.title}
                   className={`lvl-dot w-8 h-1 rounded-full ${i === 0 ? 'bg-brand-600' : 'bg-ink/15'}`}
@@ -68,11 +86,11 @@ export default function LevelUp() {
             </div>
 
             <Link
-              href={LEVELUP.ctaHref}
+              href={ctaHref}
               className="btn btn-ink mt-8 md:mt-10"
               data-cursor
             >
-              {LEVELUP.cta} <span className="fill" />
+              {cta} <span className="fill" />
               <svg
                 className="w-4 h-4"
                 viewBox="0 0 24 24"

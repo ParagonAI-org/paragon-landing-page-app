@@ -1,7 +1,19 @@
 import Link from 'next/link'
 import { WORK } from '@/lib/home-content'
 
-export default function Work() {
+export type WorkCard = {
+  title: string
+  tag?: string
+  copy?: string
+  image: string
+  href: string
+}
+
+export default function Work({
+  cards = WORK.cards,
+}: {
+  cards?: readonly WorkCard[]
+}) {
   return (
     <section id="work" className="relative overflow-hidden section-zoom">
       <div
@@ -33,7 +45,7 @@ export default function Work() {
         </div>
 
         <div id="hTrack" className="h-track">
-          {WORK.cards.map((card) => (
+          {cards.map((card) => (
             <Link
               key={card.title}
               href={card.href}

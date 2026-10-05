@@ -32,6 +32,7 @@ import { About } from './src/payload/globals/About'
 import { Announcements } from './src/payload/globals/Announcements'
 import { Footer } from './src/payload/globals/Footer'
 import { Hero } from './src/payload/globals/Hero'
+import { Homepage } from './src/payload/globals/Homepage'
 import { Navigation } from './src/payload/globals/Navigation'
 
 const filename = fileURLToPath(import.meta.url)
@@ -82,13 +83,18 @@ export default buildConfig({
     Careers,
     LegalPages,
   ],
-  globals: [Navigation, Footer, Hero, Announcements],
+  globals: [Navigation, Footer, Homepage, Hero, Announcements],
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'src/payload-types.ts'),
   },
   admin: {
     user: Users.slug,
+    meta: {
+      title: 'Paragon AI Admin',
+      description: 'Content management for paragon.ai',
+    },
+    theme: 'dark',
     importMap: {
       baseDir: path.resolve(dirname),
     },

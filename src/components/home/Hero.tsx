@@ -1,7 +1,27 @@
 import Link from 'next/link'
 import { HERO, MARQUEE_ITEMS } from '@/lib/home-content'
 
-export default function Hero() {
+export type MarqueeItem = { text: string; serif?: boolean; dot?: string }
+
+export default function Hero({
+  meta = HERO.meta,
+  place = HERO.place,
+  copy = HERO.copy,
+  image = HERO.image,
+  imageAlt = HERO.imageAlt,
+  imageCaption = HERO.imageCaption,
+  imageTag = HERO.imageTag,
+  marquee = MARQUEE_ITEMS,
+}: {
+  meta?: string
+  place?: string
+  copy?: string
+  image?: string
+  imageAlt?: string
+  imageCaption?: string
+  imageTag?: string
+  marquee?: readonly MarqueeItem[]
+}) {
   return (
     <section
       id="hero"
@@ -12,8 +32,8 @@ export default function Hero() {
           className="flex items-center justify-between mb-8 md:mb-12"
           id="heroMeta"
         >
-          <p className="label text-ink/50">{HERO.meta}</p>
-          <p className="label text-ink/50 hidden sm:block">{HERO.place}</p>
+          <p className="label text-ink/50">{meta}</p>
+          <p className="label text-ink/50 hidden sm:block">{place}</p>
         </div>
 
         <h1 className="disp font-semibold leading-[.92] tracking-[-.04em] text-[clamp(3.2rem,11.5vw,11.5rem)]">
@@ -36,7 +56,7 @@ export default function Hero() {
         <div className="grid md:grid-cols-12 gap-8 items-end mt-10 md:mt-16">
           <div className="md:col-span-5" id="heroCopy">
             <p className="text-ink/55 text-base md:text-lg leading-relaxed max-w-md">
-              {HERO.copy}
+              {copy}
             </p>
             <div className="flex flex-wrap gap-3 mt-8">
               <Link href="/#work" className="btn btn-ink" data-cursor>
@@ -66,17 +86,17 @@ export default function Hero() {
             >
               {/* biome-ignore lint/performance/noImgElement: art-directed design image */}
               <img
-                src={HERO.image}
-                alt={HERO.imageAlt}
+                src={image}
+                alt={imageAlt}
                 className="w-full h-full object-cover scale-110"
                 fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
               <p className="absolute bottom-5 left-6 text-paper/90 text-sm font-medium">
-                {HERO.imageCaption}
+                {imageCaption}
               </p>
               <p className="absolute top-5 right-6 label text-[10px]! text-paper/70">
-                {HERO.imageTag}
+                {imageTag}
               </p>
             </div>
 
@@ -136,7 +156,7 @@ export default function Hero() {
               className="flex items-center"
               aria-hidden={copy > 0}
             >
-              {MARQUEE_ITEMS.map((item) => (
+              {marquee.map((item) => (
                 <span
                   key={`${copy}-${item.text}`}
                   className="flex items-center"
