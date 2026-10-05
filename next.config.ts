@@ -2,6 +2,10 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  // Allows running an isolated second dev server (e.g. on port 3200) alongside
+  // the primary one without hitting the `.next/dev/lock` dev-server lock.
+  // Defaults to '.next' so normal dev/build behavior is unchanged.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   images: {
     remotePatterns: [
       {

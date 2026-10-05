@@ -1,5 +1,5 @@
-import { RichText as ConvertRichText } from '@payloadcms/richtext-lexical/react'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+import { RichText as ConvertRichText } from '@payloadcms/richtext-lexical/react'
 
 // Payload's @payloadcms/richtext-lexical/react wraps its output in a
 // `<div class="payload-richtext">`. We pass the className straight through

@@ -47,7 +47,8 @@ export const LegalPages: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
-        description: 'Small text shown above the title (e.g., "IP Protection", "Legal Ecosystem").',
+        description:
+          'Small text shown above the title (e.g., "IP Protection", "Legal Ecosystem").',
       },
     },
     {
@@ -58,7 +59,8 @@ export const LegalPages: CollectionConfig = {
       index: true,
       admin: {
         position: 'sidebar',
-        description: 'Use "privacy-policy", "terms-of-service", or "copyright".',
+        description:
+          'Use "privacy-policy", "terms-of-service", or "copyright".',
       },
     },
     {
@@ -100,7 +102,8 @@ export const LegalPages: CollectionConfig = {
         plural: 'Table of Contents',
       },
       admin: {
-        description: 'Sidebar navigation links. Anchor should match the section ID in the content.',
+        description:
+          'Sidebar navigation links. Anchor should match the section ID in the content.',
       },
       fields: [
         {
@@ -129,7 +132,8 @@ export const LegalPages: CollectionConfig = {
         plural: 'Sections',
       },
       admin: {
-        description: 'Structured content sections. Each section appears as a separate block with a heading.',
+        description:
+          'Structured content sections. Each section appears as a separate block with a heading.',
       },
       fields: [
         {
@@ -144,7 +148,8 @@ export const LegalPages: CollectionConfig = {
           name: 'anchor',
           type: 'text',
           admin: {
-            description: 'URL anchor without the #. Leave empty to auto-generate from title.',
+            description:
+              'URL anchor without the #. Leave empty to auto-generate from title.',
           },
         },
         {
@@ -157,7 +162,8 @@ export const LegalPages: CollectionConfig = {
       name: 'content',
       type: 'richText',
       admin: {
-        description: 'Optional fallback content. Used if no sections are defined.',
+        description:
+          'Optional fallback content. Used if no sections are defined.',
       },
     },
     {

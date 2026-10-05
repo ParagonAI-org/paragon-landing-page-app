@@ -53,7 +53,7 @@ export const Footer: GlobalConfig = {
           name: 'title',
           type: 'text',
           required: true,
-          admin: { description: 'e.g., Company, Resources, Legal' }
+          admin: { description: 'e.g., Company, Resources, Legal' },
         },
         {
           name: 'links',
@@ -64,36 +64,50 @@ export const Footer: GlobalConfig = {
               type: 'radio',
               options: [
                 { label: 'Internal Page', value: 'internal' },
-                { label: 'External URL', value: 'external' }
+                { label: 'External URL', value: 'external' },
               ],
               defaultValue: 'internal',
-              admin: { layout: 'horizontal' }
+              admin: { layout: 'horizontal' },
             },
             // For External Links (e.g., https://levelup.et)
             {
               name: 'label',
               type: 'text',
-              admin: { condition: (_, siblingData) => siblingData?.linkType === 'external' }
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.linkType === 'external',
+              },
             },
             {
               name: 'url',
               type: 'text',
-              admin: { condition: (_, siblingData) => siblingData?.linkType === 'external' }
+              admin: {
+                condition: (_, siblingData) =>
+                  siblingData?.linkType === 'external',
+              },
             },
             // For Internal Links (Creates inline relationships)
             {
               name: 'reference',
               type: 'relationship',
-              relationTo: ['pages', 'posts', 'products', 'legal-pages', 'help-articles'],
+              relationTo: [
+                'pages',
+                'posts',
+                'products',
+                'legal-pages',
+                'help-articles',
+              ],
               hasMany: false,
               admin: {
-                condition: (_, siblingData) => siblingData?.linkType === 'internal',
-                description: 'Select an existing page or click the "+" icon to create a new one right here.'
-              }
-            }
-          ]
-        }
-      ]
+                condition: (_, siblingData) =>
+                  siblingData?.linkType === 'internal',
+                description:
+                  'Select an existing page or click the "+" icon to create a new one right here.',
+              },
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'copyright',
@@ -116,5 +130,5 @@ export const Footer: GlobalConfig = {
         },
       ],
     },
-  ]
+  ],
 }
