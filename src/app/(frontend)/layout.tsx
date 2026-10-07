@@ -117,9 +117,10 @@ export default function RootLayout({
 
         <Navbar />
 
-        <main className="flex-1 relative z-10 w-full flex flex-col">
-          {children}
-        </main>
+        {/* main must stay display:block: GSAP ScrollTrigger skips pin-spacer
+            padding for elements pinned inside a flex parent, which silently
+            breaks every pinned section on the page */}
+        <main className="flex-1 relative z-10 w-full">{children}</main>
 
         <Footer />
 

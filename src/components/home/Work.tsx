@@ -15,7 +15,7 @@ export default function Work({
   cards?: readonly WorkCard[]
 }) {
   return (
-    <section id="work" className="relative overflow-hidden section-zoom">
+    <section id="work" className="relative overflow-hidden">
       <div
         id="hWrap"
         className="h-wrap py-24 md:py-0 md:h-screen flex flex-col md:justify-center relative z-10"

@@ -21,7 +21,7 @@ export default function LevelUp({
   ctaHref?: string
 }) {
   return (
-    <section id="levelup" className="pt-24 md:pt-0 section-zoom">
+    <section id="levelup" className="pt-24 md:pt-0">
       <div
         id="lvlPin"
         className="md:h-screen md:overflow-hidden px-5 md:px-10 flex items-center"
