@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { getCachedFaqs } from '@/lib/data'
 import { createPageMetadata } from '@/lib/metadata'
 import type { Faq } from '@/payload-types'
@@ -52,7 +53,8 @@ const FAQPage = async () => {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl disp font-semibold leading-[1.02] tracking-[-.03em] text-ink mb-6">
-            Questions, answered.
+            Questions,{' '}
+            <em className="serif-it font-normal text-brand-600">answered.</em>
           </h1>
           <p className="max-w-xl text-base sm:text-lg leading-relaxed text-ink/60">
             Everything you need to know about ParagonAI. Can&apos;t find what
@@ -110,6 +112,23 @@ const FAQPage = async () => {
           )}
         </main>
       </section>
+
+      {/* Footer Support CTA */}
+      <section className="py-16 md:py-24 relative z-10 border-t border-ink/10">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-10 text-center">
+          <h2 className="text-2xl md:text-3xl disp font-semibold text-ink mb-4">
+            Still need help?
+          </h2>
+          <p className="text-ink/60 mb-8 max-w-lg mx-auto">
+            Can&apos;t find the answer you&apos;re looking for? Our support team
+            is happy to help with product, technical, or account questions.
+          </p>
+          <Link href="/contact-us" className="btn btn-ink" data-cursor>
+            Contact Support
+            <span className="fill" />
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
@@ -121,7 +140,13 @@ const RichTextLite = ({ answer }: { answer: unknown }) => {
   return (
     <div className="space-y-4">
       {nodes.map((node, i) => (
-        <p key={i}>{node}</p>
+        <p
+          /* biome-ignore lint/suspicious/noArrayIndexKey: static extracted
+          paragraphs whose order never changes, so the index is the stable key */
+          key={i}
+        >
+          {node}
+        </p>
       ))}
     </div>
   )

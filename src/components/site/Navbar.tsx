@@ -4,23 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { NAV_LINKS } from '@/lib/home-content'
+import BrandMark from './BrandMark'
 import { getLenis } from './lenis-store'
-
-const Logo = () => (
-  <span className="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center shrink-0">
-    <svg
-      className="w-4 h-4 text-white"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      aria-hidden="true"
-    >
-      <path d="M12 2 3 6.5 12 11l9-4.5L12 2z" />
-      <path d="M3 17.5 12 22l9-4.5" />
-    </svg>
-  </span>
-)
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -46,6 +31,7 @@ export default function Navbar() {
   // Flip the nav to its light-on-dark palette while a dark world is at the
   // top of the viewport. Dark sections (on any page) declare data-nav-dark;
   // the dark footer declares it too. Light worlds keep the default palette.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname re-observes the dark sections of the new page
   useEffect(() => {
     const nav = document.getElementById('nav')
     if (!nav) return
@@ -94,7 +80,7 @@ export default function Navbar() {
       <header id="nav" className="site-nav" data-cursor>
         <div className="nav-inner">
           <Link href="/" className="logo-link" aria-label="Paragon AI — home">
-            <Logo />
+            <BrandMark />
             <span className="logo-word disp font-semibold text-[15px]">
               Paragon <span className="opacity-60">AI</span>
             </span>
@@ -159,8 +145,11 @@ export default function Navbar() {
         aria-label="Menu"
       >
         <div className="flex items-center justify-between px-5 pt-6">
-          <span className="disp font-semibold text-lg">
-            Paragon <span className="opacity-60">AI</span>
+          <span className="flex items-center gap-2.5">
+            <BrandMark tone="white" />
+            <span className="disp font-semibold text-lg">
+              Paragon <span className="opacity-60">AI</span>
+            </span>
           </span>
           <button
             type="button"

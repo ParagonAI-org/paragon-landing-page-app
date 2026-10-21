@@ -1,14 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { CTA } from '@/lib/home-content'
+import { useEffect, useRef, useState } from 'react'
+import { glState, universe } from '@/components/home/gl-state'
+import BrandMark from './BrandMark'
 import { scrollToTarget } from './lenis-store'
 
-const FOOTER_COLS: {
-  heading: string
-  links: { label: string; href: string }[]
-}[] = [
+const FOOTER_COLS = [
   {
     heading: 'Products',
     links: [
@@ -76,24 +74,69 @@ function LocalTime() {
 }
 
 export default function Footer() {
+  const shellRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const el = shellRef.current
+    if (!el) return
+
+    /*
+     * Finale world flip: while the footer is on screen, push the fixed
+     * backdrop (nebula shader + 3D orb palette) to its dark portal state —
+     * the design's `set3DTheme(true)` on `#contact top 75%`. On the home page
+     * ScrollFx already owns both directions of this flip (its #contact latch
+     * plus #insights leave-back), so there we only reinforce the dark state
+     * and let the choreography restore the light world. On every other route
+     * no choreography exists, so this observer also fades the backdrop back
+     * to light as the footer scrolls out.
+     */
+    const homeOwnsBackdrop = !!document.getElementById('insights')
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const dark = entry?.isIntersecting ?? false
+        if (!dark && homeOwnsBackdrop) return
+        if (universe.current) universe.current.set3DTheme(dark)
+        else glState.nebula.themeTarget = dark ? 1 : 0
+      },
+      { rootMargin: '0px 0px -25% 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
+    /*
+     * dark-sec gives color:#f4f3ef + position:relative.
+     * Transparent by design: the fixed nebula canvas (dark when #contact is
+     * in view) and the 3D orb (scaled to 2.2 by ScrollFx) show through. The
+     * radial brand-600 glow blur is the CSS "portal" layered on top. The
+     * .footer-shell wrapper in the layout carries the opaque ink fallback
+     * whenever the live WebGL backdrop isn't available.
+     */
     <footer
       id="contact"
       data-nav-dark
-      className="dark-sec rounded-t-[2.5rem] md:rounded-t-[4rem] pt-24 md:pt-36 px-5 md:px-10 relative z-10 overflow-hidden section-zoom"
+      ref={shellRef}
+      className="dark-sec rounded-t-[2.5rem] md:rounded-t-[4rem] pt-24 md:pt-36 px-5 md:px-10 relative overflow-hidden section-zoom"
     >
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-brand-600/25 blur-[130px] pointer-events-none" />
+      {/* Radial brand-600 portal glow — centrepiece of the finale */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-brand-600/25 blur-[130px] pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="max-w-[1500px] mx-auto relative z-10">
-        {/* CTA */}
+        {/* ── Eyebrow ──────────────────────────────────────────── */}
         <p
-          className="label text-lime mb-8 flex items-center justify-center gap-3"
+          className="text-sm md:text-base font-mono font-semibold tracking-[0.2em] uppercase text-lime mb-8 flex items-center justify-center gap-3"
           data-rv
         >
-          <span className="w-8 h-px bg-lime" />
-          {CTA.label}
-          <span className="w-8 h-px bg-lime" />
+          <span className="w-10 h-0.5 bg-lime" />
+          Entering — The Finale
+          <span className="w-10 h-0.5 bg-lime" />
         </p>
+
+        {/* ── Hero heading ─────────────────────────────────────── */}
         <h2
           className="disp font-semibold text-center leading-[.95] text-[clamp(2.8rem,8vw,8rem)] mb-10"
           data-rv
@@ -102,19 +145,27 @@ export default function Footer() {
           <br />
           Africa <em className="serif-it font-normal text-lime">needs next.</em>
         </h2>
-        <p className="text-paper/45 text-center max-w-md mx-auto mb-12" data-rv>
-          {CTA.copy}
+
+        {/* ── Sub-copy ─────────────────────────────────────────── */}
+        <p
+          className="text-paper/75 text-base md:text-lg text-center max-w-lg mx-auto mb-12 leading-relaxed"
+          data-rv
+        >
+          Whether you&apos;re launching a product, automating operations or
+          reimagining a classroom — we&apos;ll build it with you.
         </p>
+
+        {/* ── CTA buttons ──────────────────────────────────────── */}
         <div
           className="flex flex-col sm:flex-row gap-3 justify-center mb-24"
           data-rv
         >
           <Link
-            href={CTA.primary.href}
+            href="mailto:hello@paragon.ai"
             className="btn btn-lime !px-9 !py-4 !text-base"
             data-cursor
           >
-            {CTA.primary.label} <span className="fill" />
+            Start a project <span className="fill" />
             <svg
               className="w-4 h-4"
               viewBox="0 0 24 24"
@@ -127,48 +178,40 @@ export default function Footer() {
             </svg>
           </Link>
           <Link
-            href={CTA.secondary.href}
+            href="/contact-us"
             className="btn btn-wghost !px-9 !py-4 !text-base"
             data-cursor
           >
-            {CTA.secondary.label} <span className="fill" />
+            Talk to our team <span className="fill" />
           </Link>
         </div>
 
-        {/* Link columns */}
+        {/* ── Link grid ────────────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-10 pb-20 border-b border-paper/10">
+          {/* Brand column */}
           <div className="col-span-2">
             <div className="flex items-center gap-2.5 mb-5">
-              <span className="w-9 h-9 rounded-full bg-paper/10 border border-paper/10 flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-paper"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.4"
-                  aria-hidden="true"
-                >
-                  <path d="M12 2 3 6.5 12 11l9-4.5L12 2z" />
-                  <path d="M3 17.5 12 22l9-4.5" />
-                </svg>
-              </span>
+              <BrandMark tone="white" className="w-9 h-9" />
               <span className="disp font-semibold text-lg">
                 Paragon <span className="text-brand-400">AI</span>
               </span>
             </div>
-            <p className="text-sm text-paper/35 leading-relaxed max-w-xs mb-6">
+            <p className="text-base text-paper/50 leading-relaxed max-w-xs mb-6">
               Engineering Africa&apos;s next chapter in intelligence — AI, web
               and product, end to end.
             </p>
-            <span className="inline-flex items-center gap-2 text-xs font-semibold text-paper/50 border border-paper/15 rounded-full px-3.5 py-2">
+            <span className="inline-flex items-center gap-2 text-xs font-semibold text-paper/60 border border-paper/15 rounded-full px-3.5 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              {CTA.badge}
+              Booking Q3 2026 projects
             </span>
           </div>
 
+          {/* Nav link columns */}
           {FOOTER_COLS.map((col) => (
             <div key={col.heading}>
-              <h4 className="label text-paper/30 mb-5">{col.heading}</h4>
+              <h4 className="text-xs sm:text-sm font-mono tracking-[0.18em] uppercase text-paper/50 mb-5">
+                {col.heading}
+              </h4>
               <ul className="space-y-3 text-sm text-paper/50">
                 {col.links.map((link) => (
                   <li key={link.label}>
@@ -183,18 +226,19 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Giant wordmark */}
+        {/* ── Giant wordmark (GSAP scrubs xPercent + fontWeight) ── */}
         <div className="py-10 md:py-16 overflow-hidden" aria-hidden="true">
-          <p className="giant disp text-center text-paper/[.07] select-none will-change-transform">
+          <p
+            id="giant"
+            className="giant disp text-center text-paper/[.07] select-none will-change-transform"
+          >
             PARAGON
           </p>
         </div>
 
-        {/* Bottom bar */}
+        {/* ── Bottom bar ───────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-10 text-xs text-paper/30">
-          <p>
-            © {new Date().getFullYear()} Paragon AI. Built for the Continent.
-          </p>
+          <p>© 2026 Paragon AI. Built for the Continent.</p>
           <LocalTime />
           <button
             type="button"

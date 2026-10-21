@@ -145,6 +145,8 @@ const ProductsPage = async () => {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
+                  role="img"
+                  aria-label="Feature icon"
                 >
                   <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                   <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
@@ -172,6 +174,8 @@ const ProductsPage = async () => {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
+                  role="img"
+                  aria-label="Feature icon"
                 >
                   <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
                   <path d="M2 12h20" />
@@ -199,6 +203,8 @@ const ProductsPage = async () => {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
+                  role="img"
+                  aria-label="Feature icon"
                 >
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
@@ -295,6 +301,8 @@ const ProductsPage = async () => {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="3"
+                          role="img"
+                          aria-label="Open"
                         >
                           <path d="M5 12h14M13 5l7 7-7 7" />
                         </svg>
@@ -343,6 +351,8 @@ const ProductsPage = async () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
+                role="img"
+                aria-label="Partner logo"
               >
                 <path d="M3 8h10M9 4l4 4-4 4" />
               </svg>

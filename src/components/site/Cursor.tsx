@@ -13,8 +13,8 @@ export default function Cursor() {
     if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return
 
     const txt = el.querySelector<HTMLElement>('.ctxt')
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3' })
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3' })
+    const xTo = gsap.quickTo(el, 'x', { duration: 0.35, ease: 'power3' })
+    const yTo = gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power3' })
 
     const onMove = (e: MouseEvent) => {
       xTo(e.clientX)

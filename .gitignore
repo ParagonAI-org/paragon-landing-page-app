@@ -46,3 +46,8 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# local scratch space (screenshots, agent tooling)
+/.tmp/
+/.zcode/
+/.zcodeignore

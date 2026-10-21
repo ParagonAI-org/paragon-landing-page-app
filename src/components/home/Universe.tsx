@@ -1,8 +1,7 @@
 'use client'
 
 import { gsap } from 'gsap'
-import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { glState, universe } from './gl-state'
 
@@ -68,22 +67,21 @@ function createParticleTexture() {
 }
 
 /**
- * The Three.js "universe": noise-displaced shader core, wire cage, gyro rings,
- * satellite and a particle galaxy — fixed behind the page, journeying through
- * the worlds as you scroll (choreographed from ScrollFx via gl-state).
+ * Three.js "universe": noise-displaced shader core, wire cage, gyro rings,
+ * satellite and a particle galaxy.
+ *
+ * The canvas is rendered as a direct child (no portal) with position:fixed via
+ * the .webgl-canvas CSS class.  This means universe.current is populated inside
+ * a single useEffect — before ScrollFx's sibling useEffect runs — eliminating
+ * the two-render-cycle race that left universe.current null at choreography
+ * setup time.
  */
 export default function Universe() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [host, setHost] = useState<HTMLElement | null>(null)
-
-  // Portal to <body> so the canvas sits *behind* <main> (z-10) and the footer
-  useEffect(() => {
-    setHost(document.body)
-  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas || !host) return
+    if (!canvas) return
 
     const REDUCED = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
@@ -110,16 +108,24 @@ export default function Universe() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setSize(window.innerWidth, window.innerHeight)
 
-    // ---------- universe ----------
+    // ── universe group ──────────────────────────────────────────────────────
     const universeGroup = new THREE.Group()
     scene.add(universeGroup)
     const coreGroup = new THREE.Group()
     universeGroup.add(coreGroup)
-    const mobile = window.innerWidth < 768
-    coreGroup.position.set(mobile ? 0 : 2.0, mobile ? -0.5 : 0.15, 0)
-    coreGroup.scale.setScalar(mobile ? 0.8 : 1.15)
 
-    // ---------- shader core ----------
+    const updateInitialPlacement = () => {
+      if (window.innerWidth < 768) {
+        coreGroup.position.set(0, -0.6, 0)
+        coreGroup.scale.setScalar(0.75)
+      } else {
+        coreGroup.position.set(2.4, 0.45, 0)
+        coreGroup.scale.setScalar(1.2)
+      }
+    }
+    updateInitialPlacement()
+
+    // ── shader core ─────────────────────────────────────────────────────────
     const coreUniforms = {
       uTime: { value: 0 },
       uAmp: { value: 0.18 },
@@ -158,7 +164,7 @@ export default function Universe() {
     const innerCore = new THREE.Mesh(coreGeom, coreMat)
     coreGroup.add(innerCore)
 
-    // ---------- wire cage ----------
+    // ── wire cage ───────────────────────────────────────────────────────────
     const wireMat = new THREE.MeshBasicMaterial({
       color: 0x4f46e5,
       wireframe: true,
@@ -169,9 +175,9 @@ export default function Universe() {
     const wireCage = new THREE.Mesh(wireGeom, wireMat)
     coreGroup.add(wireCage)
 
-    const nodeGroup = new THREE.Group()
     const nodeGeom = new THREE.SphereGeometry(0.045, 8, 8)
     const nodeMat = new THREE.MeshBasicMaterial({ color: 0x6366f1 })
+    const nodeGroup = new THREE.Group()
     const posAttr = wireGeom.attributes.position
     for (let i = 0; i < posAttr.count; i += 3) {
       const node = new THREE.Mesh(nodeGeom, nodeMat)
@@ -180,14 +186,16 @@ export default function Universe() {
     }
     coreGroup.add(nodeGroup)
 
-    // ---------- gyro rings + satellite ----------
+    // ── gyro rings ──────────────────────────────────────────────────────────
     const ringAMat = new THREE.MeshBasicMaterial({
       color: 0x4f46e5,
       transparent: true,
       opacity: 0.55,
     })
-    const ringAGeom = new THREE.TorusGeometry(2.6, 0.016, 16, 120)
-    const ringA = new THREE.Mesh(ringAGeom, ringAMat)
+    const ringA = new THREE.Mesh(
+      new THREE.TorusGeometry(2.6, 0.016, 16, 120),
+      ringAMat,
+    )
     ringA.rotation.x = Math.PI / 3
     ringA.rotation.y = Math.PI / 6
     coreGroup.add(ringA)
@@ -197,36 +205,37 @@ export default function Universe() {
       transparent: true,
       opacity: 0.4,
     })
-    const ringBGeom = new THREE.TorusGeometry(3.1, 0.014, 16, 120)
-    const ringB = new THREE.Mesh(ringBGeom, ringBMat)
+    const ringB = new THREE.Mesh(
+      new THREE.TorusGeometry(3.1, 0.014, 16, 120),
+      ringBMat,
+    )
     ringB.rotation.x = -Math.PI / 4
     ringB.rotation.z = Math.PI / 4
     coreGroup.add(ringB)
 
-    const satelliteGeom = new THREE.SphereGeometry(0.075, 12, 12)
+    // ── satellite ───────────────────────────────────────────────────────────
     const satellite = new THREE.Mesh(
-      satelliteGeom,
+      new THREE.SphereGeometry(0.075, 12, 12),
       new THREE.MeshBasicMaterial({ color: 0xd8ff3e }),
     )
     coreGroup.add(satellite)
 
-    // ---------- particle galaxy ----------
+    // ── particle galaxy ─────────────────────────────────────────────────────
     const particleCount = window.innerWidth < 768 ? 600 : 1300
-    const particleGeom = new THREE.BufferGeometry()
+    const pGeom = new THREE.BufferGeometry()
     const pPos = new Float32Array(particleCount * 3)
     const pSeed = new Float32Array(particleCount)
     for (let i = 0; i < particleCount; i++) {
-      const i3 = i * 3
-      const radius = 2.5 + Math.random() * 8.5
+      const r = 2.5 + Math.random() * 8.5
       const theta = Math.random() * Math.PI * 2
       const phi = (Math.random() - 0.5) * Math.PI
-      pPos[i3] = radius * Math.cos(phi) * Math.cos(theta)
-      pPos[i3 + 1] = radius * Math.sin(phi)
-      pPos[i3 + 2] = radius * Math.cos(phi) * Math.sin(theta)
+      pPos[i * 3] = r * Math.cos(phi) * Math.cos(theta)
+      pPos[i * 3 + 1] = r * Math.sin(phi)
+      pPos[i * 3 + 2] = r * Math.cos(phi) * Math.sin(theta)
       pSeed[i] = Math.random() * 100
     }
-    particleGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3))
-    particleGeom.setAttribute('aSeed', new THREE.BufferAttribute(pSeed, 1))
+    pGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3))
+    pGeom.setAttribute('aSeed', new THREE.BufferAttribute(pSeed, 1))
 
     const particleTex = createParticleTexture()
     const particleUniforms = {
@@ -245,29 +254,29 @@ export default function Universe() {
         varying float vTwinkle;
         void main(){
           vec3 p = position;
-          p.y += sin(uTime * (0.6 + fract(aSeed) * 0.8) + aSeed) * 0.22;
-          p.x += uWarp * sin(aSeed) * 2.2;
-          vTwinkle = 0.55 + 0.45 * sin(uTime * (1.5 + fract(aSeed * 7.0)) + aSeed * 3.0);
-          vec4 mv = modelViewMatrix * vec4(p, 1.0);
-          float size = uSize * (1.0 + uWarp * 1.6) * (0.7 + 0.6 * fract(aSeed * 13.0));
-          gl_PointSize = size * (300.0 / -mv.z);
-          gl_Position = projectionMatrix * mv;
+          p.y += sin(uTime*(0.6+fract(aSeed)*0.8)+aSeed)*0.22;
+          p.x += uWarp*sin(aSeed)*2.2;
+          vTwinkle = 0.55+0.45*sin(uTime*(1.5+fract(aSeed*7.0))+aSeed*3.0);
+          vec4 mv = modelViewMatrix*vec4(p,1.0);
+          float size = uSize*(1.0+uWarp*1.6)*(0.7+0.6*fract(aSeed*13.0));
+          gl_PointSize = size*(300.0/-mv.z);
+          gl_Position = projectionMatrix*mv;
         }`,
       fragmentShader: `
         uniform vec3 uColor; uniform float uOpacity; uniform sampler2D uTex;
         varying float vTwinkle;
         void main(){
-          float a = texture2D(uTex, gl_PointCoord).a * uOpacity * vTwinkle;
-          gl_FragColor = vec4(uColor, a);
+          float a = texture2D(uTex,gl_PointCoord).a*uOpacity*vTwinkle;
+          gl_FragColor = vec4(uColor,a);
         }`,
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     })
-    const particles = new THREE.Points(particleGeom, particleMat)
+    const particles = new THREE.Points(pGeom, particleMat)
     universeGroup.add(particles)
 
-    // ---------- lights ----------
+    // ── lights ──────────────────────────────────────────────────────────────
     scene.add(new THREE.AmbientLight(0xffffff, 0.75))
     const pLight1 = new THREE.PointLight(0x4f46e5, 3.2, 25)
     pLight1.position.set(4, 3, 3)
@@ -276,7 +285,7 @@ export default function Universe() {
     pLight2.position.set(-4, -3, 2)
     scene.add(pLight2)
 
-    // ---------- theme shift ----------
+    // ── theme shift ──────────────────────────────────────────────────────────
     const set3DTheme = (isDark: boolean) => {
       const d = 1.4
       glState.nebula.themeTarget = isDark ? 1 : 0
@@ -297,9 +306,9 @@ export default function Universe() {
           r: 0xd8 / 255,
           g: 0xff / 255,
           b: 0x3e / 255,
-          opacity: 0.32,
           duration: d,
         })
+        gsap.to(wireMat, { opacity: 0.32, duration: d })
         gsap.to(ringBMat.color, {
           r: 0xd8 / 255,
           g: 0xff / 255,
@@ -331,9 +340,9 @@ export default function Universe() {
           r: 0x4f / 255,
           g: 0x46 / 255,
           b: 0xe5 / 255,
-          opacity: 0.28,
           duration: d,
         })
+        gsap.to(wireMat, { opacity: 0.28, duration: d })
         gsap.to(ringBMat.color, {
           r: 0x81 / 255,
           g: 0x8c / 255,
@@ -351,6 +360,7 @@ export default function Universe() {
       }
     }
 
+    // ── expose refs to ScrollFx immediately ─────────────────────────────────
     universe.current = {
       universeGroup,
       coreGroup,
@@ -376,7 +386,7 @@ export default function Universe() {
       set3DTheme,
     }
 
-    // ---------- mouse parallax ----------
+    // ── mouse parallax ───────────────────────────────────────────────────────
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 }
     const onMouseMove = (e: MouseEvent) => {
       mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2
@@ -389,10 +399,11 @@ export default function Universe() {
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, window.innerHeight)
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      updateInitialPlacement()
     }
     window.addEventListener('resize', onResize)
 
-    // ---------- render loop ----------
+    // ── render loop ──────────────────────────────────────────────────────────
     const clock = new THREE.Clock()
     let raf = 0
     const animate3D = () => {
@@ -401,22 +412,23 @@ export default function Universe() {
       const time = clock.getElapsedTime()
 
       const STATE = glState.STATE
-      STATE.warp += (STATE.warpTarget - STATE.warp) * 0.04
-      STATE.vel += (STATE.velTarget - STATE.vel) * 0.03
+      STATE.warp += (STATE.warpTarget - STATE.warp) * 0.055
+      STATE.vel += (STATE.velTarget - STATE.vel) * 0.05
       STATE.velTarget *= 0.94
       glState.nebula.velTarget = STATE.vel
       glState.nebula.vel +=
         (glState.nebula.velTarget - glState.nebula.vel) * 0.02
 
       if (!REDUCED) {
-        const speedBoost = 1 + STATE.warp * 4 + Math.abs(STATE.vel) * 0.01
-        innerCore.rotation.x += 0.3 * delta * speedBoost
-        innerCore.rotation.y += 0.4 * delta * speedBoost
-        wireCage.rotation.x -= 0.12 * delta * speedBoost
-        wireCage.rotation.y -= 0.18 * delta * speedBoost
-        ringA.rotation.z += 0.35 * delta * speedBoost
-        ringB.rotation.y += 0.25 * delta * speedBoost
+        const boost = 1 + STATE.warp * 3 + Math.abs(STATE.vel) * 0.006
+        innerCore.rotation.x += 0.3 * delta * boost
+        innerCore.rotation.y += 0.4 * delta * boost
+        wireCage.rotation.x -= 0.12 * delta * boost
+        wireCage.rotation.y -= 0.18 * delta * boost
+        ringA.rotation.z += 0.35 * delta * boost
+        ringB.rotation.y += 0.25 * delta * boost
         universeGroup.rotation.y += STATE.warp * delta * 0.8
+
         coreUniforms.uTime.value = time
         coreUniforms.uAmp.value =
           0.18 + STATE.warp * 0.25 + Math.min(0.1, Math.abs(STATE.vel) * 0.003)
@@ -446,23 +458,24 @@ export default function Universe() {
       window.removeEventListener('resize', onResize)
       universe.current = null
       renderer.dispose()
-      coreGeom.dispose()
-      wireGeom.dispose()
-      nodeGeom.dispose()
-      nodeMat.dispose()
-      wireMat.dispose()
-      coreMat.dispose()
-      ringAGeom.dispose()
-      ringBGeom.dispose()
-      ringAMat.dispose()
-      ringBMat.dispose()
-      satelliteGeom.dispose()
-      particleGeom.dispose()
-      particleMat.dispose()
+      ;[coreGeom, wireGeom, nodeGeom, pGeom].forEach((g) => {
+        g.dispose()
+      })
+      ;[coreMat, wireMat, nodeMat, ringAMat, ringBMat, particleMat].forEach(
+        (m) => {
+          m.dispose()
+        },
+      )
       particleTex.dispose()
     }
-  }, [host])
+  }, [])
 
-  if (!host) return null
-  return createPortal(<canvas ref={canvasRef} className="webgl-canvas" />, host)
+  return (
+    <canvas
+      ref={canvasRef}
+      className="webgl-canvas"
+      aria-hidden="true"
+      tabIndex={-1}
+    />
+  )
 }

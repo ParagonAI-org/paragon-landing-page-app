@@ -3,18 +3,23 @@
 import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
+/**
+ * The shipped artwork is named after its colour, not the browser theme:
+ * `favicon-dark.*` is the ink mark (for light chrome), `favicon-light.*` is
+ * the white mark (for dark chrome).
+ */
 const FAVICON_SETS = {
   light: {
-    icon: '/favicon-light.svg',
-    png: '/favicon-light-96x96.png',
-    apple: '/apple-touch-icon-light.png',
+    icon: '/favicon-dark.svg',
+    png: '/favicon-dark-96x96.png',
+    apple: '/apple-touch-icon-dark.png',
     manifest: '/site-light.webmanifest',
     themeColor: '#F4F3EF',
   },
   dark: {
-    icon: '/favicon-dark.svg',
-    png: '/favicon-dark-96x96.png',
-    apple: '/apple-touch-icon-dark.png',
+    icon: '/favicon-light.svg',
+    png: '/favicon-light-96x96.png',
+    apple: '/apple-touch-icon-light.png',
     manifest: '/site-dark.webmanifest',
     themeColor: '#0A0A0F',
   },

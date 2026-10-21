@@ -61,7 +61,7 @@ const CareersPage = async () => {
               Open Roles
             </div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-[1.05] md:leading-[0.95] tracking-tight text-ink mb-6 md:mb-8">
+            <h1 className="disp font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] md:leading-[0.95] tracking-tight text-ink mb-6 md:mb-8">
               Build systems <br />
               <em className="serif-it font-normal text-brand-600">
                 that matter.
@@ -100,7 +100,7 @@ const CareersPage = async () => {
               <span className="w-8 h-px bg-brand-600" />
               How We Work
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight text-ink">
+            <h2 className="disp text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight text-ink">
               Our engineering principles.
             </h2>
           </div>
@@ -117,6 +117,7 @@ const CareersPage = async () => {
                   stroke="currentColor"
                   strokeWidth="1.5"
                 >
+                  <title>Radical ownership shield</title>
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
@@ -140,6 +141,7 @@ const CareersPage = async () => {
                   stroke="currentColor"
                   strokeWidth="1.5"
                 >
+                  <title>Global scale globe</title>
                   <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
                   <path d="M2 12h20" />
                 </svg>
@@ -164,6 +166,7 @@ const CareersPage = async () => {
                   stroke="currentColor"
                   strokeWidth="1.5"
                 >
+                  <title>Velocity bolt</title>
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
               </div>
@@ -192,7 +195,7 @@ const CareersPage = async () => {
                   <span className="w-8 h-px bg-brand-600" />
                   Job Board
                 </p>
-                <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight text-ink">
+                <h2 className="disp text-3xl sm:text-4xl lg:text-5xl leading-[1.1] tracking-tight text-ink">
                   Join the team.
                 </h2>
               </div>
@@ -204,7 +207,7 @@ const CareersPage = async () => {
                 className="mb-12 md:mb-16 reveal opacity-0 translate-y-[20px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <h3 className="font-mono text-xs md:text-sm tracking-widest text-ink/45 uppercase border-b border-ink/10 pb-3 md:pb-4 mb-2 md:mb-4">
+                <h3 className="label text-ink/45 border-b border-ink/10 pb-3 md:pb-4 mb-2 md:mb-4">
                   {departmentLabels[dept] || dept}
                 </h3>
                 <div className="border-t border-ink/10">
@@ -212,7 +215,7 @@ const CareersPage = async () => {
                     <Link
                       key={job.id}
                       href={`/careers/${job.slug}`}
-                      className="block relative transition-all duration-500 hover:bg-bone/60 md:hover:pl-6 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-brand-600 before:scale-y-0 before:transition-transform before:duration-500 hover:before:scale-y-100 group py-6 md:py-8 border-b border-white/8 cursor-pointer"
+                      className="block relative transition-all duration-500 hover:bg-bone/60 md:hover:pl-6 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-brand-600 before:scale-y-0 before:transition-transform before:duration-500 hover:before:scale-y-100 group py-6 md:py-8 border-b border-ink/10 cursor-pointer"
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 flex-1">
@@ -236,6 +239,7 @@ const CareersPage = async () => {
                             stroke="currentColor"
                             strokeWidth="1.5"
                           >
+                            <title>Arrow right</title>
                             <path d="M3 8h10M9 4l4 4-4 4" />
                           </svg>
                         </div>
@@ -260,6 +264,9 @@ const CareersPage = async () => {
               We're always interested in hearing from great people. Send your
               story and we'll keep you in mind.
             </p>
+            <a href="mailto:careers@paragonai.com" className="btn btn-ink">
+              Send us your story <span className="fill" />
+            </a>
           </div>
         </section>
       )}
@@ -277,7 +284,7 @@ const CareersPage = async () => {
           <div className="delay-200 reveal opacity-0 translate-y-[20px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             <a
               href="mailto:careers@paragonai.com"
-              className="btn btn-ink w-full sm:w-auto justify-center"
+              className="group btn btn-ink w-full sm:w-auto justify-center"
             >
               Submit General Application
               <svg
@@ -286,6 +293,7 @@ const CareersPage = async () => {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
+                <title>Arrow right</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

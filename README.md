@@ -824,9 +824,10 @@ Tailwind classes in this codebase are usually grouped: `layout` â†’ `spacing` â†
 | `yarn generate:types` | Regenerate `src/payload-types.ts` from the schema.                           |
 | `yarn generate:schema`| Regenerate `src/payload-generated-schema.ts`.                                |
 | `yarn admin:status`   | List admin users.                                                            |
-| `yarn admin:create`   | Create a new admin user.                                                     |
+| `yarn admin:create`   | Create a new admin user: `yarn admin:create -- <email> <password>`.         |
 | `yarn admin:reset-password` | Reset an admin user's password.                                       |
-| `yarn test`           | Run unit tests (Vitest).                                                     |
+| `yarn seed:content`   | Re-seed the CMS copy (FAQs, product content, navigation/footer links).     |
+| `yarn test`           | Run unit tests (Vitest, single run).                                        |
 | `yarn test:e2e`       | Run end-to-end tests (Playwright).                                           |
 
 ---
@@ -837,22 +838,24 @@ Tailwind classes in this codebase are usually grouped: `layout` â†’ `spacing` â†
 
 - Configured in `vite.config.mts`
 - Test files use `*.test.ts(x)` and live next to the source, e.g. `src/components/ThemeToggle/component.test.tsx`, `src/app/(frontend)/page.test.tsx`
-- Run: `yarn test`
+- Run: `yarn test` (single run â€” the repo currently ships no unit specs, so it passes with `--passWithNoTests`)
 
 ```bash
-yarn test --watch     # watch mode
-yarn test --run       # CI mode
+yarn test                 # single run
+yarn test --watch         # watch mode
 ```
 
 #### E2E tests (Playwright)
 
 - Configured in `playwright.config.ts`
-- Specs live in `tests-e2e/`
+- Specs live in `tests-e2e/` (`smoke.spec.ts` covers every public route)
 - Run: `yarn test:e2e`
+- The suite starts the dev server itself. It listens on port 3000 by default; set `E2E_PORT` when that port is taken by another local app:
 
 ```bash
 yarn dlx playwright install   # one-time browser install
 yarn test:e2e                 # run all specs
+E2E_PORT=3003 yarn test:e2e   # run against another port
 yarn test:e2e -- --headed     # run with a visible browser
 ```
 

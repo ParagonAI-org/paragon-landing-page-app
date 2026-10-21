@@ -15,6 +15,7 @@
   --color-paper: #f4f3ef;
   --color-bone: #eae8e1;
   --color-brand: #4f46e5;
+  --color-brand-200: #c7d2fe;
   --color-brand-300: #a5b4fc;
   --color-brand-400: #818cf8;
   --color-brand-500: #6366f1;
@@ -224,52 +225,16 @@
     z-index: 1;
   }
 
-  /* ============ PRELOADER ============ */
-  .loader {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    background: #0a0a0f;
-    color: #f4f3ef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1.6rem;
+  /* ============ BENTO CAPSULE SYSTEM ============ */
+  .bento-card {
+    border-radius: 2.2rem;
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease;
   }
-  .loader .word {
-    overflow: hidden;
-  }
-  .loader .word span {
-    display: inline-block;
-    transform: translateY(110%);
-  }
-  .loader-num {
-    position: absolute;
-    bottom: 2rem;
-    right: 2.5rem;
-    font-size: clamp(4rem, 10vw, 8rem);
-    line-height: 1;
-    color: rgba(244, 243, 239, 0.14);
-  }
-  .loader-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background: #4f46e5;
-    transform-origin: left;
-    transform: scaleX(0);
-  }
-  .loader-tick {
-    position: absolute;
-    bottom: 2.2rem;
-    left: 2.2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: rgba(244, 243, 239, 0.4);
+  .bento-card:hover {
+    transform: translateY(-3px);
   }
 
   /* ============ CURSOR ============ */
@@ -338,22 +303,21 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.6rem 0.8rem;
+    padding: 0.55rem 0.85rem;
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    border-radius: 20px;
+    border-radius: 24px;
   }
   .site-nav.scrolled .nav-inner {
-    background: rgba(244, 243, 239, 0.72);
+    background: rgba(244, 243, 239, 0.75);
     backdrop-filter: blur(20px) saturate(1.8);
     -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    border: 1px solid rgba(10, 10, 15, 0.06);
-    box-shadow: 0 8px 32px -8px rgba(10, 10, 15, 0.12);
-    padding: 0.5rem 0.8rem;
+    border: 1px solid rgba(10, 10, 15, 0.08);
+    box-shadow: 0 12px 36px -10px rgba(10, 10, 15, 0.12);
   }
   .site-nav.on-dark.scrolled .nav-inner {
-    background: rgba(10, 10, 15, 0.6);
-    border-color: rgba(244, 243, 239, 0.08);
-    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
+    background: rgba(10, 10, 15, 0.7);
+    border-color: rgba(244, 243, 239, 0.1);
+    box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.5);
   }
   .site-nav.hide {
     transform: translateY(-110%);
@@ -374,16 +338,42 @@
     background: rgba(244, 243, 239, 0.06);
   }
 
+  /*
+   * Brand mark — the live site's logo artwork. The ink colourway is the
+   * default (light worlds); the nav swaps it for the white one while a dark
+   * world sits under it.
+   */
+  .brand-mark {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background-image: url("/assets/logo-mark-ink.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .brand-mark--ink {
+    background-image: url("/assets/logo-mark-ink.png");
+  }
+  .brand-mark--white {
+    background-image: url("/assets/logo-mark-white.png");
+  }
+  .site-nav.on-dark .brand-mark {
+    background-image: url("/assets/logo-mark-white.png");
+  }
+
   .navlink {
     position: relative;
     padding: 0.45rem 0.85rem;
     font-size: 13px;
     font-weight: 500;
     color: rgba(10, 10, 15, 0.6);
-    border-radius: 10px;
+    border-radius: 12px;
     transition:
       color 0.3s,
       background 0.3s;
+    text-decoration: none;
   }
   .navlink:hover {
     color: #0a0a0f;
@@ -400,11 +390,12 @@
   .nav-cta {
     background: #0a0a0f;
     color: #f4f3ef;
-    padding: 0.55rem 1.2rem;
-    border-radius: 12px;
+    padding: 0.55rem 1.25rem;
+    border-radius: 14px;
     font-size: 13px;
     font-weight: 600;
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    text-decoration: none;
   }
   .nav-cta:hover {
     background: #4f46e5;
@@ -440,7 +431,7 @@
 
   /* ============ WORLD TRANSITIONS ============ */
   .wc {
-    height: 200vh;
+    height: 180vh;
     position: relative;
   }
   .wc-panel {
@@ -479,30 +470,44 @@
     will-change: transform;
     transform: translateY(112%) rotate(2deg);
   }
-  .hero-img {
-    clip-path: inset(100% 0 0 0);
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
-  .hero-badge {
-    position: absolute;
-    right: 1.2rem;
-    bottom: 1.2rem;
-    width: 110px;
-    height: 110px;
-    z-index: 5;
-  }
-  .hero-badge svg {
-    width: 100%;
-    height: 100%;
-  }
-  .hero-badge .txt {
-    animation: spin 12s linear infinite;
-    transform-origin: center;
-  }
   @keyframes spin {
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  /* ============ SEAMLESS MARQUEE ============ */
+  /* Full-bleed (no side margins): break out of #hero's px padding, sit flush on
+     the page bg, no painted background. Fading intro/outro come from a mask, so
+     only the moving text fades — nothing is drawn behind it. */
+  #heroStrip {
+    margin-top: 2.5rem;
+    padding: 1.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(10, 10, 15, 0.07);
+    border-bottom: 1px solid rgba(10, 10, 15, 0.07);
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+  }
+  @media (min-width: 768px) {
+    #heroStrip {
+      margin-left: -2.5rem;
+      margin-right: -2.5rem;
+      padding: 1.7rem 0;
     }
   }
 
@@ -512,67 +517,48 @@
     width: max-content;
     will-change: transform;
   }
+  .mq-item {
+    white-space: nowrap;
+  }
 
-  /* ============ SERVICE LIST ============ */
-  .svc {
-    position: relative;
-    border-top: 1px solid rgba(244, 243, 239, 0.13);
+  /* ============ SERVICE ROWS ============ */
+  .svc-row {
+    border-top: 1px solid rgba(244, 243, 239, 0.12);
+    padding: 2rem 0;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
   }
-  .svc:last-child {
-    border-bottom: 1px solid rgba(244, 243, 239, 0.13);
+  .svc-row:last-child {
+    border-bottom: 1px solid rgba(244, 243, 239, 0.12);
   }
-  .svc .fill {
-    position: absolute;
-    inset: 0;
-    background: rgba(244, 243, 239, 0.06);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-  .svc:hover .fill {
-    transform: scaleY(1);
-  }
-  .svc .row {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 2rem 0;
-    transition: padding 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .svc:hover .row {
+  .svc-row:hover {
     padding-left: 1.5rem;
+    border-color: rgba(216, 255, 62, 0.4);
   }
-  .svc .arr {
-    transition:
-      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      background 0.4s,
-      color 0.4s;
+  .svc-row .arr {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .svc:hover .arr {
+  .svc-row:hover .arr {
     transform: rotate(45deg);
     background: #d8ff3e;
     color: #0a0a0f;
     border-color: #d8ff3e;
   }
-  .svc-preview {
+  #svcPreview {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 60;
-    width: 300px;
-    height: 200px;
-    border-radius: 1rem;
+    width: 320px;
+    height: 210px;
+    border-radius: 1.4rem;
     overflow: hidden;
     pointer-events: none;
     opacity: 0;
     transform: scale(0.85);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
   }
-  .svc-preview img {
+  #svcPreview img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -586,51 +572,21 @@
     .h-wrap {
       overflow-x: auto;
     }
-    .h-track {
+    #hTrack {
       padding-right: 6vw;
     }
   }
-  .h-track {
+  #hTrack {
     display: flex;
-    gap: 2.5vw;
+    gap: 2vw;
     padding-left: 6vw;
     width: max-content;
     will-change: transform;
   }
   .wcard {
-    width: min(72vw, 640px);
+    width: min(72vw, 620px);
     flex-shrink: 0;
     perspective: 1000px;
-  }
-  .wcard .imgbox {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.4rem;
-    aspect-ratio: 4 / 3;
-    background: #111;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: 0 40px 80px -30px rgba(10, 10, 15, 0.5);
-  }
-  .wcard .imgbox img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.15);
-    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .wcard:hover .imgbox img {
-    transform: scale(1.02);
-  }
-  .wtag {
-    transition:
-      background 0.4s,
-      color 0.4s;
-  }
-  .wcard:hover .wtag {
-    background: #d8ff3e;
-    color: #0a0a0f;
   }
 
   /* ============ LEVELUP PINNED STORY ============ */
@@ -657,60 +613,23 @@
   }
 
   /* ============ DARK WORLDS ============ */
+  /*
+   * .dark-sec / .coal-sec set text color only. Each section that needs an
+   * opaque background applies it via its own Tailwind class (bg-ink,
+   * bg-coal, etc.) so that transparent sections (world-transition panels,
+   * levelup, stories) correctly show the fixed WebGL canvases behind them.
+   */
   .dark-sec {
-    background: rgba(10, 10, 15, 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     color: #f4f3ef;
+    position: relative;
   }
   .coal-sec {
-    background: rgba(20, 20, 28, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
     color: #f4f3ef;
-  }
-  .reveal-img {
-    clip-path: inset(100% 0 0 0);
-  }
-  .lvl-feat {
-    border-top: 1px solid rgba(244, 243, 239, 0.12);
-  }
-  .lvl-feat:last-child {
-    border-bottom: 1px solid rgba(244, 243, 239, 0.12);
-  }
-
-  /* ============ PRINCIPLES ============ */
-  .pcard {
-    border: 1px solid rgba(244, 243, 239, 0.14);
-    border-radius: 1.4rem;
-    padding: 2rem;
-    transition:
-      background 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .pcard:hover {
-    background: #f4f3ef;
-    color: #0a0a0f;
-    transform: translateY(-6px);
-  }
-  .pcard:hover .pnum {
-    color: rgba(10, 10, 15, 0.15);
-  }
-  .pcard:hover .ptext {
-    color: rgba(10, 10, 15, 0.55);
-  }
-  .pcard:hover .parrow {
-    background: #0a0a0f;
-    color: #d8ff3e;
-    transform: rotate(45deg);
-  }
-  .parrow {
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
   }
 
   /* ============ TESTIMONIALS ============ */
   .tm-item {
-    width: min(85vw, 440px);
     flex-shrink: 0;
     transition: transform 0.4s ease;
   }
@@ -724,12 +643,15 @@
     grid-template-columns: 1fr auto;
     gap: 1.5rem;
     align-items: center;
-    border-top: 1px solid rgba(10, 10, 15, 0.12);
+    border-top: 1px solid rgba(244, 243, 239, 0.15);
     padding: 2.2rem 0;
     position: relative;
+    text-decoration: none;
+    color: #f4f3ef;
+    transition: all 0.3s;
   }
   .up-row:last-child {
-    border-bottom: 1px solid rgba(10, 10, 15, 0.12);
+    border-bottom: 1px solid rgba(244, 243, 239, 0.15);
   }
   .up-row h3 {
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -749,7 +671,7 @@
     opacity: 0;
     transform: translateY(-50%) rotate(-4deg) scale(0.8);
     z-index: 5;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   }
   .up-row .thumb img {
     width: 100%;
@@ -758,6 +680,19 @@
   }
 
   /* ============ FOOTER ============ */
+  /*
+   * The finale footer is transparent so the fixed nebula backdrop and the 3D
+   * orb (monumental portal state) show through it, exactly like the design.
+   * The shell defaults to opaque ink — covering no-JS, WebGL-unavailable and
+   * first-paint states — and flips transparent only once the nebula shader
+   * signals it is actually running (html.nebula-live, set by <Nebula/>).
+   */
+  .footer-shell {
+    background: #0a0a0f;
+  }
+  html.nebula-live .footer-shell {
+    background: transparent;
+  }
   .giant {
     font-size: clamp(4.2rem, 16.5vw, 16rem);
     line-height: 0.85;
@@ -797,6 +732,9 @@
     overflow: hidden;
     isolation: isolate;
     will-change: transform;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
   }
   .btn .fill {
     position: absolute;
@@ -809,6 +747,9 @@
   .btn:hover .fill {
     transform: translateY(0);
   }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
   .btn-ink {
     background: #0a0a0f;
     color: #f4f3ef;
@@ -819,9 +760,6 @@
   .btn-ghost {
     border: 1px solid rgba(10, 10, 15, 0.2);
     color: #0a0a0f;
-    transition:
-      border-color 0.3s,
-      color 0.3s;
   }
   .btn-ghost .fill {
     background: #0a0a0f;
@@ -840,7 +778,6 @@
   .btn-wghost {
     border: 1px solid rgba(244, 243, 239, 0.25);
     color: #f4f3ef;
-    transition: color 0.3s;
   }
   .btn-wghost .fill {
     background: #f4f3ef;
@@ -887,10 +824,6 @@
   .reduced .hline > span {
     transform: none;
   }
-  .reduced .hero-img,
-  .reduced .reveal-img {
-    clip-path: none;
-  }
   .reduced .lvl-ch {
     position: static;
     opacity: 1 !important;
@@ -899,8 +832,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .noise,
-    .hero-badge .txt {
+    .noise {
       animation: none !important;
     }
     * {

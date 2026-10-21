@@ -79,21 +79,23 @@ const ProductDetailPage = async ({ params }: Args) => {
               />
             </div>
           ) : (
-            <div className="shrink-0 h-20 w-20 md:h-24 md:w-24 rounded-2xl border border-ink/10 bg-ink/[0.04]" />
+            <div className="relative shrink-0 flex h-20 w-20 md:h-24 md:w-24 items-center justify-center rounded-2xl border border-ink/10 bg-brand-600 text-paper">
+              <span className="disp text-3xl md:text-4xl font-semibold leading-none">
+                {product.name.trim().charAt(0).toUpperCase()}
+              </span>
+            </div>
           )}
 
           <div className="flex-1 min-w-0 w-full">
             <div className="mb-3 md:mb-4 flex flex-wrap items-center gap-2 md:gap-3">
-              <span className="rounded-full border border-ink/10 bg-ink/[0.04] px-2.5 md:px-3 py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/70">
-                {product.category}
-              </span>
+              <span className="label text-ink/45">{product.category}</span>
               {product.status === 'coming-soon' && (
                 <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 md:px-3 py-1 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-amber-600">
                   Coming soon
                 </span>
               )}
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight text-ink break-words">
+            <h1 className="disp font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-.02em] text-ink break-words">
               {product.name}
             </h1>
             <p className="mt-3 md:mt-4 max-w-2xl text-base md:text-lg leading-relaxed text-ink/65">
@@ -105,7 +107,7 @@ const ProductDetailPage = async ({ params }: Args) => {
                 href={product.link}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-6 md:mt-8 inline-flex items-center justify-center w-full sm:w-auto gap-2 rounded-full bg-ink px-6 py-3.5 md:py-3 text-sm font-bold text-paper transition-transform hover:scale-[1.02] hover:bg-brand-600 hover:text-paper"
+                className="btn btn-ink mt-6 md:mt-8 w-full sm:w-auto justify-center"
               >
                 Visit product
                 <svg
@@ -118,6 +120,7 @@ const ProductDetailPage = async ({ params }: Args) => {
                   <title>Open external link</title>
                   <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
                 </svg>
+                <span className="fill" />
               </a>
             ) : null}
           </div>
@@ -175,9 +178,9 @@ const ProductDetailPage = async ({ params }: Args) => {
 
         {/* More Products Section */}
         {others.length > 0 ? (
-          <section className="mt-20 md:mt-24 border-t border-white/10 pt-12 md:pt-16">
+          <section className="mt-20 md:mt-24 border-t border-ink/10 pt-12 md:pt-16">
             <div className="flex items-end justify-between gap-4">
-              <h2 className="text-xl md:text-2xl font-bold tracking-tight text-ink">
+              <h2 className="disp font-semibold text-xl md:text-2xl text-ink">
                 More from ParagonAI
               </h2>
               <Link
@@ -193,7 +196,7 @@ const ProductDetailPage = async ({ params }: Args) => {
                 <Link
                   key={p.id}
                   href={`/products/${p.slug}`}
-                  className="group flex flex-col rounded-2xl border border-ink/10 bg-bone/70 p-5 transition-all hover:border-ink/10 bg-bone/70 hover:border-brand-400/40"
+                  className="group flex flex-col rounded-2xl border border-ink/10 bg-bone/70 p-5 transition-all hover:border-brand-400/50"
                 >
                   <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-ink/45">
                     {p.category}

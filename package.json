@@ -7,6 +7,7 @@
     "postinstall": "husky",
     "dev": "next dev --turbopack",
     "admin:status": "tsx scripts/payload-admin.ts status",
+    "seed:content": "tsx scripts/seed-content.ts",
     "admin:create": "tsx scripts/payload-admin.ts create",
     "admin:reset-password": "tsx scripts/payload-admin.ts reset-password",
     "build": "next build",
@@ -16,7 +17,7 @@
     "payload": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload",
     "generate:types": "yarn payload generate:types",
     "generate:schema": "yarn payload generate:db-schema",
-    "test": "vitest",
+    "test": "vitest run --passWithNoTests",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -77,8 +78,6 @@
   },
   "packageManager": "yarn@4.15.0",
   "lint-staged": {
-    "*": [
-      "biome check --write --no-errors-on-unmatched"
-    ]
+    "*": ["biome check --write --no-errors-on-unmatched"]
   }
 }

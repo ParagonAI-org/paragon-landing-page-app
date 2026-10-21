@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useRef } from 'react'
 import { glState } from './gl-state'
 
 const VERT = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`
@@ -9,55 +8,59 @@ const VERT = `attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}`
 const FRAG = `
   precision mediump float;
   uniform vec2 uRes; uniform float uTime; uniform float uTheme; uniform float uVel;
-  float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453123); }
+  float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123); }
   float noise(vec2 p){
-    vec2 i = floor(p), f = fract(p);
-    f = f*f*(3.0-2.0*f);
-    return mix(mix(hash(i), hash(i+vec2(1.,0.)), f.x), mix(hash(i+vec2(0.,1.)), hash(i+vec2(1.,1.)), f.x), f.y);
+    vec2 i=floor(p),f=fract(p);
+    f=f*f*(3.0-2.0*f);
+    return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);
   }
   float fbm(vec2 p){
-    float v = 0.0, a = 0.5;
-    for(int i=0;i<5;i++){ v += a*noise(p); p = p*2.03 + vec2(1.7,4.1); a *= 0.5; }
+    float v=0.0,a=0.5;
+    for(int i=0;i<5;i++){v+=a*noise(p);p=p*2.03+vec2(1.7,4.1);a*=0.5;}
     return v;
   }
   void main(){
-    vec2 uv = gl_FragCoord.xy / uRes;
-    vec2 q = uv * vec2(uRes.x/uRes.y, 1.0);
-    float t = uTime * 0.025;
-    float vel = uVel * 0.03;
-    float n1 = fbm(q*2.0 + vec2(t + vel, -t*0.5 + vel*0.5));
-    float n2 = fbm(q*3.0 - vec2(t*0.6, t*0.8) + n1*0.5);
-    vec3 lightA = vec3(0.957,0.953,0.937);
-    vec3 lightB = vec3(0.72,0.71,0.96) * 0.45;
-    vec3 darkA  = vec3(0.035,0.035,0.055);
-    vec3 darkB  = vec3(0.31,0.27,0.90) * 0.35;
-    vec3 darkC  = vec3(0.62,0.86,0.22) * 0.08;
-    vec3 base = mix(lightA, darkA, uTheme);
-    vec3 neb  = mix(lightB, darkB, uTheme);
-    float mask = smoothstep(0.4, 0.9, n2);
-    vec3 col = base + neb * mask * 0.8;
-    col += mix(vec3(0.0), darkC, uTheme) * smoothstep(0.8, 1.0, n1) * mask * 0.5;
-    gl_FragColor = vec4(col, 1.0);
+    vec2 uv=gl_FragCoord.xy/uRes;
+    vec2 q=uv*vec2(uRes.x/uRes.y,1.0);
+    float t=uTime*0.025;
+    float vel=uVel*0.03;
+    float n1=fbm(q*2.0+vec2(t+vel,-t*0.5+vel*0.5));
+    float n2=fbm(q*3.0-vec2(t*0.6,t*0.8)+n1*0.5);
+    vec3 lightA=vec3(0.957,0.953,0.937);
+    vec3 lightB=vec3(0.72,0.71,0.96)*0.45;
+    vec3 darkA =vec3(0.035,0.035,0.055);
+    vec3 darkB =vec3(0.31,0.27,0.90)*0.35;
+    vec3 darkC =vec3(0.62,0.86,0.22)*0.08;
+    vec3 base=mix(lightA,darkA,uTheme);
+    vec3 neb =mix(lightB,darkB,uTheme);
+    float mask=smoothstep(0.4,0.9,n2);
+    vec3 col=base+neb*mask*0.8;
+    col+=mix(vec3(0.0),darkC,uTheme)*smoothstep(0.8,1.0,n1)*mask*0.5;
+    gl_FragColor=vec4(col,1.0);
   }`
 
 /**
- * Full-viewport FBM shader mist that sits behind everything and cross-fades
- * between the light (paper) and dark (ink) worlds.
+ * Full-viewport FBM shader backdrop.
+ *
+ * Rendered as a direct child (no portal, no useState for host).  The canvas is
+ * position:fixed via .nebula-canvas CSS — this means the single useEffect runs
+ * on the very first mount and the nebula is visible immediately, without waiting
+ * for a second render cycle that was previously needed to resolve the portal host.
  */
 export default function Nebula() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [host, setHost] = useState<HTMLElement | null>(null)
-
-  // Portal to <body> so the canvas sits *behind* <main> (z-10) and the footer
-  useEffect(() => {
-    setHost(document.body)
-  }, [])
 
   useEffect(() => {
     const cv = canvasRef.current
-    if (!cv || !host) return
+    if (!cv) return
     const gl = cv.getContext('webgl', { alpha: true, antialias: false })
     if (!gl) return
+
+    // Signal that the live shader backdrop exists — the finale footer shell
+    // goes transparent (showing this canvas + the 3D orb) only when this class
+    // is on <html>; otherwise it keeps its opaque ink fallback.
+    const root = document.documentElement
+    root.classList.add('nebula-live')
 
     let raf = 0
     const dpr = Math.min(window.devicePixelRatio, 1.5)
@@ -71,20 +74,17 @@ export default function Nebula() {
 
     const sh = (type: number, src: string) => {
       const s = gl.createShader(type)
-      if (!s) return null
+      if (!s) throw new Error('WebGL: could not create shader')
       gl.shaderSource(s, src)
       gl.compileShader(s)
       return s
     }
-    const vs = sh(gl.VERTEX_SHADER, VERT)
-    const fs = sh(gl.FRAGMENT_SHADER, FRAG)
-    if (!vs || !fs) return
     const prog = gl.createProgram()
-    if (!prog) return
-    gl.attachShader(prog, vs)
-    gl.attachShader(prog, fs)
+    if (!prog) throw new Error('WebGL: could not create program')
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT))
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG))
     gl.linkProgram(prog)
-    // biome-ignore lint/correctness/useHookAtTopLevel: WebGL API call, not a React hook
+    // biome-ignore lint/correctness/useHookAtTopLevel: gl.useProgram is the WebGL API, not a React hook
     gl.useProgram(prog)
 
     const buf = gl.createBuffer()
@@ -118,15 +118,19 @@ export default function Nebula() {
     loop()
 
     return () => {
+      root.classList.remove('nebula-live')
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
       gl.getExtension('WEBGL_lose_context')?.loseContext()
     }
-  }, [host])
+  }, [])
 
-  if (!host) return null
-  return createPortal(
-    <canvas ref={canvasRef} className="nebula-canvas" />,
-    host,
+  return (
+    <canvas
+      ref={canvasRef}
+      className="nebula-canvas"
+      aria-hidden="true"
+      tabIndex={-1}
+    />
   )
 }

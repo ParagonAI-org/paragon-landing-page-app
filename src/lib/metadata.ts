@@ -66,48 +66,49 @@ export const defaultMetadata: Metadata = {
   },
   icons: {
     icon: [
-      // Light mode favicons
-      {
-        url: '/favicon-light-96x96.png',
-        sizes: '96x96',
-        type: 'image/png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/favicon-light.svg',
-        type: 'image/svg+xml',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/favicon-light.ico',
-        rel: 'icon',
-        media: '(prefers-color-scheme: light)',
-      },
-      // Dark mode favicons
+      // The shipped artwork is named after its colour, not the browser theme:
+      // `favicon-dark.*` is the ink mark (for light chrome), `favicon-light.*`
+      // is the white mark (for dark chrome).
       {
         url: '/favicon-dark-96x96.png',
         sizes: '96x96',
         type: 'image/png',
-        media: '(prefers-color-scheme: dark)',
+        media: '(prefers-color-scheme: light)',
       },
       {
         url: '/favicon-dark.svg',
         type: 'image/svg+xml',
-        media: '(prefers-color-scheme: dark)',
+        media: '(prefers-color-scheme: light)',
       },
       {
         url: '/favicon-dark.ico',
+        rel: 'icon',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/favicon-light-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/favicon-light.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/favicon-light.ico',
         rel: 'icon',
         media: '(prefers-color-scheme: dark)',
       },
     ],
     apple: [
       {
-        url: '/apple-touch-icon-light.png',
+        url: '/apple-touch-icon-dark.png',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/apple-touch-icon-dark.png',
+        url: '/apple-touch-icon-light.png',
         media: '(prefers-color-scheme: dark)',
       },
     ],

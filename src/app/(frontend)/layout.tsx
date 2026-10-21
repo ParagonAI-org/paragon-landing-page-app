@@ -1,6 +1,8 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Fraunces, Inter, Space_Grotesk } from 'next/font/google'
+import Nebula from '@/components/home/Nebula'
+import Universe from '@/components/home/Universe'
 import LayoutScripts from '@/components/LayoutScripts'
 import Cursor from '@/components/site/Cursor'
 import Footer from '@/components/site/Footer'
@@ -43,42 +45,45 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   ...defaultMetadata,
   icons: {
+    // The shipped artwork is named after its colour, not the browser theme:
+    // `favicon-dark.*` is the ink mark (for light chrome), `favicon-light.*`
+    // is the white mark (for dark chrome).
     icon: [
       {
-        url: '/favicon-light-96x96.png',
+        url: '/favicon-dark-96x96.png',
         sizes: '96x96',
         type: 'image/png',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/favicon-light.svg',
+        url: '/favicon-dark.svg',
         type: 'image/svg+xml',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/favicon-dark-96x96.png',
+        url: '/favicon-light-96x96.png',
         sizes: '96x96',
         type: 'image/png',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/favicon-dark.svg',
+        url: '/favicon-light.svg',
         type: 'image/svg+xml',
         media: '(prefers-color-scheme: dark)',
       },
     ],
     shortcut: [
-      { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
-      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
+      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: light)' },
+      { url: '/favicon-light.ico', media: '(prefers-color-scheme: dark)' },
     ],
     apple: [
       {
-        url: '/apple-touch-icon-light.png',
+        url: '/apple-touch-icon-dark.png',
         sizes: '180x180',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/apple-touch-icon-dark.png',
+        url: '/apple-touch-icon-light.png',
         sizes: '180x180',
         media: '(prefers-color-scheme: dark)',
       },
@@ -112,17 +117,45 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${fraunces.variable} font-body antialiased bg-paper text-ink min-h-screen flex flex-col`}
       >
+        {/*
+          Nebula (z-0) and Universe (z-1) sit here as direct children of <body>,
+          outside of any stacking-context ancestor, so their position:fixed canvases
+          correctly underlay every section and the footer without being trapped inside
+          <main>'s stacking context.
+        */}
+        <Nebula />
+        <Universe />
+
         <SmoothScroll />
         <Cursor />
 
         <Navbar />
 
-        {/* main must stay display:block: GSAP ScrollTrigger skips pin-spacer
-            padding for elements pinned inside a flex parent, which silently
-            breaks every pinned section on the page */}
-        <main className="flex-1 relative z-10 w-full">{children}</main>
+        {/*
+          <main> must stay display:block — GSAP ScrollTrigger skips pin-spacer
+          padding for elements pinned inside a flex parent.
+          z-[2] places <main> above the fixed canvases (z-0 nebula, z-1 universe)
+          in the body stacking context. isolate prevents child z-indexes from
+          competing with body-level elements like the navbar.
+        */}
+        <main className="flex-1 relative z-[2] isolate w-full">{children}</main>
 
-        <Footer />
+        {/*
+          Footer sits after <main> in DOM order at z-[2], so it paints on top of
+          <main> via DOM order. Like the design (new-design.html #contact), the
+          footer itself is transparent: the fixed nebula canvas (dark-flipped as
+          the footer enters view) and the Three.js orb — scrubbed into its
+          monumental finale state by ScrollFx's #contact timeline — show through
+          behind the content, with the radial glow layered on top. That rounded,
+          see-through "3D portal" only works because the shell is NOT opaque.
+          The .footer-shell CSS keeps an #0a0a0f fallback whenever the live
+          WebGL backdrop can't be there (no JS, no WebGL, first paint), and it
+          goes transparent the moment the nebula shader confirms it is running
+          (html.nebula-live, set by <Nebula/>).
+        */}
+        <div className="footer-shell relative z-[2]">
+          <Footer />
+        </div>
 
         <div className="noise" aria-hidden="true" />
         <LayoutScripts />

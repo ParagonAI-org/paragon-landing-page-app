@@ -1,3 +1,4 @@
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { notFound } from 'next/navigation'
 import RichText from '@/components/RichText'
 import { getCachedLegalPage } from '@/lib/data'
@@ -140,7 +141,7 @@ const LegalPageView = async ({ params }: Args) => {
                         section: {
                           title?: string | null
                           anchor?: string | null
-                          content?: any
+                          content?: DefaultTypedEditorState | null
                         },
                         index: number,
                       ) => {

@@ -1,24 +1,34 @@
 import Link from 'next/link'
-import type { UpdateRow } from '@/lib/home-content'
+import { FALLBACK_UPDATES, type UpdateRow } from '@/lib/home-content'
 
-export default function Updates({ updates }: { updates: UpdateRow[] }) {
+export default function Updates({
+  updates = FALLBACK_UPDATES,
+}: {
+  updates?: UpdateRow[]
+}) {
   return (
     <section
       id="insights"
-      className="pb-32 md:pb-44 px-5 md:px-10 relative section-zoom"
+      data-nav-dark
+      className="pb-32 md:pb-44 px-5 md:px-10 relative bg-transparent"
     >
       <div className="max-w-[1500px] mx-auto relative z-10">
         <div className="flex items-end justify-between mb-12">
-          <h2
-            className="disp font-semibold text-[clamp(2.4rem,6vw,5.5rem)] leading-[.95]"
-            data-rv
-          >
-            News &amp;{' '}
-            <em className="serif-it font-normal text-brand-600">notes.</em>
-          </h2>
+          <div>
+            <span className="text-sm md:text-base font-mono font-semibold tracking-[0.2em] text-lime uppercase mb-3 block">
+              08 — DISPATCHES
+            </span>
+            <h2
+              className="disp font-semibold text-[clamp(2.4rem,6vw,5.5rem)] leading-[.95] text-white"
+              data-rv
+            >
+              News &amp;{' '}
+              <em className="serif-it font-normal text-lime">notes.</em>
+            </h2>
+          </div>
           <Link
-            href="/blog"
-            className="btn btn-ghost hidden md:inline-flex"
+            href="/#contact"
+            className="btn btn-wghost hidden md:inline-flex"
             data-cursor
           >
             See more <span className="fill" />
@@ -30,23 +40,25 @@ export default function Updates({ updates }: { updates: UpdateRow[] }) {
             <Link
               key={row.title}
               href={row.href}
-              className="up-row"
+              className="up-row group"
               data-img={row.image}
               data-cursor-text="Read"
             >
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="label text-[10px]! bg-ink text-paper rounded-full px-3 py-1.5">
+                  <span className="text-xs font-mono font-semibold tracking-wider bg-white/10 text-white border border-white/15 rounded-full px-3 py-1">
                     {row.tag}
                   </span>
-                  <span className="label text-ink/35">{row.date}</span>
+                  <span className="text-xs sm:text-sm font-mono tracking-wider text-white/60">
+                    {row.date}
+                  </span>
                 </div>
-                <h3 className="disp font-semibold text-xl md:text-3xl tracking-tight">
+                <h3 className="disp font-semibold text-xl md:text-3xl tracking-tight text-white group-hover:text-lime transition-colors">
                   {row.title}
                 </h3>
               </div>
               <svg
-                className="w-5 h-5 text-ink/40"
+                className="w-5 h-5 text-white/50 group-hover:text-lime transition-colors"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

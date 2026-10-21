@@ -45,11 +45,15 @@ export const Homepage: GlobalConfig = {
         {
           label: 'Hero',
           fields: [
-            { name: 'heroMeta', type: 'text', label: 'Meta line (top-left)' },
+            {
+              name: 'heroEyebrow',
+              type: 'text',
+              label: 'Masthead eyebrow',
+            },
             {
               name: 'heroPlace',
               type: 'text',
-              label: 'Place line (top-right)',
+              label: 'Place line (top-right of masthead)',
             },
             {
               name: 'heroCopy',
@@ -57,25 +61,93 @@ export const Homepage: GlobalConfig = {
               label: 'Intro paragraph',
             },
             {
-              name: 'heroImage',
+              name: 'heroPrimaryLabel',
               type: 'text',
-              label: 'Hero image URL',
-              admin: { description: 'Full https:// image URL.' },
+              label: 'Primary button label',
             },
             {
-              name: 'heroImageAlt',
+              name: 'heroPrimaryHref',
               type: 'text',
-              label: 'Hero image alt text',
+              label: 'Primary button link',
             },
             {
-              name: 'heroImageCaption',
+              name: 'heroSecondaryLabel',
               type: 'text',
-              label: 'Caption on the hero image',
+              label: 'Secondary button label',
             },
             {
-              name: 'heroImageTag',
+              name: 'heroSecondaryHref',
               type: 'text',
-              label: 'Small tag (top-right of image)',
+              label: 'Secondary button link',
+            },
+            {
+              name: 'heroStatusPill',
+              type: 'text',
+              label: 'Status pill (globe stage, top)',
+            },
+            {
+              name: 'heroStatusTag',
+              type: 'text',
+              label: 'Status tag (globe stage, bottom)',
+            },
+            {
+              name: 'heroDock',
+              type: 'array',
+              label: 'Bento dock cards',
+              maxRows: 3,
+              fields: [
+                {
+                  name: 'theme',
+                  type: 'select',
+                  required: true,
+                  defaultValue: 'lime',
+                  options: [
+                    { label: 'Lime (booking)', value: 'lime' },
+                    { label: 'Ink (scale stat)', value: 'ink' },
+                    { label: 'Brand (flagship)', value: 'brand' },
+                  ],
+                },
+                { name: 'label', type: 'text', required: true },
+                {
+                  name: 'title',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Lime & brand cards: card headline. Ignored on ink.',
+                  },
+                },
+                { name: 'sub', type: 'textarea' },
+                {
+                  name: 'stat',
+                  type: 'text',
+                  admin: {
+                    description: 'Ink card only: big stat, e.g. "50".',
+                  },
+                },
+                {
+                  name: 'statSuffix',
+                  type: 'text',
+                  admin: { description: 'Ink card only: e.g. "K+".' },
+                },
+                {
+                  name: 'tag',
+                  type: 'text',
+                  admin: { description: 'Ink card only: bottom tag.' },
+                },
+                {
+                  name: 'ctaLabel',
+                  type: 'text',
+                  admin: {
+                    description:
+                      'Lime & brand cards: button label. Ignored on ink.',
+                  },
+                },
+                {
+                  name: 'ctaHref',
+                  type: 'text',
+                  admin: { description: 'Lime & brand cards: button link.' },
+                },
+              ],
             },
             {
               name: 'marquee',
@@ -181,13 +253,27 @@ export const Homepage: GlobalConfig = {
               label: 'Caption tag on image',
             },
             {
+              name: 'levelupImageStat',
+              type: 'text',
+              label: 'Caption stat on image',
+            },
+            {
               name: 'levelupChapters',
               type: 'array',
               label: 'Pinned chapters (3)',
+              maxRows: 3,
               fields: [
+                { name: 'eyebrow', type: 'text', label: 'Chapter eyebrow' },
                 { name: 'title', type: 'text', required: true },
                 { name: 'copy', type: 'textarea', required: true },
               ],
+            },
+            {
+              name: 'levelupChapterImages',
+              type: 'array',
+              label: 'Chapter images (swapped per chapter)',
+              maxRows: 3,
+              fields: [{ name: 'image', type: 'text', label: 'Image URL' }],
             },
             { name: 'levelupCtaLabel', type: 'text', label: 'CTA label' },
             { name: 'levelupCtaHref', type: 'text', label: 'CTA link' },
@@ -201,10 +287,25 @@ export const Homepage: GlobalConfig = {
             {
               name: 'processSteps',
               type: 'array',
+              maxRows: 4,
               fields: [
                 { name: 'num', type: 'text', required: true },
                 { name: 'title', type: 'text', required: true },
                 { name: 'copy', type: 'textarea' },
+                {
+                  name: 'phaseEyebrow',
+                  type: 'text',
+                  label: 'Phase label',
+                  admin: { description: 'e.g. "PHASE 01 // IMMERSION".' },
+                },
+                {
+                  name: 'tagBadge',
+                  type: 'text',
+                  label: 'Image caption',
+                  admin: {
+                    description: 'e.g. "USER JOURNEYS & FIELD AUDITS".',
+                  },
+                },
                 { name: 'image', type: 'text', label: 'Image URL' },
                 {
                   name: 'highlight',
@@ -234,10 +335,17 @@ export const Homepage: GlobalConfig = {
             {
               name: 'principles',
               type: 'array',
+              maxRows: 4,
               fields: [
                 { name: 'num', type: 'text', required: true },
                 { name: 'title', type: 'text', required: true },
                 { name: 'copy', type: 'textarea', required: true },
+                {
+                  name: 'tag',
+                  type: 'text',
+                  label: 'Footer label',
+                  admin: { description: 'e.g. "CO-CREATION".' },
+                },
               ],
             },
           ],
@@ -249,6 +357,7 @@ export const Homepage: GlobalConfig = {
             {
               name: 'testimonials',
               type: 'array',
+              maxRows: 4,
               fields: [
                 {
                   name: 'stat',
@@ -284,29 +393,77 @@ export const Homepage: GlobalConfig = {
         {
           label: 'World transitions',
           fields: [
-            { name: 'wc1Label', type: 'text', label: 'Studio — eyebrow' },
+            { name: 'wc1Rail', type: 'text', label: 'Studio — rail label' },
+            { name: 'wc1Index', type: 'text', label: 'Studio — index' },
             {
               name: 'wc1Scramble',
               type: 'text',
               label: 'Studio — scramble line',
             },
-            { name: 'wc2Label', type: 'text', label: 'Workshop — eyebrow' },
+            { name: 'wc1Status', type: 'text', label: 'Studio — status label' },
+            { name: 'wc1FootLeft', type: 'text', label: 'Studio — foot left' },
+            { name: 'wc1FootMid', type: 'text', label: 'Studio — foot middle' },
+            {
+              name: 'wc1RightStat',
+              type: 'text',
+              label: 'Studio — right rail stat',
+            },
+            { name: 'wc2Rail', type: 'text', label: 'Workshop — rail label' },
+            { name: 'wc2Index', type: 'text', label: 'Workshop — index' },
             {
               name: 'wc2Scramble',
               type: 'text',
               label: 'Workshop — scramble line',
             },
-            { name: 'wc3Label', type: 'text', label: 'Method — eyebrow' },
+            {
+              name: 'wc2Status',
+              type: 'text',
+              label: 'Workshop — status label',
+            },
+            {
+              name: 'wc2FootLeft',
+              type: 'text',
+              label: 'Workshop — foot left',
+            },
+            {
+              name: 'wc2FootMid',
+              type: 'text',
+              label: 'Workshop — foot middle',
+            },
+            {
+              name: 'wc2RightStat',
+              type: 'text',
+              label: 'Workshop — right rail stat',
+            },
+            { name: 'wc3Rail', type: 'text', label: 'Method — rail label' },
+            { name: 'wc3Index', type: 'text', label: 'Method — index' },
             {
               name: 'wc3Scramble',
               type: 'text',
               label: 'Method — scramble line',
             },
-            { name: 'wc4Label', type: 'text', label: 'Voices — eyebrow' },
+            { name: 'wc3Status', type: 'text', label: 'Method — status label' },
+            { name: 'wc3FootLeft', type: 'text', label: 'Method — foot left' },
+            { name: 'wc3FootMid', type: 'text', label: 'Method — foot middle' },
+            {
+              name: 'wc3RightStat',
+              type: 'text',
+              label: 'Method — right rail stat',
+            },
+            { name: 'wc4Rail', type: 'text', label: 'Voices — rail label' },
+            { name: 'wc4Index', type: 'text', label: 'Voices — index' },
             {
               name: 'wc4Scramble',
               type: 'text',
               label: 'Voices — scramble line',
+            },
+            { name: 'wc4Status', type: 'text', label: 'Voices — status label' },
+            { name: 'wc4FootLeft', type: 'text', label: 'Voices — foot left' },
+            { name: 'wc4FootMid', type: 'text', label: 'Voices — foot middle' },
+            {
+              name: 'wc4RightStat',
+              type: 'text',
+              label: 'Voices — right rail stat',
             },
           ],
         },

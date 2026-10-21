@@ -14,9 +14,27 @@
     "bracketSpacing": true,
     "expand": "auto",
     "useEditorconfig": true,
-    "includes": ["**", "!**/build", "!**/coverage"]
+    "includes": [
+      "**",
+      "!**/build",
+      "!**/coverage",
+      "!**/src/payload-types.ts",
+      "!**/src/payload-generated-schema.ts",
+      "!**/src/migrations/**",
+      "!**/importMap.js"
+    ]
   },
-  "linter": { "enabled": true, "rules": { "recommended": true } },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": true },
+    "includes": [
+      "**",
+      "!**/src/payload-types.ts",
+      "!**/src/payload-generated-schema.ts",
+      "!**/src/migrations/**",
+      "!**/importMap.js"
+    ]
+  },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double",
@@ -54,6 +72,7 @@
   ],
   "assist": {
     "enabled": true,
-    "actions": { "source": { "organizeImports": "on" } }
+    "actions": { "source": { "organizeImports": "on" } },
+    "includes": ["**", "!**/importMap.js"]
   }
 }
