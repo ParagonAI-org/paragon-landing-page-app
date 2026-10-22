@@ -3636,7 +3636,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@payloadcms/db-postgres@npm:^3.85.0":
+"@payloadcms/db-postgres@npm:3.85.0":
   version: 3.85.0
   resolution: "@payloadcms/db-postgres@npm:3.85.0"
   dependencies:
@@ -3688,7 +3688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@payloadcms/next@npm:^3.85.0":
+"@payloadcms/next@npm:3.85.0":
   version: 3.85.0
   resolution: "@payloadcms/next@npm:3.85.0"
   dependencies:
@@ -3731,7 +3731,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@payloadcms/richtext-lexical@npm:^3.85.0":
+"@payloadcms/richtext-lexical@npm:3.85.0":
   version: 3.85.0
   resolution: "@payloadcms/richtext-lexical@npm:3.85.0"
   dependencies:
@@ -3773,7 +3773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@payloadcms/storage-s3@npm:^3.85.0":
+"@payloadcms/storage-s3@npm:3.85.0":
   version: 3.85.0
   resolution: "@payloadcms/storage-s3@npm:3.85.0"
   dependencies:
@@ -10854,10 +10854,10 @@ __metadata:
     "@biomejs/biome": "npm:^2.4.16"
     "@commitlint/cli": "npm:^19.8.0"
     "@commitlint/config-conventional": "npm:^19.8.0"
-    "@payloadcms/db-postgres": "npm:^3.85.0"
-    "@payloadcms/next": "npm:^3.85.0"
-    "@payloadcms/richtext-lexical": "npm:^3.85.0"
-    "@payloadcms/storage-s3": "npm:^3.85.0"
+    "@payloadcms/db-postgres": "npm:3.85.0"
+    "@payloadcms/next": "npm:3.85.0"
+    "@payloadcms/richtext-lexical": "npm:3.85.0"
+    "@payloadcms/storage-s3": "npm:3.85.0"
     "@playwright/test": "npm:^1.51.1"
     "@react-three/drei": "npm:^10.7.7"
     "@react-three/fiber": "npm:^9.6.1"
@@ -10884,7 +10884,7 @@ __metadata:
     lucide-react: "npm:^1.24.0"
     next: "npm:^16.2.6"
     next-themes: "npm:^0.4.6"
-    payload: "npm:^3.85.0"
+    payload: "npm:3.85.0"
     postprocessing: "npm:^6.39.2"
     radix-ui: "npm:^1.4.3"
     react: "npm:^19.2.6"
@@ -11049,7 +11049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"payload@npm:^3.85.0":
+"payload@npm:3.85.0":
   version: 3.85.0
   resolution: "payload@npm:3.85.0"
   dependencies:

@@ -870,6 +870,10 @@ When adding a Playwright spec, also consider whether the page depends on the dat
 - Media is stored in **Supabase Storage (S3-compatible)**. The `next.config.ts` `images.remotePatterns` whitelists the Supabase hostnames — update both the Supabase project ref and the remotePatterns entry if you migrate projects.
 - Required env vars in production: `PAYLOAD_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_SITE_URL`, `REVALIDATE_SECRET`, `S3_*`. The S3 hook in Payload is server-side; the revalidation hook uses the public site URL.
 - The admin user `hq.paragonai@gmail.com` is the default; rotate its password before launch using `yarn admin:reset-password`.
+- **Yarn must be pinned to the committed release.** The repo ships a Yarn Berry lockfile (`yarn.lock` v10) and vendors the Yarn 4.15.0 CLI at `.yarn/releases/yarn-4.15.0.cjs`, wired up via `yarnPath` in `.yarnrc.yml`. `vercel.json` therefore installs with `node .yarn/releases/yarn-4.15.0.cjs install --immutable` (never a bare `yarn install`, and never `corepack enable` — Corepack is not guaranteed to be present on the Vercel build image).
+  - If you set a custom **Install Command** in the Vercel dashboard it overrides `vercel.json` — use the same `node .yarn/releases/yarn-4.15.0.cjs install --immutable` value there.
+  - **Payload is pinned to exactly `3.85.0`** (no `^`) because the database schema and the generated `src/payload-types.ts` / `src/payload-generated-schema.ts` are 3.85-based. Payload `3.91+` adds a `_objectKey` column to the `media` table; if the installed Payload is newer than the database, the `/blog` prerender dies with `column "_objectkey" does not exist`.
+  - If you upgrade Payload, run the migrations against the production database before the next deploy (`yarn payload migrate`).
 
 ---
 
@@ -884,6 +888,15 @@ When adding a Playwright spec, also consider whether the page depends on the dat
 1. Check the editor's network tab — the `afterChange` hook should be POSTing to `/api/revalidate`.
 2. Confirm `NEXT_PUBLIC_SITE_URL` is set and reachable from the Payload runtime (use `http://localhost:3000` in local dev).
 3. As a nuclear option, POST to `/api/revalidate?secret=…` with an empty body to flush all tags.
+
+#### `column "_objectkey" does not exist` during the Vercel build
+
+The installed Payload is newer than the database schema. Payload `3.91+` selects a `_objectKey` column on `media` that the 3.85-based schema does not have. Check the install step in the build log — if it says `yarn install v1.22.19` and `success Saved lockfile`, the build ran Yarn Classic and re-resolved every range instead of honouring `yarn.lock`.
+
+- Confirm `vercel.json` → `installCommand` is `node .yarn/releases/yarn-4.15.0.cjs install --immutable`.
+- Confirm the Vercel dashboard has no custom Install/Build Command overriding `vercel.json`.
+- Confirm `package.json` pins `payload` and the `@payloadcms/*` packages to an exact `3.85.0` (no `^`).
+- If Payload was upgraded on purpose, run the migrations against the production database (`yarn payload migrate`) before redeploying.
 
 #### `cannot find module '@payload-config'`
 
