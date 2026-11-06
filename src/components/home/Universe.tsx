@@ -91,9 +91,14 @@ export default function Universe() {
     ).matches
 
     const scene = new THREE.Scene()
+    // Below the desktop breakpoint the canvas is a 320px stage under the nav
+    // (see .webgl-canvas in globals.css). The renderer/camera must match that
+    // aspect, otherwise the orb is stretched or sized for the whole screen.
+    const stageHeight = () =>
+      window.innerWidth < 1024 ? 320 : window.innerHeight
     const camera = new THREE.PerspectiveCamera(
       45,
-      window.innerWidth / window.innerHeight,
+      window.innerWidth / stageHeight(),
       0.1,
       100,
     )
@@ -106,7 +111,7 @@ export default function Universe() {
       powerPreference: 'high-performance',
     })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(window.innerWidth, stageHeight())
 
     // ── universe group ──────────────────────────────────────────────────────
     const universeGroup = new THREE.Group()
@@ -115,10 +120,10 @@ export default function Universe() {
     universeGroup.add(coreGroup)
 
     const updateInitialPlacement = () => {
-      if (window.innerWidth < 768) {
-        coreGroup.position.set(0, -0.6, 0)
-        coreGroup.scale.setScalar(0.75)
-        glState.universe.homeScale = 0.75
+      if (window.innerWidth < 1024) {
+        coreGroup.position.set(0, 0, 0)
+        coreGroup.scale.setScalar(0.85)
+        glState.universe.homeScale = 0.85
       } else {
         coreGroup.position.set(2.4, 0.45, 0)
         coreGroup.scale.setScalar(1.2)
@@ -429,9 +434,9 @@ export default function Universe() {
     if (isDesktop) window.addEventListener('mousemove', onMouseMove)
 
     const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight
+      camera.aspect = window.innerWidth / stageHeight()
       camera.updateProjectionMatrix()
-      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.setSize(window.innerWidth, stageHeight())
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       updateInitialPlacement()
     }

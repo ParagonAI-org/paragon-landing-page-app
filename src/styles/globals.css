@@ -180,11 +180,16 @@
     pointer-events: none;
     z-index: 1;
   }
-  /* On phones/tablets the orb sits directly behind the copy; keep it as a
-     soft backdrop so the text stays readable. */
+  /*
+   * Below the desktop breakpoint the orb is a dedicated stage under the nav:
+   * it scrolls with the page and the hero copy starts below it. Keep the height
+   * in sync with Universe.tsx's stageHeight (320).
+   */
   @media (max-width: 1023px) {
     .webgl-canvas {
-      opacity: 0.5;
+      position: absolute;
+      inset: 64px 0 auto 0;
+      height: 320px;
     }
   }
 
