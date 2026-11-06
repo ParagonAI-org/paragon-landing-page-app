@@ -121,9 +121,11 @@ export default function Universe() {
 
     const updateInitialPlacement = () => {
       if (window.innerWidth < 1024) {
-        coreGroup.position.set(0, 0, 0)
-        coreGroup.scale.setScalar(0.85)
-        glState.universe.homeScale = 0.85
+        // Mobile/tablet: a large orb pushed to the right so it crops at the
+        // stage edge, matching the desktop composition.
+        coreGroup.position.set(2.4, 0.15, 0)
+        coreGroup.scale.setScalar(1.3)
+        glState.universe.homeScale = 1.3
       } else {
         coreGroup.position.set(2.4, 0.45, 0)
         coreGroup.scale.setScalar(1.2)
