@@ -36,7 +36,7 @@ export default function Hero({
     <section id="hero" className="relative min-h-[100svh] pt-16 flex flex-col">
       {/* Mobile/tablet orb stage: the absolute canvas is positioned into this
           slot by .webgl-canvas; the copy below starts underneath it. */}
-      <div className="lg:hidden h-[320px] shrink-0" aria-hidden="true" />
+      <div className="lg:hidden h-[420px] shrink-0" aria-hidden="true" />
 
       <div className="flex-1 w-full max-w-[1600px] mx-auto px-5 md:px-10 flex items-center py-6 md:py-10">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">

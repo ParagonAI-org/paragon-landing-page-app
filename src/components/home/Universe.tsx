@@ -91,18 +91,21 @@ export default function Universe() {
     ).matches
 
     const scene = new THREE.Scene()
-    // Below the desktop breakpoint the canvas is a 320px stage under the nav
+    // Below the desktop breakpoint the canvas is a 420px stage under the nav
     // (see .webgl-canvas in globals.css). The renderer/camera must match that
     // aspect, otherwise the orb is stretched or sized for the whole screen.
     const stageHeight = () =>
-      window.innerWidth < 1024 ? 320 : window.innerHeight
+      window.innerWidth < 1024 ? 420 : window.innerHeight
+    // Pull the camera back on the shorter stage so the larger orb fits
+    // vertically instead of being cut by the copy below it.
+    const cameraZ = () => (window.innerWidth < 1024 ? 11.5 : 7.5)
     const camera = new THREE.PerspectiveCamera(
       45,
       window.innerWidth / stageHeight(),
       0.1,
       100,
     )
-    camera.position.set(0, 0, 7.5)
+    camera.position.set(0, 0, cameraZ())
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -122,10 +125,11 @@ export default function Universe() {
     const updateInitialPlacement = () => {
       if (window.innerWidth < 1024) {
         // Mobile/tablet: a large orb pushed to the right so it crops at the
-        // stage edge, matching the desktop composition.
-        coreGroup.position.set(2.4, 0.15, 0)
-        coreGroup.scale.setScalar(1.3)
-        glState.universe.homeScale = 1.3
+        // stage edge like the desktop composition. The camera pull-back above
+        // keeps its full height inside the stage.
+        coreGroup.position.set(2.4, 0.2, 0)
+        coreGroup.scale.setScalar(1.5)
+        glState.universe.homeScale = 1.5
       } else {
         coreGroup.position.set(2.4, 0.45, 0)
         coreGroup.scale.setScalar(1.2)
@@ -437,6 +441,7 @@ export default function Universe() {
 
     const onResize = () => {
       camera.aspect = window.innerWidth / stageHeight()
+      camera.position.z = cameraZ()
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, stageHeight())
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
