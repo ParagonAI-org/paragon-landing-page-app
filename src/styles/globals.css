@@ -183,13 +183,13 @@
   /*
    * Below the desktop breakpoint the orb is a dedicated stage under the nav:
    * it scrolls with the page and the hero copy starts below it. Keep the height
-   * in sync with Universe.tsx's stageHeight (420).
+   * in sync with Universe.tsx's stageHeight (520).
    */
   @media (max-width: 1023px) {
     .webgl-canvas {
       position: absolute;
       inset: 64px 0 auto 0;
-      height: 420px;
+      height: 520px;
     }
   }
 

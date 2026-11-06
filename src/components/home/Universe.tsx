@@ -91,14 +91,14 @@ export default function Universe() {
     ).matches
 
     const scene = new THREE.Scene()
-    // Below the desktop breakpoint the canvas is a 420px stage under the nav
+    // Below the desktop breakpoint the canvas is a 520px stage under the nav
     // (see .webgl-canvas in globals.css). The renderer/camera must match that
     // aspect, otherwise the orb is stretched or sized for the whole screen.
     const stageHeight = () =>
-      window.innerWidth < 1024 ? 420 : window.innerHeight
+      window.innerWidth < 1024 ? 520 : window.innerHeight
     // Pull the camera back on the shorter stage so the larger orb fits
     // vertically instead of being cut by the copy below it.
-    const cameraZ = () => (window.innerWidth < 1024 ? 11.5 : 7.5)
+    const cameraZ = () => (window.innerWidth < 1024 ? 12.2 : 7.5)
     const camera = new THREE.PerspectiveCamera(
       45,
       window.innerWidth / stageHeight(),
@@ -128,8 +128,8 @@ export default function Universe() {
         // stage edge like the desktop composition. The camera pull-back above
         // keeps its full height inside the stage.
         coreGroup.position.set(2.4, 0.2, 0)
-        coreGroup.scale.setScalar(1.5)
-        glState.universe.homeScale = 1.5
+        coreGroup.scale.setScalar(1.6)
+        glState.universe.homeScale = 1.6
       } else {
         coreGroup.position.set(2.4, 0.45, 0)
         coreGroup.scale.setScalar(1.2)
