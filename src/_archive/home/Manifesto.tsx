@@ -6,11 +6,15 @@ export default function Manifesto({
   label = MANIFESTO.label,
   textPre = MANIFESTO.textPre,
   textEm = MANIFESTO.textEm,
+  focusLabel = MANIFESTO.focusLabel,
+  focusHeading = MANIFESTO.focusHeading,
   stats = MANIFESTO.stats,
 }: {
   label?: string
   textPre?: string
   textEm?: string
+  focusLabel?: string
+  focusHeading?: string
   stats?: readonly ManifestoStat[]
 }) {
   return (
@@ -36,8 +40,15 @@ export default function Manifesto({
           <em className="serif-it text-lime">{textEm}</em>
         </p>
 
+        <div className="mt-16" data-rv>
+          <span className="label text-paper/40 block mb-2">{focusLabel}</span>
+          <h3 className="disp font-semibold text-2xl md:text-3xl text-paper">
+            {focusHeading}
+          </h3>
+        </div>
+
         <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-20 pt-10 border-t border-paper/10"
+          className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8 pt-10 border-t border-paper/10"
           data-rv
         >
           {stats.map((stat) => (

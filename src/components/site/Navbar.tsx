@@ -86,51 +86,56 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <Link key={link.label} href={link.href} className="navlink">
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex items-center gap-3 md:gap-6">
+            <nav
+              className="hidden md:flex items-center gap-6"
+              aria-label="Primary"
+            >
+              {NAV_LINKS.map((link) => (
+                <Link key={link.label} href={link.href} className="navlink">
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href="/#contact"
-              className="nav-cta hidden sm:inline-flex items-center gap-1.5"
-            >
-              Start a project
-              <svg
-                className="w-3.5 h-3.5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden="true"
+            <div className="flex items-center gap-2">
+              <Link
+                href="/contact-us"
+                className="nav-cta hidden sm:inline-flex items-center gap-1.5"
               >
-                <path d="M7 17 17 7M8 7h9v9" />
-              </svg>
-            </Link>
-            <button
-              type="button"
-              className="nav-burger md:hidden w-10 h-10 rounded-xl border flex items-center justify-center"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen(true)}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                aria-hidden="true"
+                Contact
+                <svg
+                  className="w-3.5 h-3.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </Link>
+              <button
+                type="button"
+                className="nav-burger md:hidden w-10 h-10 rounded-xl border flex items-center justify-center"
+                aria-label="Open menu"
+                onClick={() => setMenuOpen(true)}
               >
-                <line x1="4" y1="7" x2="20" y2="7" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="17" x2="20" y2="17" />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <line x1="4" y1="7" x2="20" y2="7" />
+                  <line x1="4" y1="12" x2="20" y2="12" />
+                  <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -194,16 +199,16 @@ export default function Navbar() {
 
         <div className="px-6 mt-10">
           <Link
-            href="/#contact"
+            href="/contact-us"
             onClick={() => setMenuOpen(false)}
             className="btn btn-lime w-full justify-center"
           >
-            Start a project <span className="fill" />
+            Contact <span className="fill" />
           </Link>
         </div>
 
         <p className="absolute bottom-8 left-6 label text-paper/30">
-          Addis Ababa — Ethiopia
+          A small software and app studio — Addis Ababa
         </p>
       </div>
     </>

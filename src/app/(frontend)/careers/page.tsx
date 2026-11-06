@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import PageHeader from '@/components/site/PageHeader'
 import { getCachedCareers } from '@/lib/data'
 import { createPageMetadata } from '@/lib/metadata'
 import type { Career } from '@/payload-types'
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: 'Careers — Paragon AI',
+    title: 'Careers',
     description:
       'Join Paragon AI and help build practical AI products that improve education and opportunity across Africa.',
     path: '/careers',
@@ -43,58 +44,38 @@ const CareersPage = async () => {
 
   return (
     <>
-      {/* Careers Hero */}
-      <section className="relative w-full flex flex-col justify-center pt-36 sm:pt-40 md:pt-48 pb-16 md:pb-24 lg:min-h-[85vh] lg:max-h-[950px] z-10 overflow-hidden">
-        {/* Aurora Background */}
-        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
-          <div className="absolute blur-[80px] md:blur-[120px] opacity-30 rounded-full -rotate-[15deg] w-[400px] md:w-[800px] h-[150px] md:h-[250px] bg-brand-400 -right-[100px] md:-right-[200px] top-[15%] md:top-[20%] animate-drift-1" />
-          <div className="absolute blur-[80px] md:blur-[120px] opacity-25 rounded-full -rotate-[15deg] w-[500px] md:w-[900px] h-[200px] md:h-[300px] bg-brand-600 -right-[150px] md:-right-[300px] top-[35%] md:top-[40%] animate-drift-2" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 relative z-10 w-full">
-          <div
-            className="max-w-4xl reveal opacity-0 translate-y-[20px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0"
-            suppressHydrationWarning
+      <PageHeader
+        eyebrow="Open Roles"
+        title={
+          <>
+            Build systems
+            <br />
+            <span className="serif-it font-normal text-brand-600">
+              that matter.
+            </span>
+          </>
+        }
+        lede="We are a small team of engineers, researchers and designers in Addis Ababa building practical AI products for the continent."
+      >
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <a
+            href="#openings"
+            className="btn btn-ink w-full sm:w-auto justify-center"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-ink/15 text-[10px] uppercase tracking-[0.18em] text-ink/60 font-semibold mb-6 md:mb-8">
-              <span className="w-1.5 h-1.5 bg-brand-600 rounded-full"></span>
-              Open Roles
-            </div>
-
-            <h1 className="disp font-semibold text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] md:leading-[0.95] tracking-tight text-ink mb-6 md:mb-8">
-              Build systems <br />
-              <em className="serif-it font-normal text-brand-600">
-                that matter.
-              </em>
-            </h1>
-
-            <p className="text-base sm:text-lg lg:text-xl text-ink/60 max-w-2xl leading-relaxed mb-10 md:mb-12">
-              We are an elite team of engineers, researchers, and designers in
-              Addis Ababa building the next decade of artificial intelligence
-              for the African continent.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <a
-                href="#openings"
-                className="btn btn-ink w-full sm:w-auto justify-center"
-              >
-                View Openings
-              </a>
-              <a
-                href="#culture"
-                className="btn btn-ghost w-full sm:w-auto justify-center"
-              >
-                Our Culture
-              </a>
-            </div>
-          </div>
+            View Openings <span className="fill" />
+          </a>
+          <a
+            href="#culture"
+            className="btn btn-ghost w-full sm:w-auto justify-center"
+          >
+            Our Culture <span className="fill" />
+          </a>
         </div>
-      </section>
+      </PageHeader>
 
       {/* Culture & Values */}
       <section id="culture" className="py-16 md:py-24 lg:py-32 relative z-10">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-10">
           <div className="mb-10 md:mb-16 reveal opacity-0 translate-y-[20px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             <p className="label text-brand-600 mb-3 md:mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-brand-600" />
@@ -105,9 +86,9 @@ const CareersPage = async () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 border border-ink/10 divide-y md:divide-y-0 md:divide-x divide-ink/10 rounded-2xl md:rounded-3xl overflow-hidden reveal opacity-0 translate-y-[20px] transition-all duration-900 delay-100 [&.visible]:opacity-100 [&.visible]:translate-y-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 reveal opacity-0 translate-y-[20px] transition-all duration-900 delay-100 [&.visible]:opacity-100 [&.visible]:translate-y-0">
             {/* Principle 1 */}
-            <div className="p-6 sm:p-8 lg:p-10 hover:bg-bone/60 transition-colors">
+            <div className="border-t border-ink/15 pt-5">
               <div className="text-brand-600 mb-5 md:mb-6">
                 <svg
                   width="24"
@@ -131,7 +112,7 @@ const CareersPage = async () => {
             </div>
 
             {/* Principle 2 */}
-            <div className="p-6 sm:p-8 lg:p-10 hover:bg-bone/60 transition-colors">
+            <div className="border-t border-ink/15 pt-5">
               <div className="text-brand-600 mb-5 md:mb-6">
                 <svg
                   width="24"
@@ -150,13 +131,13 @@ const CareersPage = async () => {
                 Local Context, Global Scale
               </h3>
               <p className="text-sm md:text-base text-ink/60 leading-relaxed">
-                We build world-class AI infrastructure that fundamentally
-                understands the constraints and nuances of our specific markets.
+                We build software that understands the constraints and nuances
+                of our specific markets.
               </p>
             </div>
 
             {/* Principle 3 */}
-            <div className="p-6 sm:p-8 lg:p-10 hover:bg-bone/60 transition-colors">
+            <div className="border-t border-ink/15 pt-5">
               <div className="text-brand-600 mb-5 md:mb-6">
                 <svg
                   width="24"
@@ -174,8 +155,8 @@ const CareersPage = async () => {
                 Velocity is a Feature
               </h3>
               <p className="text-sm md:text-base text-ink/60 leading-relaxed">
-                We ship fast, learn faster, and iterate. Perfection is the enemy
-                of progress when the goal is to revolutionize education.
+                We ship small, learn from real use, and keep improving. Shipping
+                is how the work gets better.
               </p>
             </div>
           </div>
@@ -188,7 +169,7 @@ const CareersPage = async () => {
           id="openings"
           className="py-16 md:py-24 relative z-10 border-t border-ink/10"
         >
-          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+          <div className="max-w-[1300px] mx-auto px-5 md:px-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6 mb-10 md:mb-16 reveal opacity-0 translate-y-[20px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0">
               <div>
                 <p className="label text-brand-600 mb-3 md:mb-4 flex items-center gap-3">
@@ -215,7 +196,7 @@ const CareersPage = async () => {
                     <Link
                       key={job.id}
                       href={`/careers/${job.slug}`}
-                      className="block relative transition-all duration-500 hover:bg-bone/60 md:hover:pl-6 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-brand-600 before:scale-y-0 before:transition-transform before:duration-500 hover:before:scale-y-100 group py-6 md:py-8 border-b border-ink/10 cursor-pointer"
+                      className="block group py-6 md:py-8 border-b border-ink/10"
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 flex-1">
@@ -223,10 +204,10 @@ const CareersPage = async () => {
                             {job.title}
                           </h4>
                           <div className="flex flex-wrap gap-2 md:gap-3">
-                            <span className="px-2.5 py-1 rounded-full border border-ink/10 bg-paper text-[10px] md:text-[11px] font-medium text-ink/60 whitespace-nowrap">
+                            <span className="text-[10px] md:text-[11px] font-medium text-ink/45 whitespace-nowrap">
                               {job.location || 'Addis Ababa'}
                             </span>
-                            <span className="px-2.5 py-1 rounded-full bg-brand-600/10 text-brand-600 border border-brand-400/30 text-[10px] md:text-[11px] font-semibold whitespace-nowrap">
+                            <span className="text-[10px] md:text-[11px] font-semibold text-brand-600 whitespace-nowrap">
                               {typeLabels[job.type] || job.type || 'Full-time'}
                             </span>
                           </div>

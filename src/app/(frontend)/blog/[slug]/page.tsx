@@ -13,14 +13,14 @@ type Args = {
 }
 
 const categoryLabels: Record<string, string> = {
-  insights: 'Insights',
-  'product-updates': 'Product Updates',
+  insights: 'Ideas',
+  'product-updates': 'Product',
   engineering: 'Engineering',
-  research: 'Research',
-  company: 'Company News',
-  'student-success': 'Student Success',
+  research: 'Deep dives',
+  company: 'Studio',
+  'student-success': 'Students',
   safety: 'Safety',
-  announcements: 'Announcements',
+  announcements: 'News',
 }
 
 function extractSummary(content: unknown): string | undefined {
@@ -117,12 +117,7 @@ const BlogPost = async ({ params }: Args) => {
   return (
     <>
       {/* Article Header */}
-      <article className="relative pt-32 md:pt-40 pb-16 md:pb-20 z-10 w-full overflow-hidden">
-        {/* Soft brand glow */}
-        <div className="absolute top-0 left-0 w-full h-[400px] md:h-[600px] z-0 pointer-events-none overflow-hidden">
-          <div className="absolute blur-[80px] md:blur-[120px] opacity-25 rounded-full w-[400px] md:w-[600px] h-[200px] md:h-[300px] bg-brand-400/40 left-1/2 -translate-x-1/2 -top-[50px] md:-top-[100px]" />
-        </div>
-
+      <article className="relative pt-28 md:pt-36 pb-16 md:pb-20 z-10 w-full overflow-hidden">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-10 relative z-10">
           {/* Back Link */}
           <Link
@@ -144,12 +139,12 @@ const BlogPost = async ({ params }: Args) => {
 
           {/* Meta & Title */}
           <div className="reveal opacity-0 translate-y-[40px] transition-all duration-900 delay-100 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-            <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6">
-              <span className="label text-[10px] px-2.5 py-1 rounded-full bg-brand-600/10 border border-brand-600/20 text-brand-600">
+            <div className="flex flex-wrap items-center gap-3 mb-4 md:mb-6">
+              <span className="label text-[10px] text-brand-600">
                 {categoryLabels[post.category] || post.category}
               </span>
               {post.publishedDate && (
-                <span className="label text-[10px] text-ink/55">
+                <span className="label text-[10px] text-ink/40">
                   {new Date(post.publishedDate).toLocaleDateString('en-US', {
                     month: 'long',
                     day: 'numeric',
@@ -195,7 +190,7 @@ const BlogPost = async ({ params }: Args) => {
 
         {/* Hero Abstract Image */}
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-10 mb-12 md:mb-20 reveal opacity-0 translate-y-[60px] transition-all duration-900 delay-200 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-          <div className="w-full aspect-video md:aspect-[21/9] rounded-2xl md:rounded-3xl bg-gradient-to-br from-brand-400/10 via-bone to-bone border border-ink/10 relative overflow-hidden flex items-center justify-center">
+          <div className="w-full aspect-video md:aspect-[21/9] rounded-xl bg-ink/[0.03] relative overflow-hidden flex items-center justify-center">
             {heroImage?.url ? (
               <PayloadImage
                 media={heroImage}
@@ -333,7 +328,7 @@ const BlogPost = async ({ params }: Args) => {
                   {post.tags?.map((item) => (
                     <span
                       key={item.tag}
-                      className="px-2.5 md:px-3 py-1 rounded-full bg-bone/70 border border-ink/10 text-[11px] md:text-xs text-ink/60 whitespace-nowrap"
+                      className="text-[11px] md:text-xs text-ink/45 whitespace-nowrap"
                     >
                       {item.tag}
                     </span>
@@ -385,7 +380,7 @@ const BlogPost = async ({ params }: Args) => {
 
       {/* Related Research Section */}
       {relatedPosts.length > 0 && (
-        <section className="py-16 md:py-24 bg-bone/40 border-t border-ink/10 relative z-10">
+        <section className="py-14 md:py-20 border-t border-ink/10 relative z-10">
           <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
             <h3 className="disp font-semibold text-xl md:text-2xl text-ink mb-8 md:mb-10 reveal opacity-0 translate-y-[40px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0">
               Read next
@@ -402,7 +397,7 @@ const BlogPost = async ({ params }: Args) => {
                     className="group block reveal opacity-0 translate-y-[40px] transition-all duration-900 [&.visible]:opacity-100 [&.visible]:translate-y-0"
                     style={{ transitionDelay: `${delay}ms` }}
                   >
-                    <div className="aspect-video rounded-2xl md:rounded-3xl overflow-hidden bg-bone border border-ink/10 mb-4 md:mb-6 transition-all duration-500 group-hover:border-brand-400/50 group-hover:-translate-y-1 relative">
+                    <div className="aspect-video rounded-lg overflow-hidden bg-ink/[0.03] mb-4 md:mb-6 relative">
                       {relHero?.url ? (
                         <PayloadImage
                           media={relHero}

@@ -3,7 +3,7 @@
 import { gsap } from 'gsap'
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { glState, universe } from './gl-state'
+import { glState, type OrbPalette, universe } from './gl-state'
 
 const SIMPLEX = `
 vec3 mod289(vec3 x){return x - floor(x*(1.0/289.0))*289.0;}
@@ -72,7 +72,7 @@ function createParticleTexture() {
  *
  * The canvas is rendered as a direct child (no portal) with position:fixed via
  * the .webgl-canvas CSS class.  This means universe.current is populated inside
- * a single useEffect — before ScrollFx's sibling useEffect runs — eliminating
+ * a single useEffect — before HeroIntro's sibling useEffect runs — eliminating
  * the two-render-cycle race that left universe.current null at choreography
  * setup time.
  */
@@ -118,12 +118,20 @@ export default function Universe() {
       if (window.innerWidth < 768) {
         coreGroup.position.set(0, -0.6, 0)
         coreGroup.scale.setScalar(0.75)
+        glState.universe.homeScale = 0.75
       } else {
         coreGroup.position.set(2.4, 0.45, 0)
         coreGroup.scale.setScalar(1.2)
+        glState.universe.homeScale = 1.2
       }
     }
     updateInitialPlacement()
+    // Spawn gate: the choreography's intro elastic-scales the core in from
+    // ~0 at boot. Until then keep it invisible — otherwise the orb paints at
+    // full size right away and visibly snaps away when the spawn begins
+    // (boot waits for fonts + window load, so the gap is real on cold
+    // loads). Reduced motion never spawns, so it stays at placement scale.
+    if (!REDUCED) coreGroup.scale.setScalar(0.001)
 
     // ── shader core ─────────────────────────────────────────────────────────
     const coreUniforms = {
@@ -286,81 +294,106 @@ export default function Universe() {
     scene.add(pLight2)
 
     // ── theme shift ──────────────────────────────────────────────────────────
-    const set3DTheme = (isDark: boolean) => {
+    /**
+     * Orb palettes. `indigo` is the light world, `lime` the original dark-world
+     * accent (used on the sub-page footer flip) and `emerald` the high-contrast
+     * green tuned for the landing page's white canvas.
+     */
+    type OrbPaletteSpec = {
+      coreA: number
+      coreB: number
+      wire: number
+      wireOpacity: number
+      ringA: number
+      ringB: number
+      node: number
+      particle: number
+      particleOpacity: number
+      satellite: number
+      light2: number
+    }
+    const ORB_PALETTES: Record<OrbPalette, OrbPaletteSpec> = {
+      indigo: {
+        coreA: 0x4f46e5,
+        coreB: 0xa5b4fc,
+        wire: 0x4f46e5,
+        wireOpacity: 0.28,
+        ringA: 0x4f46e5,
+        ringB: 0x818cf8,
+        node: 0x6366f1,
+        particle: 0x4f46e5,
+        particleOpacity: 0.5,
+        satellite: 0xd8ff3e,
+        light2: 1.8,
+      },
+      lime: {
+        coreA: 0x6366f1,
+        coreB: 0xd8ff3e,
+        wire: 0xd8ff3e,
+        wireOpacity: 0.32,
+        ringA: 0x4f46e5,
+        ringB: 0xd8ff3e,
+        node: 0x6366f1,
+        particle: 0xd8ff3e,
+        particleOpacity: 0.7,
+        satellite: 0xd8ff3e,
+        light2: 3.8,
+      },
+      emerald: {
+        coreA: 0x047857,
+        coreB: 0x34d399,
+        wire: 0x059669,
+        wireOpacity: 0.38,
+        ringA: 0x059669,
+        ringB: 0x10b981,
+        node: 0x10b981,
+        particle: 0x059669,
+        particleOpacity: 0.55,
+        satellite: 0x34d399,
+        light2: 3.0,
+      },
+    }
+    const rgb = (hex: number) => ({
+      r: ((hex >> 16) & 0xff) / 255,
+      g: ((hex >> 8) & 0xff) / 255,
+      b: (hex & 0xff) / 255,
+    })
+
+    /**
+     * Switches the orb palette. `backdrop` also flips the nebula behind it;
+     * pass false to tint only the orb (the one-screen landing keeps its white
+     * page while using a green orb).
+     */
+    const setOrbPalette = (palette: OrbPalette, backdrop = true) => {
       const d = 1.4
-      glState.nebula.themeTarget = isDark ? 1 : 0
-      if (isDark) {
-        gsap.to(coreUniforms.uColorA.value, {
-          r: 0x63 / 255,
-          g: 0x66 / 255,
-          b: 0xf1 / 255,
-          duration: d,
-        })
-        gsap.to(coreUniforms.uColorB.value, {
-          r: 0xd8 / 255,
-          g: 0xff / 255,
-          b: 0x3e / 255,
-          duration: d,
-        })
-        gsap.to(wireMat.color, {
-          r: 0xd8 / 255,
-          g: 0xff / 255,
-          b: 0x3e / 255,
-          duration: d,
-        })
-        gsap.to(wireMat, { opacity: 0.32, duration: d })
-        gsap.to(ringBMat.color, {
-          r: 0xd8 / 255,
-          g: 0xff / 255,
-          b: 0x3e / 255,
-          duration: d,
-        })
-        gsap.to(particleUniforms.uColor.value, {
-          r: 0xd8 / 255,
-          g: 0xff / 255,
-          b: 0x3e / 255,
-          duration: d,
-        })
-        gsap.to(particleUniforms.uOpacity, { value: 0.7, duration: d })
-        gsap.to(pLight2, { intensity: 3.8, duration: d })
-      } else {
-        gsap.to(coreUniforms.uColorA.value, {
-          r: 0x4f / 255,
-          g: 0x46 / 255,
-          b: 0xe5 / 255,
-          duration: d,
-        })
-        gsap.to(coreUniforms.uColorB.value, {
-          r: 0xa5 / 255,
-          g: 0xb4 / 255,
-          b: 0xfc / 255,
-          duration: d,
-        })
-        gsap.to(wireMat.color, {
-          r: 0x4f / 255,
-          g: 0x46 / 255,
-          b: 0xe5 / 255,
-          duration: d,
-        })
-        gsap.to(wireMat, { opacity: 0.28, duration: d })
-        gsap.to(ringBMat.color, {
-          r: 0x81 / 255,
-          g: 0x8c / 255,
-          b: 0xf8 / 255,
-          duration: d,
-        })
-        gsap.to(particleUniforms.uColor.value, {
-          r: 0x4f / 255,
-          g: 0x46 / 255,
-          b: 0xe5 / 255,
-          duration: d,
-        })
-        gsap.to(particleUniforms.uOpacity, { value: 0.5, duration: d })
-        gsap.to(pLight2, { intensity: 1.8, duration: d })
-      }
+      const p = ORB_PALETTES[palette]
+      if (backdrop) glState.nebula.themeTarget = palette === 'indigo' ? 0 : 1
+      gsap.to(coreUniforms.uColorA.value, { ...rgb(p.coreA), duration: d })
+      gsap.to(coreUniforms.uColorB.value, { ...rgb(p.coreB), duration: d })
+      gsap.to(wireMat.color, { ...rgb(p.wire), duration: d })
+      gsap.to(wireMat, { opacity: p.wireOpacity, duration: d })
+      gsap.to(ringAMat.color, { ...rgb(p.ringA), duration: d })
+      gsap.to(ringBMat.color, { ...rgb(p.ringB), duration: d })
+      gsap.to(nodeMat.color, { ...rgb(p.node), duration: d })
+      gsap.to(particleUniforms.uColor.value, {
+        ...rgb(p.particle),
+        duration: d,
+      })
+      gsap.to(particleUniforms.uOpacity, {
+        value: p.particleOpacity,
+        duration: d,
+      })
+      gsap.to((satellite.material as THREE.MeshBasicMaterial).color, {
+        ...rgb(p.satellite),
+        duration: d,
+      })
+      gsap.to(pLight2, { intensity: p.light2, duration: d })
     }
 
-    // ── expose refs to ScrollFx immediately ─────────────────────────────────
+    const set3DTheme = (isDark: boolean, backdrop = true) =>
+      setOrbPalette(isDark ? 'lime' : 'indigo', backdrop)
+
+    // ── expose refs to HeroIntro immediately ────────────────────────────────
     universe.current = {
       universeGroup,
       coreGroup,
@@ -384,6 +417,7 @@ export default function Universe() {
       pLight1,
       pLight2,
       set3DTheme,
+      setOrbPalette,
     }
 
     // ── mouse parallax ───────────────────────────────────────────────────────

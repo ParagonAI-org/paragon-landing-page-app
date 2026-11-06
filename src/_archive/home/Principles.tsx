@@ -8,10 +8,10 @@ export type PrincipleItem = {
 }
 
 const DEFAULT_TAGS: Record<string, string> = {
-  '01': 'CO-CREATION',
-  '02': 'LOW-RESILIENT INFRA',
-  '03': 'RIGOROUS FINISH',
-  '04': 'GLOBAL BENCHMARK',
+  '01': 'PURPOSE FIRST',
+  '02': 'CONTEXT MATTERS',
+  '03': 'INTELLIGENCE WITH PURPOSE',
+  '04': 'SUSTAINABLE INNOVATION',
 }
 
 export default function Principles({
@@ -37,7 +37,7 @@ export default function Principles({
               className="disp font-semibold text-[clamp(2.3rem,5.5vw,5rem)] leading-[.95]"
               data-rv
             >
-              How we
+              {PRINCIPLES.heading}
               <br />
               <em className="serif-it font-normal text-lime">
                 {PRINCIPLES.emphasis}

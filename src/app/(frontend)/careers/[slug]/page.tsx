@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const job = (await getCachedCareer(slug)) as Career | null
   if (!job) return { title: 'Role not found | ParagonAI' }
   return createPageMetadata({
-    title: `${job.title} | ParagonAI Careers`,
+    title: `${job.title} — Careers`,
     description: job.summary,
   })
 }

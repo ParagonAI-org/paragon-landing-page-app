@@ -1,8 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Fraunces, Inter, Space_Grotesk } from 'next/font/google'
-import Nebula from '@/components/home/Nebula'
-import Universe from '@/components/home/Universe'
+import UniverseGate from '@/components/home/UniverseGate'
 import LayoutScripts from '@/components/LayoutScripts'
 import Cursor from '@/components/site/Cursor'
 import Footer from '@/components/site/Footer'
@@ -111,20 +110,19 @@ export default function RootLayout({
         />
         <noscript>
           {/* If JS is off, never leave choreography-hidden content invisible */}
-          <style>{`.hline>span{transform:none}.hero-img{clip-path:none}.loader{display:none}`}</style>
+          <style>{`.hline>span{transform:none}.reveal{opacity:1!important;transform:none!important}#hero [data-hero-rise],#nav{opacity:1 !important}`}</style>
         </noscript>
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${fraunces.variable} font-body antialiased bg-paper text-ink min-h-screen flex flex-col`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${fraunces.variable} font-body antialiased bg-white text-ink min-h-screen flex flex-col`}
       >
         {/*
-          Nebula (z-0) and Universe (z-1) sit here as direct children of <body>,
-          outside of any stacking-context ancestor, so their position:fixed canvases
-          correctly underlay every section and the footer without being trapped inside
-          <main>'s stacking context.
+          The Three.js orb is the only fixed canvas left. It sits here as a
+          direct child of <body>, outside any stacking-context ancestor, so its
+          position:fixed canvas correctly underlays the hero without being
+          trapped inside <main>'s stacking context.
         */}
-        <Nebula />
-        <Universe />
+        <UniverseGate />
 
         <SmoothScroll />
         <Cursor />
@@ -134,30 +132,19 @@ export default function RootLayout({
         {/*
           <main> must stay display:block — GSAP ScrollTrigger skips pin-spacer
           padding for elements pinned inside a flex parent.
-          z-[2] places <main> above the fixed canvases (z-0 nebula, z-1 universe)
-          in the body stacking context. isolate prevents child z-indexes from
-          competing with body-level elements like the navbar.
+          z-[2] places <main> above the fixed universe canvas (z-1) in the body
+          stacking context. isolate prevents child z-indexes from competing
+          with body-level elements like the navbar.
         */}
         <main className="flex-1 relative z-[2] isolate w-full">{children}</main>
 
         {/*
-          Footer sits after <main> in DOM order at z-[2], so it paints on top of
-          <main> via DOM order. Like the design (new-design.html #contact), the
-          footer itself is transparent: the fixed nebula canvas (dark-flipped as
-          the footer enters view) and the Three.js orb — scrubbed into its
-          monumental finale state by ScrollFx's #contact timeline — show through
-          behind the content, with the radial glow layered on top. That rounded,
-          see-through "3D portal" only works because the shell is NOT opaque.
-          The .footer-shell CSS keeps an #0a0a0f fallback whenever the live
-          WebGL backdrop can't be there (no JS, no WebGL, first paint), and it
-          goes transparent the moment the nebula shader confirms it is running
-          (html.nebula-live, set by <Nebula/>).
+          The landing page renders its compact footer inside <Hero/> and
+          <Footer/> returns null there; every other route gets the same compact
+          footer after <main>.
         */}
-        <div className="footer-shell relative z-[2]">
-          <Footer />
-        </div>
+        <Footer />
 
-        <div className="noise" aria-hidden="true" />
         <LayoutScripts />
         <Analytics />
       </body>

@@ -94,7 +94,7 @@ const applyFaviconTheme = (theme: Theme) => {
  * Theme-aware favicon swap + sub-page reveal animations.
  */
 const LayoutScripts = () => {
-  const _pathname = usePathname()
+  const pathname = usePathname()
 
   useEffect(() => {
     applyFaviconTheme(getResolvedTheme())
@@ -117,7 +117,12 @@ const LayoutScripts = () => {
     }
   }, [])
 
-  // Reveal-on-scroll for the sub-pages' `.reveal` elements (re-runs per route)
+  // Reveal-on-scroll for the sub-pages' `.reveal` elements. This must re-run
+  // on every client-side navigation: the layout persists, so a mount-only
+  // effect would leave the newly navigated page's content at opacity 0 until
+  // a hard refresh. A MutationObserver also catches content that streams in
+  // after the route commit.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname is the trigger — the observer must be rebuilt for each route's new .reveal nodes
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => {
@@ -131,17 +136,34 @@ const LayoutScripts = () => {
       { threshold: 0.01 },
     )
 
-    const timer = setTimeout(() => {
-      document.querySelectorAll('.reveal').forEach((el) => {
+    const observe = (el: Element) => {
+      if (
+        el.classList.contains('reveal') &&
+        !el.classList.contains('visible')
+      ) {
         io.observe(el)
+      }
+    }
+
+    document.querySelectorAll('.reveal').forEach(observe)
+
+    const mo = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement) {
+            observe(node)
+            node.querySelectorAll('.reveal').forEach(observe)
+          }
+        })
       })
-    }, 50)
+    })
+    mo.observe(document.body, { childList: true, subtree: true })
 
     return () => {
-      clearTimeout(timer)
+      mo.disconnect()
       io.disconnect()
     }
-  }, [])
+  }, [pathname])
 
   return null
 }

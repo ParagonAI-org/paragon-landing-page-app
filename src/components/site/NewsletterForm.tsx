@@ -5,9 +5,8 @@ import { useState } from 'react'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
- * Newsletter signup for the blog CTA. No backend — mirrors the contact-us
- * mailto pattern: opens the visitor's mail client addressed to
- * hello@paragonai.com with a fixed subject.
+ * Newsletter signup. No backend — mirrors the contact mailto pattern: opens
+ * the visitor's mail client addressed to hello@paragonai.com.
  */
 const NewsletterForm = () => {
   const [email, setEmail] = useState('')
@@ -43,13 +42,8 @@ const NewsletterForm = () => {
   }
 
   return (
-    <form
-      className="max-w-md mx-auto reveal opacity-0 translate-y-[40px] transition-all duration-900 delay-300 [&.visible]:opacity-100 [&.visible]:translate-y-0"
-      onSubmit={onSubmit}
-      noValidate
-      suppressHydrationWarning
-    >
-      <div className="flex flex-col sm:flex-row gap-3">
+    <form onSubmit={onSubmit} noValidate>
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="email"
           value={email}
@@ -57,31 +51,31 @@ const NewsletterForm = () => {
           placeholder="Email address"
           aria-label="Email address"
           aria-invalid={error ? true : undefined}
-          className="flex-1 bg-paper/5 border border-paper/15 rounded-full px-5 py-3 text-sm text-paper placeholder-paper/40 focus:outline-none focus:border-brand-400/60 focus:ring-1 focus:ring-brand-400/50 transition-all"
+          className="flex-1 border-b border-ink/20 bg-transparent px-0 py-3 text-sm text-ink placeholder-ink/35 focus:outline-none focus:border-brand-600 transition-colors"
         />
-        <button type="submit" className="btn btn-lime !py-3" data-cursor>
-          {sent ? 'Opening your mail app…' : 'Subscribe'}
+        <button type="submit" className="btn btn-ink !py-3" data-cursor>
+          {sent ? 'Opening…' : 'Subscribe'}
           <span className="fill" />
         </button>
       </div>
-      {error && (
-        <p className="mt-3 text-sm text-brand-400 text-left" role="alert">
+      {error ? (
+        <p className="mt-3 text-sm text-brand-600" role="alert">
           <span aria-hidden="true">! </span>
           {error}
         </p>
-      )}
-      {sent && !error && (
-        <p className="mt-3 text-sm text-paper/60 text-left" role="status">
+      ) : null}
+      {sent && !error ? (
+        <p className="mt-3 text-sm text-ink/50" role="status">
           If nothing opened automatically, email us at{' '}
           <a
-            className="text-brand-400 underline underline-offset-2"
+            className="text-brand-600 underline underline-offset-2"
             href="mailto:hello@paragonai.com"
           >
             hello@paragonai.com
           </a>
           .
         </p>
-      )}
+      ) : null}
     </form>
   )
 }

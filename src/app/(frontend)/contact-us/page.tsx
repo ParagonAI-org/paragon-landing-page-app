@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import PageHeader from '@/components/site/PageHeader'
 
 type FormState = {
   name: string
@@ -77,7 +78,7 @@ const ContactUsPage = () => {
   }
 
   const fieldClass = (hasError?: string) =>
-    `w-full bg-bone/70 border rounded-lg px-4 py-3 text-sm text-ink placeholder-ink/40 focus:outline-none focus:ring-1 transition-all ${
+    `w-full bg-transparent border rounded-lg px-4 py-3 text-sm text-ink placeholder-ink/35 focus:outline-none focus:ring-1 transition-all ${
       hasError
         ? 'border-brand-600 focus:border-brand-600 focus:ring-brand-600/40'
         : 'border-ink/15 focus:border-brand-400/60 focus:ring-brand-400/40'
@@ -85,40 +86,24 @@ const ContactUsPage = () => {
 
   return (
     <>
-      {/* Contact Hero */}
-      <section className="h-[80vh] min-h-[620px] max-h-[900px] relative flex flex-col justify-center pt-32 pb-12 overflow-visible z-10 w-full">
-        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
-          <div className="absolute blur-[120px] opacity-30 rounded-full -rotate-[15deg] w-[800px] h-[250px] bg-brand-400 -right-[200px] top-[20%] animate-drift-1" />
-          <div className="absolute blur-[120px] opacity-25 rounded-full -rotate-[15deg] w-[900px] h-[300px] bg-brand-600 -right-[300px] top-[40%] animate-drift-2" />
-        </div>
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-          <div
-            className="max-w-3xl reveal opacity-0 translate-y-[30px] transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0"
-            suppressHydrationWarning
-          >
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-ink/15 text-[10px] uppercase tracking-[0.18em] text-ink/60 font-semibold mb-8">
-              <span className="w-1.5 h-1.5 bg-brand-600 rounded-full" />
-              Contact Us
-            </div>
-            <h1 className="disp font-semibold text-6xl md:text-8xl leading-[.95] tracking-[-.03em] mb-8 text-ink">
-              Let&apos;s talk about
-              <br />
-              <em className="serif-it font-normal text-brand-600">
-                what&apos;s next.
-              </em>
-            </h1>
-            <p className="text-xl text-ink/60 leading-relaxed mb-12">
-              Whether you&apos;re a student, educator, institution, or
-              investor—we&apos;d love to hear from you.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Contact Us"
+        title={
+          <>
+            Let&apos;s talk about
+            <br />
+            <span className="serif-it font-normal text-brand-600">
+              what&apos;s next.
+            </span>
+          </>
+        }
+        lede="Whether you're a student, educator, institution or collaborator — we'd love to hear from you."
+      />
 
       {/* Contact Info & Form */}
-      <section className="py-24 relative z-10 border-t border-ink/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid lg:grid-cols-2 gap-16">
+      <section className="py-14 md:py-20 relative z-10 border-t border-ink/10">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Info */}
             <div
               className="reveal opacity-0 translate-y-[30px] transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0"
@@ -175,7 +160,7 @@ const ContactUsPage = () => {
               suppressHydrationWarning
             >
               <form
-                className="space-y-6 rounded-2xl md:rounded-3xl border border-ink/10 bg-bone/60 p-6 md:p-8"
+                className="space-y-6 border-t border-ink/10 pt-6"
                 onSubmit={onSubmit}
                 noValidate
               >

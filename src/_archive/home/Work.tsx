@@ -24,7 +24,7 @@ export default function Work({
           <div>
             <p className="label text-brand-600 mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-brand-600 block" />
-              03 — Selected work
+              03 — Our work
             </p>
             <h2 className="disp font-semibold text-[clamp(2.4rem,6vw,5.5rem)] leading-[.95]">
               {WORK.heading}
@@ -36,7 +36,7 @@ export default function Work({
           </div>
           <div className="hidden md:flex items-center gap-4 pb-2">
             <span id="hCount" className="disp text-sm text-ink/40 tnum">
-              01 / 05
+              01 / {String(cards.length).padStart(2, '0')}
             </span>
             <div className="w-40 h-px bg-ink/15 overflow-hidden">
               <div id="hProg" className="h-full bg-brand-600 w-0" />
@@ -46,9 +46,9 @@ export default function Work({
 
         <div id="hTrack">
           {cards.map((card) => {
-            // The design's "Shipped Ledger" full-index card wears the mono
-            // chip and the larger lead copy (new-design.html:672-688).
-            const isLedger = card.title === 'Shipped Ledger'
+            // The flagship card wears the mono chip and the larger lead copy
+            // (the design's full-index card treatment, new-design.html:672-688).
+            const isLead = card.title === 'LevelUP'
             return (
               <Link
                 key={card.title}
@@ -69,7 +69,7 @@ export default function Work({
                     {card.tag && (
                       <span
                         className={`absolute top-4 left-4 ${
-                          isLedger
+                          isLead
                             ? 'text-xs font-mono font-semibold tracking-wider'
                             : 'label text-[10px]!'
                         } bg-ink text-paper rounded-full px-3.5 py-1.5`}
@@ -86,7 +86,7 @@ export default function Work({
                       {card.copy && (
                         <p
                           className={
-                            isLedger
+                            isLead
                               ? 'text-ink/75 text-base sm:text-lg mt-2 leading-relaxed max-w-sm'
                               : 'text-ink/50 text-sm mt-1 max-w-[280px]'
                           }

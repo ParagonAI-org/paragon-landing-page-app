@@ -2,15 +2,17 @@
  * Homepage content — single source of truth for the landing page copy.
  * Deliberately plain data so any of these can later be moved into
  * Payload globals/collections without touching the section components.
+ *
+ * Positioning: ParagonAI is a small software and app studio building from
+ * Addis Ababa — starting with LevelUP — open to selected collaborations. Only
+ * verifiable facts; no invented scale, clients, or testimonials.
  */
 
 export const NAV_LINKS = [
-  { label: 'Studio', href: '/#manifesto' },
-  { label: 'Services', href: '/#services' },
-  { label: 'Work', href: '/#work' },
-  { label: 'LevelUP', href: '/#levelup' },
-  { label: 'Method', href: '/#process' },
-  { label: 'Stories', href: '/#stories' },
+  { label: 'Products', href: '/products' },
+  { label: 'LevelUP', href: '/products/levelup' },
+  { label: 'About', href: '/about' },
+  { label: 'Blog', href: '/blog' },
 ] as const
 
 export type HeroDockCard =
@@ -42,57 +44,34 @@ export type HeroDockCard =
 
 export const HERO = {
   masthead: {
-    eyebrow: 'PARAGON AI STUDIO',
-    place: 'EST. ADDIS ABABA, ET',
-    lines: [
-      { text: 'We build the' },
-      {
-        html: 'technology <em class="serif-it font-normal text-brand-600">Africa</em>',
-      },
-      {
-        html: '<span class="text-ink">runs on</span><span class="text-brand-600">.</span>',
-      },
-    ],
-    copy: "Paragon AI is a technology studio partnering with the continent's boldest teams — from startups to ministries — to design, engineer and scale what comes next.",
-    primary: { label: 'Explore what we build', href: '/#work' },
-    secondary: { label: 'Meet LevelUP', href: '/#levelup' },
+    copy: 'Paragon AI is a small software and app studio in Addis Ababa, building AI products and digital experiences — starting with LevelUP.',
+    primary: { label: 'Explore our work', href: '/products' },
+    secondary: { label: 'Meet LevelUP', href: '/products/levelup' },
   },
-  statusPill: "ADDIS ABABA (09°01'N 38°44'E)",
-  statusTag: 'SOVEREIGN ARCHITECTURE // 2026',
   dock: [
     {
       theme: 'lime',
-      label: 'BOOKING Q3 2026',
-      title: 'Start your build with us.',
-      sub: 'One senior squad. No junior hand-offs.',
-      cta: { label: 'Start a project', href: '/#contact' },
+      label: 'OPEN TO COLLABORATION',
+      title: 'Have a problem worth solving?',
+      sub: 'We work on ambitious ideas, useful AI applications and products built to matter.',
+      cta: { label: 'Get in touch', href: '/contact-us' },
     },
     {
       theme: 'ink',
-      label: 'SCALE & IMPACT',
-      stat: '50',
-      statSuffix: 'K+',
-      sub: 'Learners on LevelUP across 12 African countries.',
-      tag: 'LEVELUP 2.0 LIVE',
+      label: 'OUR MISSION',
+      stat: '1',
+      sub: 'Built for African learners — starting in Ethiopia.',
+      tag: 'FLAGSHIP · LEVELUP',
     },
     {
       theme: 'brand',
-      label: 'EDTECH FLAGSHIP',
-      title: 'LevelUP Adaptive AI',
-      sub: 'Offline-first test prep engineered for $80 phones and 2G connectivity.',
-      cta: { label: 'Meet LevelUP', href: '/#levelup' },
+      label: 'OUR FLAGSHIP PRODUCT',
+      title: 'LevelUP',
+      sub: 'AI-powered learning, built for local curricula.',
+      cta: { label: 'Meet LevelUP', href: '/products/levelup' },
     },
   ] as HeroDockCard[],
 } as const
-
-export const MARQUEE_ITEMS = [
-  { text: 'AI SYSTEMS', serif: false, dot: 'bg-brand-600' },
-  { text: 'web platforms', serif: true, dot: 'bg-lime' },
-  { text: 'MOBILE PRODUCTS', serif: false, dot: 'bg-brand-600' },
-  { text: 'data & analytics', serif: true, dot: 'bg-lime' },
-  { text: 'CLOUD & DEVOPS', serif: false, dot: 'bg-brand-600' },
-  { text: 'product strategy', serif: true, dot: 'bg-lime' },
-] as const
 
 export const WORLD_TRANSITIONS = {
   wc1: {
@@ -101,91 +80,95 @@ export const WORLD_TRANSITIONS = {
     index: '01',
     theme: 'dark' as const,
     statement: [
-      { text: 'Technology is the new' },
+      { text: 'Technology should be built for' },
       {
-        html: '<em class="serif-it font-normal text-lime">infrastructure</em> of the continent.',
+        html: '<em class="serif-it font-normal text-lime">the realities we live in</em> — and the future we imagine.',
       },
     ],
-    scramble: "Rendering the machines that will define Africa's next decade.",
-    status: 'Now accepting missions',
+    scramble: 'Building useful, ambitious technology from Africa.',
+    status: 'Building from Addis Ababa',
     statusDot: 'lime' as const,
-    footLeft: '//\u00a0Design\u00a0Engineering\u00a0AI',
-    footMid: 'Infrastructure of the continent',
-    rightStat: 'EST.\u00a02020',
+    footLeft: '//\u00a0Useful\u00a0Ambitious\u00a0Ours',
+    footMid: 'Technology from Africa',
+    rightStat: 'ADDIS\u00a0ABABA',
   },
   wc2: {
     id: 'wc2',
-    rail: 'Workshop',
+    rail: 'Work',
     index: '02',
     theme: 'light' as const,
     statement: [
       { text: 'From idea' },
       {
-        html: 'to <em class="serif-it font-normal text-brand-600">impact.</em>',
+        html: 'to <em class="serif-it font-normal text-brand-600">product.</em>',
       },
     ],
-    scramble: 'Prototyping the paths that turn concepts into shipped products.',
-    status: 'From prototype to production',
+    scramble: 'Our work starts with products we believe should exist.',
+    status: 'A product-first company',
     statusDot: 'brand' as const,
-    footLeft: '//\u00a0Ideate\u00a0Prototype\u00a0Launch',
-    footMid: 'Ideas, engineered',
-    rightStat: 'SHIP\u00a0\u00a0FAST',
+    footLeft: '//\u00a0Build\u00a0Learn\u00a0Iterate',
+    footMid: 'Products we believe in',
+    rightStat: 'PRODUCT\u00a0FIRST',
   },
   wc3: {
     id: 'wc3',
-    rail: 'Method',
+    rail: 'Approach',
     index: '03',
     theme: 'dark' as const,
     statement: [
-      { text: 'Four moves.' },
+      { text: 'A practical way' },
       {
-        html: '<em class="serif-it font-normal text-lime">Zero</em>&nbsp;hand-offs.',
+        html: 'of <em class="serif-it font-normal text-lime">building.</em>',
       },
     ],
     scramble:
-      'One senior team carrying the work start to finish — no translation loss between hand-offs.',
-    status: 'Full-ownership delivery',
+      'Understand the problem, validate the idea, engineer the solution — and keep improving it.',
+    status: 'Four phases, one loop',
     statusDot: 'lime' as const,
-    footLeft: '//\u00a0Discover\u00a0Design\u00a0Build\u00a0Scale',
-    footMid: 'Four moves, one team',
-    rightStat: 'ONE\u00a0TEAM',
+    footLeft: '//\u00a0Discover\u00a0Design\u00a0Build\u00a0Improve',
+    footMid: 'From problem to product',
+    rightStat: 'ONE\u00a0LOOP',
   },
   wc4: {
     id: 'wc4',
-    rail: 'Voices',
+    rail: 'Perspective',
     index: '04',
     theme: 'dark' as const,
     statement: [
-      { text: 'Proof, not' },
-      { html: '<em class="serif-it font-normal text-lime">promises.</em>' },
+      { text: 'Ambition,' },
+      {
+        html: '<em class="serif-it font-normal text-lime">grounded in reality.</em>',
+      },
     ],
     scramble:
-      'Testimonials and field reports from the people who ship and learn with us.',
-    status: 'Field-proven outcomes',
+      'What we believe about building technology from Ethiopia — for the people who live here.',
+    status: 'Our perspective',
     statusDot: 'lime' as const,
-    footLeft: '//\u00a0Partners\u00a0Educators\u00a0Learners',
-    footMid: 'Proven, on the record',
-    rightStat: 'REAL\u00a0STORIES',
+    footLeft: '//\u00a0Ethiopia\u00a0Purpose\u00a0Vision',
+    footMid: 'Built with ambition',
+    rightStat: 'LONG\u00a0TERM',
   },
 } as const
 
 export const MANIFESTO = {
   label: '01 — Who we are',
+  focusLabel: 'OUR CURRENT FOCUS',
+  focusHeading: 'AI products. Real problems. Long-term ambition.',
   textPre:
-    'Paragon AI exists to prove that world-class technology can be built in Africa, for Africa — and for everyone. We design AI systems, web platforms and digital products that move entire industries. Education is where we started. It is ',
-  textEm: 'not where we stop.',
+    'ParagonAI exists to build useful, ambitious technology from Africa — AI-powered products and digital experiences that solve real problems. We start with education, expand into applied AI, and stay open to collaborations that share our ambition. This is ',
+  textEm: 'day one.',
   stats: [
-    { value: '30', suffix: '+', label: 'Platforms shipped' },
-    { value: '12', suffix: '+', label: 'Countries served' },
-    { value: '50', suffix: 'K+', label: 'Learners on LevelUP' },
+    { value: '01', suffix: '', label: 'Flagship product — LevelUP' },
+    { value: '01', suffix: '', label: 'Core focus — Applied AI' },
+    { value: '01', suffix: '', label: 'Home base — Addis Ababa' },
   ],
 } as const
 
 export const SERVICES = [
   {
     index: '01',
-    title: 'AI Systems',
-    copy: 'LLM products, computer vision, forecasting and automation — from prototype to production.',
+    title: 'AI Products & Agents',
+    copy: 'AI-powered applications, intelligent agents, and workflow automation designed around practical use cases.',
     image:
       'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
@@ -193,39 +176,39 @@ export const SERVICES = [
   {
     index: '02',
     title: 'Web Platforms',
-    copy: 'Scalable web apps, dashboards and marketplaces engineered for real-world traffic.',
+    copy: 'Modern web applications, business tools, dashboards, and digital platforms built around real user needs.',
     image:
       'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
   },
   {
     index: '03',
-    title: 'Mobile Products',
-    copy: 'Offline-first Android & iOS apps built for low-bandwidth, low-spec realities.',
+    title: 'Mobile Applications',
+    copy: 'Mobile experiences designed for accessibility, performance, and the realities of everyday device use.',
     image:
       'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
   },
   {
     index: '04',
-    title: 'Data & Analytics',
-    copy: 'Pipelines, warehousing and decision dashboards that turn noise into strategy.',
+    title: 'Data & Intelligent Systems',
+    copy: 'Retrieval-augmented generation, knowledge systems, data processing, and AI-assisted decision tools.',
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
   },
   {
     index: '05',
-    title: 'Cloud & DevOps',
-    copy: "Resilient infrastructure, CI/CD and observability across the continent's edge.",
+    title: 'Infrastructure & Deployment',
+    copy: 'Reliable application architecture, cloud deployment, integrations, and the systems that keep products running.',
     image:
       'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
   },
   {
     index: '06',
-    title: 'Design & Strategy',
-    copy: 'Research, prototyping and product strategy that de-risk the build before it begins.',
+    title: 'Product Development',
+    copy: 'From defining the problem to prototyping, engineering, and iterating toward a product people can use.',
     image:
       'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80&w=800',
     href: '/#contact',
@@ -233,59 +216,43 @@ export const SERVICES = [
 ] as const
 
 export const WORK = {
-  heading: 'Flagships we own.',
-  emphasis: 'Platforms we build.',
+  heading: "Products we're",
+  emphasis: 'building.',
   cards: [
     {
       title: 'LevelUP',
-      tag: 'EdTech · Flagship',
-      copy: 'AI-powered gamified test prep — offline-first, localized, free for learners.',
+      tag: 'FLAGSHIP PRODUCT · EDUCATION',
+      copy: 'An AI-powered exam preparation companion built around Ethiopian curricula, past exam questions, personalized explanations, and engaging learning experiences — built for Ethiopian high school students, with broader ambitions for African education.',
       image:
         'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&q=80&w=1200',
       href: '/products/levelup',
     },
     {
-      title: 'Paragon Engine',
-      tag: 'AI Infrastructure',
-      copy: 'Production-grade model serving, RAG and evaluation APIs.',
+      title: 'Applied AI',
+      tag: 'RESEARCH & DEVELOPMENT',
+      copy: 'Exploring practical applications of AI, agent-based workflows, knowledge retrieval, and intelligent software systems — an evolving area of research and product development.',
       image:
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
-      href: '/products',
-    },
-    {
-      title: 'Paragon Studios',
-      tag: 'Client Builds',
-      copy: 'Senior product squads for fintech, health, agro and public sector.',
-      image:
-        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200',
-      href: '/products',
-    },
-    {
-      title: 'Paragon Labs',
-      tag: 'Applied Research',
-      copy: 'Adaptive systems, low-resource languages, offline inference.',
-      image:
-        'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200',
       href: '/blog',
     },
     {
-      title: 'Shipped Ledger',
-      tag: 'Full Index',
-      copy: 'Every product, platform and case study — in one place.',
+      title: 'Digital Products',
+      tag: 'SELECTED COLLABORATIONS',
+      copy: 'We are open to selected collaborations involving software development, AI integration, and new digital product ideas. Interested in building something together?',
       image:
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
-      href: '/products',
+        'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200',
+      href: '/contact-us',
     },
   ],
 } as const
 
 export const LEVELUP = {
-  label: '04 — Flagship · EdTech',
+  label: '04 — Flagship product · Education',
   image:
     'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=80&w=1200',
-  imageAlt: 'LevelUP in the classroom',
-  imageTag: 'LEVELUP 2.0 // NATIONAL DEPLOYMENT',
-  imageStat: '50,000+ USERS',
+  imageAlt: 'Students learning with LevelUP',
+  imageTag: 'LEVELUP // AI LEARNING COMPANION',
+  imageStat: 'BUILT FOR ETHIOPIAN SCHOOLS',
   chapterImages: [
     'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=80&w=1200',
     'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1200',
@@ -293,36 +260,36 @@ export const LEVELUP = {
   ],
   chapters: [
     {
-      eyebrow: '01 / DYNAMIC LEARNING',
-      title: 'Adapts in real time',
-      copy: 'Every answer reshapes the next question. No two learning paths are alike — the tutor knows what you know before you do.',
+      eyebrow: '01 / CURRICULUM-ALIGNED',
+      title: 'Matches the syllabus',
+      copy: 'Learning experiences grounded in Ethiopian school subjects, curriculum content, and past exam questions.',
     },
     {
-      eyebrow: '02 / HARDWARE INDEPENDENCE',
-      title: 'Works anywhere',
-      copy: 'Offline-first architecture built for low-connectivity regions and $80 phones. Download a subject, climb a mountain, keep learning.',
+      eyebrow: '02 / PERSONALIZED EXPLANATIONS',
+      title: 'Understands, not just answers',
+      copy: 'An AI learning companion that helps students understand questions, not just see answers.',
     },
     {
-      eyebrow: '03 / NATIVE VERNACULAR',
-      title: 'Speaks your language',
-      copy: 'Localized across Amharic, Swahili, French, English and more — because understanding beats translation, every time.',
+      eyebrow: '03 / BUILT FOR LOCAL NEEDS',
+      title: 'Designed for local realities',
+      copy: 'Built with local curricula, accessible mobile experiences, and multilingual learning in mind.',
     },
   ],
   cta: 'Explore LevelUP',
-  ctaHref: '/#work',
+  ctaHref: '/products/levelup',
 } as const
 
 export const PROCESS = {
-  heading: 'How we',
-  emphasis: 'work.',
-  sub: 'One senior team owns your product from first workshop to national scale.',
+  heading: 'From problem',
+  emphasis: 'to product.',
+  sub: 'A practical approach to building technology: understand the problem, validate the idea, engineer the solution, and keep improving it.',
   steps: [
     {
       num: '01',
       title: 'Discover',
-      copy: 'Workshops, field research and data audits. We fall in love with the problem before we touch a keyboard.',
-      phaseEyebrow: 'PHASE 01 // IMMERSION',
-      tagBadge: 'USER JOURNEYS & FIELD AUDITS',
+      copy: 'Understand the people, constraints, and problem before deciding what to build.',
+      phaseEyebrow: 'PHASE 01 // DISCOVER',
+      tagBadge: 'RESEARCH & PROBLEM DEFINITION',
       image:
         'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
       highlight: false,
@@ -330,9 +297,9 @@ export const PROCESS = {
     {
       num: '02',
       title: 'Design',
-      copy: 'Prototypes tested with real users on real devices — in Addis, Lagos, Nairobi and Kigali — before a line of prod code.',
-      phaseEyebrow: 'PHASE 02 // VALIDATION',
-      tagBadge: 'HIGH-FIDELITY TESTING',
+      copy: 'Shape the experience, test assumptions, and turn the idea into a clear product direction.',
+      phaseEyebrow: 'PHASE 02 // DESIGN',
+      tagBadge: 'PROTOTYPES & PRODUCT THINKING',
       image:
         'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80&w=1200',
       highlight: false,
@@ -340,19 +307,19 @@ export const PROCESS = {
     {
       num: '03',
       title: 'Build',
-      copy: 'Senior engineers ship in two-week cycles with CI/CD, observability and security baked in from day one.',
-      phaseEyebrow: 'PHASE 03 // EXECUTION',
-      tagBadge: 'CI/CD & ZERO OUTSOURCING',
+      copy: 'Engineer the product with a focus on usability, maintainability, and reliable delivery.',
+      phaseEyebrow: 'PHASE 03 // BUILD',
+      tagBadge: 'ENGINEERING & ITERATION',
       image:
         'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200',
       highlight: false,
     },
     {
       num: '04',
-      title: 'Scale',
-      copy: 'We stay for the growth: load testing, localization, training and handover — or run it with you, forever.',
-      phaseEyebrow: 'PHASE 04 // EXPANSION',
-      tagBadge: 'SLA & RUNTIME SUPPORT',
+      title: 'Improve',
+      copy: "Learn from real-world use, fix what's not working, and evolve the product over time.",
+      phaseEyebrow: 'PHASE 04 // IMPROVE',
+      tagBadge: 'FEEDBACK & CONTINUOUS IMPROVEMENT',
       image:
         'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200',
       highlight: true,
@@ -360,101 +327,68 @@ export const PROCESS = {
   ],
 } as const
 
-export const BIG_STATS = [
-  { value: 30, suffix: '+', label: 'Platforms shipped' },
-  { value: 50, suffix: 'K+', label: 'Learners on LevelUP' },
-  { value: 12, suffix: '+', label: 'Countries served' },
-  { value: 400, suffix: '+', label: 'Partner engineers' },
-] as const
-
 export const PRINCIPLES = {
-  heading: 'How we',
-  emphasis: 'think.',
-  sub: 'Four principles that decide what we build and how we build it.',
+  heading: 'What',
+  emphasis: 'guides us.',
+  sub: 'The principles behind the products we choose to build and the way we approach technology.',
   items: [
     {
       num: '01',
-      title: 'Build with, not for',
-      copy: 'We embed with ministries, teachers and founders before we write a line of code.',
-      tag: 'CO-CREATION',
+      title: 'Solve real problems',
+      copy: 'Technology matters when it makes something meaningfully better for the people using it.',
+      tag: 'PURPOSE FIRST',
     },
     {
       num: '02',
-      title: 'Offline-first, always',
-      copy: 'Designed for $80 phones and 2G connectivity. Connectivity is a feature, not a given.',
-      tag: 'LOW-RESILIENT INFRA',
+      title: 'Design for our reality',
+      copy: 'Products should account for local languages, device limitations, connectivity, affordability, and how people actually live.',
+      tag: 'CONTEXT MATTERS',
     },
     {
       num: '03',
-      title: 'Craft is strategy',
-      copy: 'Polish is not vanity. In markets where trust is earned slowly, craft is the fastest growth lever.',
-      tag: 'RIGOROUS FINISH',
+      title: 'Make AI useful',
+      copy: 'We focus on practical applications that help people learn, work, create, and make better decisions.',
+      tag: 'INTELLIGENCE WITH PURPOSE',
     },
     {
       num: '04',
-      title: 'Talent is everywhere',
-      copy: 'Senior African engineers and designers, held to a global bar — and paid one.',
-      tag: 'GLOBAL BENCHMARK',
+      title: 'Build for the long term',
+      copy: 'We value thoughtful engineering, continuous learning, and products that can grow beyond their first use case.',
+      tag: 'SUSTAINABLE INNOVATION',
     },
   ],
 } as const
 
-export type Testimonial = {
-  stat: string
-  statSuffix?: string
-  label: string
-  quote: string
-  name: string
-  role: string
-  avatar: string
+export type PerspectiveItem = {
+  num: string
+  title: string
+  copy: string
   variant: 'ink' | 'brand' | 'bone'
 }
 
-export const TESTIMONIALS: Testimonial[] = [
+/**
+ * The former testimonials section, rebuilt as a company-perspective strip:
+ * real beliefs instead of invented quotes. When genuine LevelUP user
+ * feedback exists, replace these with real words used with permission.
+ */
+export const PERSPECTIVE: PerspectiveItem[] = [
   {
-    stat: '99.9',
-    statSuffix: '%',
-    label: 'Uptime since launch',
-    quote:
-      '"Paragon rebuilt our core ledger and shipped in 14 weeks. Zero downtime since — our investors noticed."',
-    name: 'Chidi O.',
-    role: 'CTO, Lagos fintech',
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100',
+    num: '01',
+    title: 'From Ethiopia',
+    copy: 'We believe Africa should be more than a market for technology built elsewhere — building from local experience, with global standards in mind.',
     variant: 'ink',
   },
   {
-    stat: '+210',
-    label: 'Points · national exam',
-    quote:
-      '"LevelUP found the exact topics I was weak in. Three months later I scored in the top 1% nationally."',
-    name: 'Hanna W.',
-    role: 'Grade 12 student, Addis Ababa',
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100',
+    num: '02',
+    title: 'AI with purpose',
+    copy: 'We apply emerging technology to meaningful, everyday problems — intelligence in service of people.',
     variant: 'brand',
   },
   {
-    stat: '12',
-    label: 'Districts in 6 months',
-    quote:
-      '"Their team understood our constraints — bandwidth, devices, language — better than vendors ten times their size."',
-    name: 'Selam G.',
-    role: 'Education officer, MoE',
-    avatar:
-      'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&q=80&w=100',
+    num: '03',
+    title: 'A long-term vision',
+    copy: 'Starting with focused products and growing into new opportunities across industries, one real problem at a time.',
     variant: 'bone',
-  },
-  {
-    stat: '3×',
-    label: 'Faster diagnosis triage',
-    quote:
-      '"The vision model Paragon built reads crop-disease photos as well as our best agronomists."',
-    name: 'Wanjiru M.',
-    role: 'Founder, agritech startup',
-    avatar:
-      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=100',
-    variant: 'ink',
   },
 ]
 
@@ -468,46 +402,38 @@ export type UpdateRow = {
 
 export const FALLBACK_UPDATES: UpdateRow[] = [
   {
-    tag: 'Company',
-    date: 'Jul 2026',
-    title: 'Paragon AI expands to Kenya & Rwanda with new regional hubs',
+    tag: 'Product',
+    date: '2026',
+    title: 'Building LevelUP: an AI exam-prep companion for Ethiopian students',
     href: '/blog',
     image:
       'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=400',
   },
   {
-    tag: 'Product',
-    date: 'Jun 2026',
-    title: 'LevelUP 2.0: personalized AI tutoring now live nationwide',
+    tag: 'AI',
+    date: '2026',
+    title:
+      'AI, beyond the hype: where intelligent systems create practical value',
     href: '/blog',
     image:
       'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=400',
   },
   {
-    tag: 'Studios',
-    date: 'May 2026',
-    title: 'Studios ships real-time payments dashboard for Lagos fintech',
+    tag: 'Company',
+    date: '2026',
+    title: 'Building from Ethiopia: lessons, challenges, and opportunities',
     href: '/blog',
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400',
   },
-  {
-    tag: 'Labs',
-    date: 'Apr 2026',
-    title: 'Offline inference: running tutors on $80 phones',
-    href: '/blog',
-    image:
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400',
-  },
 ]
 
 export const CTA = {
-  label: 'Entering — The Finale',
-  heading: "Let's build what",
-  emphasis: 'needs next.',
-  headingEnd: 'Africa',
-  copy: "Whether you're launching a product, automating operations or reimagining a classroom — we'll build it with you.",
-  primary: { label: 'Start a project', href: 'mailto:hello@paragon.ai' },
-  secondary: { label: 'Talk to our team', href: '/contact-us' },
-  badge: 'Booking Q3 2026 projects',
+  label: "LET'S BUILD",
+  heading: "The future isn't built",
+  emphasis: 'by waiting.',
+  copy: "We're building AI-powered products from Ethiopia, starting with education and looking toward what's next. If you're working on a meaningful problem or exploring an idea worth building, let's talk.",
+  primary: { label: 'Explore LevelUP', href: '/products/levelup' },
+  secondary: { label: 'Contact ParagonAI', href: '/contact-us' },
+  badge: 'Open to selected collaborations',
 } as const

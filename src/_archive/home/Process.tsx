@@ -1,4 +1,4 @@
-import { BIG_STATS, PROCESS } from '@/lib/home-content'
+import { PROCESS } from '@/lib/home-content'
 
 export type ProcessStep = {
   num: string
@@ -9,35 +9,32 @@ export type ProcessStep = {
   phaseEyebrow?: string
   tagBadge?: string
 }
-export type BigStat = { value: number; suffix?: string; label: string }
 
 const STEP_EYEBROWS: Record<string, { eyebrow: string; tag: string }> = {
   '01': {
-    eyebrow: 'PHASE 01 // IMMERSION',
-    tag: 'USER JOURNEYS & FIELD AUDITS',
+    eyebrow: 'PHASE 01 // DISCOVER',
+    tag: 'RESEARCH & PROBLEM DEFINITION',
   },
   '02': {
-    eyebrow: 'PHASE 02 // VALIDATION',
-    tag: 'HIGH-FIDELITY TESTING',
+    eyebrow: 'PHASE 02 // DESIGN',
+    tag: 'PROTOTYPES & PRODUCT THINKING',
   },
   '03': {
-    eyebrow: 'PHASE 03 // EXECUTION',
-    tag: 'CI/CD & ZERO OUTSOURCING',
+    eyebrow: 'PHASE 03 // BUILD',
+    tag: 'ENGINEERING & ITERATION',
   },
   '04': {
-    eyebrow: 'PHASE 04 // EXPANSION',
-    tag: 'SLA & RUNTIME SUPPORT',
+    eyebrow: 'PHASE 04 // IMPROVE',
+    tag: 'FEEDBACK & CONTINUOUS IMPROVEMENT',
   },
 }
 
 export default function Process({
   sub = PROCESS.sub,
   steps = PROCESS.steps,
-  bigStats = BIG_STATS,
 }: {
   sub?: string
   steps?: readonly ProcessStep[]
-  bigStats?: readonly BigStat[]
 }) {
   return (
     <>
@@ -56,7 +53,7 @@ export default function Process({
                 className="disp font-semibold text-[clamp(2.6rem,7vw,6.5rem)] leading-[.95]"
                 data-rv
               >
-                How we
+                {PROCESS.heading}
                 <br />
                 <em className="serif-it font-normal text-lime">
                   {PROCESS.emphasis}
@@ -151,29 +148,6 @@ export default function Process({
               )
             })}
           </div>
-        </div>
-      </section>
-
-      {/* Stats with bento-card glass containers */}
-      <section
-        id="statsSec"
-        data-nav-dark
-        className="coal-sec pb-24 md:pb-32 px-5 md:px-10 bg-transparent"
-      >
-        <div className="max-w-[1500px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-5 pt-16 border-t border-paper/10">
-          {bigStats.map((stat) => (
-            <div
-              key={stat.label}
-              className="bento-card p-8 bg-white/[0.04] border border-paper/10 backdrop-blur-md"
-              data-rv
-            >
-              <p className="disp font-semibold text-5xl md:text-7xl tnum text-paper">
-                <span data-count={stat.value}>0</span>
-                <span className="text-lime">{stat.suffix}</span>
-              </p>
-              <p className="label text-paper/35 mt-3">{stat.label}</p>
-            </div>
-          ))}
         </div>
       </section>
     </>

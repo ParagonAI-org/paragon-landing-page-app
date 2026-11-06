@@ -5,7 +5,7 @@ export const siteConfig = {
   fullName: 'Paragon AI',
   tagline: 'Building AI Products for Africa.',
   description:
-    'Paragon AI is an artificial intelligence company building practical AI products for Africa. Our first product, LevelUP, helps secondary school students prepare for national exams using personalized AI tutoring, multilingual learning, and curriculum-aligned content.',
+    'Paragon AI is a small software and app studio in Addis Ababa building AI-powered products and digital experiences. Our first product, LevelUP, helps secondary school students prepare for national exams with personalized AI tutoring, multilingual learning, and curriculum-aligned content.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://paragon.et',
   locale: 'en_US',
   twitterHandle: '@paragonai',

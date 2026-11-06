@@ -92,11 +92,11 @@
   }
 
   html {
-    background: #f4f3ef;
+    background: #ffffff;
   }
 
   body {
-    background: #f4f3ef;
+    background: #ffffff;
     color: #0a0a0f;
     /* clip, not hidden: `overflow-x: hidden` turns body into a scroll
        container, which breaks ScrollTrigger's fixed pinning + spacer
@@ -163,50 +163,6 @@
     text-transform: uppercase;
   }
 
-  /* ============ NOISE / GRAIN ============ */
-  .noise {
-    position: fixed;
-    inset: -100%;
-    z-index: 200;
-    pointer-events: none;
-    opacity: 0.045;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
-    animation: grain 8s steps(10) infinite;
-  }
-  @keyframes grain {
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-    10% {
-      transform: translate(-5%, -8%);
-    }
-    20% {
-      transform: translate(-12%, 4%);
-    }
-    30% {
-      transform: translate(6%, -12%);
-    }
-    40% {
-      transform: translate(-4%, 14%);
-    }
-    50% {
-      transform: translate(-12%, 8%);
-    }
-    60% {
-      transform: translate(12%, 0);
-    }
-    70% {
-      transform: translate(0, 12%);
-    }
-    80% {
-      transform: translate(3%, 14%);
-    }
-    90% {
-      transform: translate(-8%, 8%);
-    }
-  }
-
   /* ============ WEBGL LAYERS ============ */
   .nebula-canvas {
     position: fixed;
@@ -223,6 +179,13 @@
     height: 100vh;
     pointer-events: none;
     z-index: 1;
+  }
+  /* On phones/tablets the orb sits directly behind the copy; keep it as a
+     soft backdrop so the text stays readable. */
+  @media (max-width: 1023px) {
+    .webgl-canvas {
+      opacity: 0.5;
+    }
   }
 
   /* ============ BENTO CAPSULE SYSTEM ============ */
@@ -287,55 +250,63 @@
     }
   }
 
-  /* ============ NAV (glassmorphic floating bar) ============ */
+  /* ============ NAV (flat full-width bar) ============ */
   .site-nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 1rem 1.5rem;
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom: 1px solid rgba(10, 10, 15, 0.08);
+    /* transform only — .hide slides the bar; opacity belongs to the GSAP
+       intro. `transition: all` re-targets every per-frame inline opacity
+       write with a 0.6s transition, making the nav fade mushy. */
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .site-nav .nav-inner {
-    max-width: 1500px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.55rem 0.85rem;
-    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    border-radius: 24px;
+    width: 100%;
+    height: 64px;
+    padding: 0 1.25rem;
   }
-  .site-nav.scrolled .nav-inner {
-    background: rgba(244, 243, 239, 0.75);
-    backdrop-filter: blur(20px) saturate(1.8);
-    -webkit-backdrop-filter: blur(20px) saturate(1.8);
-    border: 1px solid rgba(10, 10, 15, 0.08);
-    box-shadow: 0 12px 36px -10px rgba(10, 10, 15, 0.12);
+  @media (min-width: 768px) {
+    .site-nav .nav-inner {
+      padding: 0 2.5rem;
+    }
   }
-  .site-nav.on-dark.scrolled .nav-inner {
-    background: rgba(10, 10, 15, 0.7);
-    border-color: rgba(244, 243, 239, 0.1);
-    box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.5);
+  .site-nav.scrolled {
+    box-shadow: 0 14px 30px -26px rgba(10, 10, 15, 0.45);
+  }
+  .site-nav.on-dark {
+    background: rgba(10, 10, 15, 0.9);
+    border-bottom-color: rgba(244, 243, 239, 0.1);
   }
   .site-nav.hide {
     transform: translateY(-110%);
+  }
+
+  /*
+   * The landing page is a single screen, so its bar floats transparently over
+   * the hero. Other routes keep the filled bar for legibility while scrolling.
+   */
+  body:has(#hero) .site-nav,
+  body:has(#hero) .site-nav.scrolled {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+    box-shadow: none;
   }
 
   .site-nav .logo-link {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.4rem 0.6rem;
-    border-radius: 12px;
-    transition: background 0.3s;
-  }
-  .site-nav .logo-link:hover {
-    background: rgba(10, 10, 15, 0.04);
-  }
-  .site-nav.on-dark .logo-link:hover {
-    background: rgba(244, 243, 239, 0.06);
   }
 
   /*
@@ -365,33 +336,27 @@
 
   .navlink {
     position: relative;
-    padding: 0.45rem 0.85rem;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(10, 10, 15, 0.6);
-    border-radius: 12px;
-    transition:
-      color 0.3s,
-      background 0.3s;
+    color: rgba(10, 10, 15, 0.55);
+    transition: color 0.25s;
     text-decoration: none;
   }
   .navlink:hover {
     color: #0a0a0f;
-    background: rgba(10, 10, 15, 0.05);
   }
   .site-nav.on-dark .navlink {
     color: rgba(244, 243, 239, 0.65);
   }
   .site-nav.on-dark .navlink:hover {
     color: #f4f3ef;
-    background: rgba(244, 243, 239, 0.08);
   }
 
   .nav-cta {
     background: #0a0a0f;
     color: #f4f3ef;
     padding: 0.55rem 1.25rem;
-    border-radius: 14px;
+    border-radius: 10px;
     font-size: 13px;
     font-weight: 600;
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -429,35 +394,6 @@
     color: #f4f3ef;
   }
 
-  /* ============ WORLD TRANSITIONS ============ */
-  .wc {
-    height: 180vh;
-    position: relative;
-  }
-  .wc-panel {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-    will-change: transform;
-  }
-  .wc-circle {
-    clip-path: circle(5.5% at 50% 55%);
-  }
-  .wc-scr {
-    font-family: var(--font-space-grotesk), ui-monospace, monospace;
-  }
-  @keyframes dash {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-  .draw circle {
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    animation: dash 1.6s 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-
   /* ============ HERO ============ */
   .hline {
     display: block;
@@ -470,253 +406,17 @@
     will-change: transform;
     transform: translateY(112%) rotate(2deg);
   }
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* ============ SEAMLESS MARQUEE ============ */
-  /* Full-bleed (no side margins): break out of #hero's px padding, sit flush on
-     the page bg, no painted background. Fading intro/outro come from a mask, so
-     only the moving text fades — nothing is drawn behind it. */
-  #heroStrip {
-    margin-top: 2.5rem;
-    padding: 1.5rem 0;
-    overflow: hidden;
-    border-top: 1px solid rgba(10, 10, 15, 0.07);
-    border-bottom: 1px solid rgba(10, 10, 15, 0.07);
-    margin-left: -1.25rem;
-    margin-right: -1.25rem;
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      #000 14%,
-      #000 86%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      #000 14%,
-      #000 86%,
-      transparent 100%
-    );
-  }
-  @media (min-width: 768px) {
-    #heroStrip {
-      margin-left: -2.5rem;
-      margin-right: -2.5rem;
-      padding: 1.7rem 0;
-    }
-  }
-
-  /* marquee */
-  .mq {
-    display: flex;
-    width: max-content;
-    will-change: transform;
-  }
-  .mq-item {
-    white-space: nowrap;
-  }
-
-  /* ============ SERVICE ROWS ============ */
-  .svc-row {
-    border-top: 1px solid rgba(244, 243, 239, 0.12);
-    padding: 2rem 0;
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: pointer;
-  }
-  .svc-row:last-child {
-    border-bottom: 1px solid rgba(244, 243, 239, 0.12);
-  }
-  .svc-row:hover {
-    padding-left: 1.5rem;
-    border-color: rgba(216, 255, 62, 0.4);
-  }
-  .svc-row .arr {
-    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .svc-row:hover .arr {
-    transform: rotate(45deg);
-    background: #d8ff3e;
-    color: #0a0a0f;
-    border-color: #d8ff3e;
-  }
-  #svcPreview {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 60;
-    width: 320px;
-    height: 210px;
-    border-radius: 1.4rem;
-    overflow: hidden;
-    pointer-events: none;
+  /* Pre-JS intro states: the choreography reveals these on boot. Without
+     this, the dock cards paint fully visible, then snap out when their intro
+     slots begin and fade back in — a visible double take on every load.
+     Scoped to #hero (home page only). The nav gets the same treatment via
+     body:has(#hero) so other pages are untouched. Revealed statically below
+     for reduced-motion and noscript. */
+  #hero [data-hero-rise] {
     opacity: 0;
-    transform: scale(0.85);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
   }
-  #svcPreview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* ============ HORIZONTAL WORK ============ */
-  .h-wrap {
-    overflow: hidden;
-  }
-  @media (max-width: 767px) {
-    .h-wrap {
-      overflow-x: auto;
-    }
-    #hTrack {
-      padding-right: 6vw;
-    }
-  }
-  #hTrack {
-    display: flex;
-    gap: 2vw;
-    padding-left: 6vw;
-    width: max-content;
-    will-change: transform;
-  }
-  .wcard {
-    width: min(72vw, 620px);
-    flex-shrink: 0;
-    perspective: 1000px;
-  }
-
-  /* ============ LEVELUP PINNED STORY ============ */
-  .lvl-ch {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  body:has(#hero) #nav {
     opacity: 0;
-    visibility: hidden;
-  }
-  .lvl-dot {
-    transition: all 0.4s;
-  }
-  @media (max-width: 767px) {
-    .lvl-ch {
-      position: static;
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: none !important;
-      margin-bottom: 3rem;
-    }
-  }
-
-  /* ============ DARK WORLDS ============ */
-  /*
-   * .dark-sec / .coal-sec set text color only. Each section that needs an
-   * opaque background applies it via its own Tailwind class (bg-ink,
-   * bg-coal, etc.) so that transparent sections (world-transition panels,
-   * levelup, stories) correctly show the fixed WebGL canvases behind them.
-   */
-  .dark-sec {
-    color: #f4f3ef;
-    position: relative;
-  }
-  .coal-sec {
-    color: #f4f3ef;
-    position: relative;
-  }
-
-  /* ============ TESTIMONIALS ============ */
-  .tm-item {
-    flex-shrink: 0;
-    transition: transform 0.4s ease;
-  }
-  .tm-item:hover {
-    transform: translateY(-4px);
-  }
-
-  /* ============ UPDATES ============ */
-  .up-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1.5rem;
-    align-items: center;
-    border-top: 1px solid rgba(244, 243, 239, 0.15);
-    padding: 2.2rem 0;
-    position: relative;
-    text-decoration: none;
-    color: #f4f3ef;
-    transition: all 0.3s;
-  }
-  .up-row:last-child {
-    border-bottom: 1px solid rgba(244, 243, 239, 0.15);
-  }
-  .up-row h3 {
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .up-row:hover h3 {
-    transform: translateX(14px);
-  }
-  .up-row .thumb {
-    position: absolute;
-    right: 14%;
-    top: 50%;
-    width: 190px;
-    height: 130px;
-    border-radius: 0.9rem;
-    overflow: hidden;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateY(-50%) rotate(-4deg) scale(0.8);
-    z-index: 5;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  }
-  .up-row .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* ============ FOOTER ============ */
-  /*
-   * The finale footer is transparent so the fixed nebula backdrop and the 3D
-   * orb (monumental portal state) show through it, exactly like the design.
-   * The shell defaults to opaque ink — covering no-JS, WebGL-unavailable and
-   * first-paint states — and flips transparent only once the nebula shader
-   * signals it is actually running (html.nebula-live, set by <Nebula/>).
-   */
-  .footer-shell {
-    background: #0a0a0f;
-  }
-  html.nebula-live .footer-shell {
-    background: transparent;
-  }
-  .giant {
-    font-size: clamp(4.2rem, 16.5vw, 16rem);
-    line-height: 0.85;
-    letter-spacing: -0.045em;
-    font-weight: 300;
-  }
-  .footlink {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    height: 1.4em;
-  }
-  .footlink span {
-    display: block;
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .footlink span:last-child {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    color: #d8ff3e;
-  }
-  .footlink:hover span {
-    transform: translateY(-100%);
   }
 
   /* ============ BUTTONS ============ */
@@ -787,56 +487,20 @@
   }
 
   /* ============ MISC ============ */
-  .mword {
-    display: inline-block;
-    margin-right: 0.28em;
-    opacity: 0.13;
-    will-change: opacity;
-  }
-
-  .scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    background: #4f46e5;
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: 150;
-  }
-
-  .section-zoom {
-    will-change: transform, opacity;
-  }
-
   /* ============ REDUCED MOTION ============ */
-  .reduced .wc {
-    height: auto;
-  }
-  .reduced .wc-panel {
-    position: static;
-    height: auto;
-    min-height: 60vh;
-    transform: none !important;
-    clip-path: none !important;
-  }
   .reduced .hline > span {
     transform: none;
   }
-  .reduced .lvl-ch {
-    position: static;
-    opacity: 1 !important;
-    visibility: visible !important;
-    margin-bottom: 3rem;
-  }
 
   @media (prefers-reduced-motion: reduce) {
-    .noise {
-      animation: none !important;
-    }
     * {
       transition-duration: 0.01ms !important;
+    }
+    /* No choreography boots under reduced motion — show the pre-hidden
+       hero elements and nav immediately. */
+    #hero [data-hero-rise],
+    body:has(#hero) #nav {
+      opacity: 1;
     }
   }
 }

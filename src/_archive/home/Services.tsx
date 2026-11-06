@@ -32,15 +32,15 @@ export default function Services({
               >
                 What
                 <br />
-                we <em className="serif-it font-normal text-lime">do.</em>
+                we <em className="serif-it font-normal text-lime">build.</em>
               </h2>
             </div>
             <p
               className="text-paper/40 text-sm max-w-xs leading-relaxed md:text-right"
               data-rv
             >
-              From model to marketplace — end to end, so nothing gets lost
-              between teams.
+              We turn ideas and real-world problems into thoughtful software,
+              useful AI systems, and products designed for people.
             </p>
           </div>
 

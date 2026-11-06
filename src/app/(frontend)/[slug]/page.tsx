@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import RichText from '@/components/RichText'
+import PageHeader from '@/components/site/PageHeader'
 import { createPageMetadata } from '@/lib/metadata'
 import { getPayload } from '@/lib/payload'
 
@@ -61,25 +62,26 @@ const Page = async ({ params }: Args) => {
 
   return (
     <div className="min-h-screen text-ink overflow-x-hidden">
-      <main className="max-w-[1200px] mx-auto px-5 sm:px-8 pt-32 sm:pt-40 pb-24">
-        <div className="reveal opacity-0 translate-y-[20px] transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-          <p className="label text-brand-600 mb-5 flex items-center gap-3">
-            <span className="w-8 h-px bg-brand-600 block" />
-            Page
-          </p>
-          <h1 className="text-4xl md:text-6xl font-display font-semibold tracking-tight leading-[1.05] mb-12 text-ink">
+      <PageHeader
+        eyebrow="Page"
+        title={
+          <>
             {baseTitle}{' '}
             {accentWord ? (
-              <em className="serif-it font-normal text-brand-600">
+              <span className="serif-it font-normal text-brand-600">
                 {accentWord}
-              </em>
+              </span>
             ) : null}
-          </h1>
+          </>
+        }
+      />
+      <main className="max-w-[1300px] mx-auto px-5 md:px-10 pb-20 md:pb-28">
+        <div className="border-t border-ink/10 pt-10">
+          <RichText
+            content={page.content}
+            className="prose prose-base md:prose-lg max-w-none prose-p:text-ink/70 prose-p:leading-relaxed prose-headings:font-display prose-headings:text-ink prose-strong:text-ink prose-li:text-ink/70 prose-a:text-brand-600 hover:prose-a:underline"
+          />
         </div>
-        <RichText
-          content={page.content}
-          className="prose prose-base md:prose-lg max-w-none prose-p:text-ink/70 prose-p:leading-relaxed prose-headings:font-display prose-headings:text-ink prose-strong:text-ink prose-li:text-ink/70 prose-a:text-brand-600 hover:prose-a:underline"
-        />
       </main>
     </div>
   )

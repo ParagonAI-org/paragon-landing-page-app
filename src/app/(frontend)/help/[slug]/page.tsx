@@ -76,17 +76,17 @@ const HelpArticlePage = async ({ params }: Args) => {
         {related.length > 0 ? (
           <section className="mt-20 border-t border-ink/10 pt-12">
             <h2 className="label text-ink/45">Related articles</h2>
-            <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div className="mt-6 grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-x-8">
               {related.map((a) => (
                 <Link
                   key={a.id}
                   href={`/help/${a.slug}`}
-                  className="group rounded-2xl border border-ink/10 bg-bone/70 p-5 transition-all hover:border-brand-400/50 hover:-translate-y-1"
+                  className="group border-t border-ink/10 py-4"
                 >
-                  <h3 className="text-sm font-bold leading-snug text-ink transition-colors group-hover:text-brand-600">
+                  <h3 className="text-sm font-semibold leading-snug text-ink transition-colors group-hover:text-brand-600">
                     {a.title}
                   </h3>
-                  <p className="mt-1 text-sm text-ink/60">{a.summary}</p>
+                  <p className="mt-1 text-sm text-ink/50">{a.summary}</p>
                 </Link>
               ))}
             </div>

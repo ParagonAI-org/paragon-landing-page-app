@@ -2,6 +2,10 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  // Playwright and local probes hit the dev server at 127.0.0.1; Next blocks
+  // dev resources from a different host by default, which silently disables
+  // hydration. Allow it so dev and test runs behave like localhost.
+  allowedDevOrigins: ['127.0.0.1'],
   // Allows running an isolated second dev server (e.g. on port 3200) alongside
   // the primary one without hitting the `.next/dev/lock` dev-server lock.
   // Defaults to '.next' so normal dev/build behavior is unchanged.

@@ -91,40 +91,46 @@ export default function ScrollFx() {
       // the flag so a remount reverts and replays cleanly.
       if (bootedRef.current) return
       bootedRef.current = true
+      // Snappy entrance: the whole sequence settles in ~1.4s so the first
+      // load feels instant while keeping the choreographed reveal.
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
-      tl.to('.hline > span', { y: 0, rotate: 0, duration: 1.2, stagger: 0.12 })
+      tl.to('.hline > span', { y: 0, rotate: 0, duration: 0.9, stagger: 0.09 })
         .fromTo(
           '#heroMasthead',
           { opacity: 0, y: 30, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 1.0 },
-          '-=1.0',
+          { opacity: 1, y: 0, scale: 1, duration: 0.75 },
+          '-=.75',
         )
         .fromTo(
-          '#hero .bento-card',
+          '#hero .bento-card:not(#heroMasthead)',
           { opacity: 0, y: 35, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: 0.08 },
-          '-=.7',
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.06 },
+          '-=.6',
         )
         .fromTo(
           '#nav',
           { y: -20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9 },
-          '-=.9',
+          { y: 0, opacity: 1, duration: 0.55 },
+          '-=.5',
         )
         .fromTo(
           '#heroStrip',
           { opacity: 0 },
-          { opacity: 1, duration: 0.8 },
-          '-=.7',
+          { opacity: 1, duration: 0.5 },
+          '-=.45',
         )
 
       const u = universe.current
       if (u) {
-        gsap.from(u.coreGroup.scale, {
-          x: 0.001,
-          y: 0.001,
-          z: 0.001,
-          duration: 2.0,
+        // Spawn: the core sits at ~0 (set by <Universe/> init) so it never
+        // paints at full size pre-boot; elastic-scale up to its placement
+        // value exactly once.
+        const s = glState.universe.homeScale
+        gsap.to(u.coreGroup.scale, {
+          x: s,
+          y: s,
+          z: s,
+          duration: 1.3,
           ease: 'elastic.out(1, 0.75)',
         })
       }
@@ -660,10 +666,16 @@ export default function ScrollFx() {
         document
           .querySelectorAll<HTMLElement>('#svcList .svc-row')
           .forEach((svc, index) => {
-            const onEnter = () => {
+            const onEnter = (e: MouseEvent) => {
               const src = svc.dataset.img
               if (isDesktop && img && src) {
                 img.src = src
+                // A row can slide under a stationary pointer while the page
+                // scrolls: mouseenter fires with no preceding mousemove, so
+                // the preview would reveal at its last (initially 0,0)
+                // transform — the top-left corner. Place it from the event
+                // itself; quickTo keeps trailing the cursor on mousemoves.
+                gsap.set(prev, { x: e.clientX - 160, y: e.clientY - 105 })
                 gsap.to(prev, {
                   opacity: 1,
                   scale: 1,
@@ -804,11 +816,9 @@ export default function ScrollFx() {
       gsap.set('#nav', { opacity: 0 })
     })
 
-    // Mirror the ref design's boot gating: its preloader only runs the whole
-    // choreography after load and fonts settle, so every ScrollTrigger
-    // measures the final document (pin spacers included). The app boots at
-    // hydration, and GSAP does not re-anchor pre-pin triggers afterwards, so
-    // the app defers initAnims to the same conditions.
+    // Boot right after fonts settle — see the gate near the end of this
+    // effect. The reAnchorAll machinery below is what keeps trigger
+    // measurements correct when the document shifts after boot.
     let ctx: gsap.Context | null = null
     let disposed = false
 
@@ -847,14 +857,16 @@ export default function ScrollFx() {
       })
     }
 
-    const fonts = document.fonts?.ready ?? Promise.resolve()
-    const loaded =
-      document.readyState === 'complete'
-        ? Promise.resolve()
-        : new Promise<void>((resolve) => {
-            window.addEventListener('load', () => resolve(), { once: true })
-          })
-    Promise.all([fonts, loaded]).then(boot)
+    // Boot as soon as fonts settle (capped at 1.2s) — deliberately NOT the
+    // window `load` event: load stalls on every image/analytics request,
+    // which held the whole hero hostage for seconds on cold loads. Late
+    // layout changes (lazy images finishing, pin spacers) are re-anchored by
+    // reAnchorAll() at boot plus the 'refresh' listener above.
+    const fonts = Promise.race([
+      document.fonts?.ready ?? Promise.resolve(),
+      new Promise<void>((resolve) => setTimeout(resolve, 1200)),
+    ])
+    fonts.then(boot)
 
     return () => {
       disposed = true

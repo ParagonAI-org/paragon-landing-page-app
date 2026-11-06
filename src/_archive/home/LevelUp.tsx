@@ -68,7 +68,9 @@ export default function LevelUp({
             <h2 className="disp font-semibold text-[clamp(2.3rem,4.5vw,4.2rem)] leading-[.98] mb-8 text-white">
               LevelUP.
               <br />
-              <em className="serif-it font-normal text-lime">The story.</em>
+              <em className="serif-it font-normal text-lime">
+                Learning, reimagined.
+              </em>
             </h2>
 
             <div className="relative md:h-[32vh]" id="lvlChapters">

@@ -18,6 +18,7 @@
       "**",
       "!**/build",
       "!**/coverage",
+      "!**/src/_archive/**",
       "!**/src/payload-types.ts",
       "!**/src/payload-generated-schema.ts",
       "!**/src/migrations/**",
@@ -29,6 +30,7 @@
     "rules": { "recommended": true },
     "includes": [
       "**",
+      "!**/src/_archive/**",
       "!**/src/payload-types.ts",
       "!**/src/payload-generated-schema.ts",
       "!**/src/migrations/**",
@@ -73,6 +75,6 @@
   "assist": {
     "enabled": true,
     "actions": { "source": { "organizeImports": "on" } },
-    "includes": ["**", "!**/importMap.js"]
+    "includes": ["**", "!**/src/_archive/**", "!**/importMap.js"]
   }
 }

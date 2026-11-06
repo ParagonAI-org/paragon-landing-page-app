@@ -78,8 +78,6 @@
   },
   "packageManager": "yarn@4.15.0",
   "lint-staged": {
-    "*": [
-      "biome check --write --no-errors-on-unmatched"
-    ]
+    "*": ["biome check --write --no-errors-on-unmatched"]
   }
 }

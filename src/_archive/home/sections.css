@@ -1,0 +1,236 @@
+/* ============================================================
+   ARCHIVED — landing-page section styles
+
+   These blocks were cut from src/styles/globals.css when the landing
+   page was reduced to the hero + footer. Nothing imports this file, so
+   it costs nothing at build time.
+
+   To restore a section:
+   1. Move its component back from src/_archive/home/ to
+      src/components/home/ and re-import it in
+      src/app/(frontend)/page.tsx.
+   2. Copy the matching block below back into the @layer components
+      block in src/styles/globals.css.
+   3. For scroll/marquee/hover behaviour, lift the relevant section of
+      src/_archive/home/ScrollFx.full.tsx back into
+      src/components/home/ScrollFx.tsx.
+   ============================================================ */
+
+@layer components {
+  /* ============ WORLD TRANSITIONS ============ */
+  .wc {
+    height: 180vh;
+    position: relative;
+  }
+  .wc-panel {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    will-change: transform;
+  }
+  .wc-circle {
+    clip-path: circle(5.5% at 50% 55%);
+  }
+  .wc-scr {
+    font-family: var(--font-space-grotesk), ui-monospace, monospace;
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .draw circle {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: dash 1.6s 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  /* ============ SERVICE ROWS ============ */
+  .svc-row {
+    border-top: 1px solid rgba(244, 243, 239, 0.12);
+    padding: 2rem 0;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+  }
+  .svc-row:last-child {
+    border-bottom: 1px solid rgba(244, 243, 239, 0.12);
+  }
+  .svc-row:hover {
+    padding-left: 1.5rem;
+    border-color: rgba(216, 255, 62, 0.4);
+  }
+  .svc-row .arr {
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .svc-row:hover .arr {
+    transform: rotate(45deg);
+    background: #d8ff3e;
+    color: #0a0a0f;
+    border-color: #d8ff3e;
+  }
+  #svcPreview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    width: 320px;
+    height: 210px;
+    border-radius: 1.4rem;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.85);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  }
+  #svcPreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ============ HORIZONTAL WORK ============ */
+  .h-wrap {
+    overflow: hidden;
+  }
+  @media (max-width: 767px) {
+    .h-wrap {
+      overflow-x: auto;
+    }
+    #hTrack {
+      padding-right: 6vw;
+    }
+  }
+  #hTrack {
+    display: flex;
+    gap: 2vw;
+    padding-left: 6vw;
+    width: max-content;
+    will-change: transform;
+  }
+  .wcard {
+    width: min(72vw, 620px);
+    flex-shrink: 0;
+    perspective: 1000px;
+  }
+
+  /* ============ LEVELUP PINNED STORY ============ */
+  .lvl-ch {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .lvl-dot {
+    transition: all 0.4s;
+  }
+  @media (max-width: 767px) {
+    .lvl-ch {
+      position: static;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      margin-bottom: 3rem;
+    }
+  }
+
+  /* ============ DARK WORLDS — COAL ============ */
+  /* .dark-sec stays in globals.css (the footer uses it). */
+  .coal-sec {
+    color: #f4f3ef;
+    position: relative;
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  .tm-item {
+    flex-shrink: 0;
+    transition: transform 0.4s ease;
+  }
+  .tm-item:hover {
+    transform: translateY(-4px);
+  }
+
+  /* ============ UPDATES ============ */
+  .up-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    border-top: 1px solid rgba(244, 243, 239, 0.15);
+    padding: 2.2rem 0;
+    position: relative;
+    text-decoration: none;
+    color: #f4f3ef;
+    transition: all 0.3s;
+  }
+  .up-row:last-child {
+    border-bottom: 1px solid rgba(244, 243, 239, 0.15);
+  }
+  .up-row h3 {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .up-row:hover h3 {
+    transform: translateX(14px);
+  }
+  .up-row .thumb {
+    position: absolute;
+    right: 14%;
+    top: 50%;
+    width: 190px;
+    height: 130px;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%) rotate(-4deg) scale(0.8);
+    z-index: 5;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  }
+  .up-row .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ============ MANIFESTO WORD SPLIT ============ */
+  .mword {
+    display: inline-block;
+    margin-right: 0.28em;
+    opacity: 0.13;
+    will-change: opacity;
+  }
+
+  /* ============ MARQUEE ============ */
+  /* #heroStrip (the old hero marquee) was removed with the single-screen
+     redesign; .mq / .mq-item are still used by the archived Perspective and
+     Testimonials marquees. */
+  .mq {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .mq-item {
+    white-space: nowrap;
+  }
+
+  /* ============ REDUCED MOTION (archived sections) ============ */
+  .reduced .wc {
+    height: auto;
+  }
+  .reduced .wc-panel {
+    position: static;
+    height: auto;
+    min-height: 60vh;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .reduced .lvl-ch {
+    position: static;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin-bottom: 3rem;
+  }
+}

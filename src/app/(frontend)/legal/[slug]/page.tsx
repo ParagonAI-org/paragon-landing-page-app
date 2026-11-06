@@ -1,6 +1,7 @@
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import { notFound } from 'next/navigation'
 import RichText from '@/components/RichText'
+import PageHeader from '@/components/site/PageHeader'
 import { getCachedLegalPage } from '@/lib/data'
 import { createPageMetadata } from '@/lib/metadata'
 import type { LegalPage } from '@/payload-types'
@@ -58,46 +59,28 @@ const LegalPageView = async ({ params }: Args) => {
 
   return (
     <div className="min-h-screen text-ink overflow-x-hidden">
-      {/* Page Title Header */}
-      <section className="relative pt-32 sm:pt-40 md:pt-48 pb-12 md:pb-16 overflow-hidden z-10 w-full">
-        {/* Soft brand glow */}
-        <div className="absolute top-0 right-0 w-full h-full z-0 pointer-events-none overflow-hidden">
-          <div className="absolute blur-[80px] md:blur-[120px] opacity-20 rounded-full -rotate-[15deg] w-[400px] md:w-[600px] h-[200px] md:h-[250px] bg-brand-600/40 -right-[100px] md:-right-[200px] top-[10%] animate-drift-1" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 relative z-10">
-          <div className="reveal opacity-0 translate-y-[20px] transition-all duration-700 [&.visible]:opacity-100 [&.visible]:translate-y-0">
-            {page.label && (
-              <p className="label text-brand-600 mb-4 md:mb-6 flex items-center gap-3">
-                <span className="w-8 h-px bg-brand-600 block" />
-                {page.label}
-              </p>
-            )}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display leading-[1.1] tracking-tight mb-4 md:mb-6 text-ink">
-              {page.title}
-            </h1>
-            {page.effectiveDate && (
-              <p className="text-xs md:text-sm font-mono text-ink/55">
-                Last Updated:{' '}
-                {new Date(page.effectiveDate).toLocaleDateString('en-US', {
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow={page.label || 'Legal'}
+        title={page.title}
+        lede={
+          page.effectiveDate
+            ? `Last updated ${new Date(page.effectiveDate).toLocaleDateString(
+                'en-US',
+                { month: 'long', year: 'numeric' },
+              )}`
+            : undefined
+        }
+      />
 
       {/* Main Legal Content Layout */}
-      <section className="pb-20 md:pb-32 relative z-10">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-start">
+      <section className="pb-20 md:pb-28 relative z-10">
+        <div className="max-w-[1300px] mx-auto px-5 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16 items-start border-t border-ink/10 pt-10">
             {/* Left: Sticky Table of Contents (Hidden on mobile/tablet) */}
             {tocItems.length > 0 && (
-              <div className="hidden lg:block lg:col-span-4 sticky top-32 p-8 rounded-2xl bg-bone/70 border border-ink/10 reveal opacity-0 transition-all duration-700 delay-100 [&.visible]:opacity-100">
-                <h3 className="label text-brand-600 mb-6">Document Index</h3>
-                <nav className="flex flex-col gap-4">
+              <div className="hidden lg:block lg:col-span-4 sticky top-32 border-l border-ink/10 pl-5">
+                <h3 className="label text-brand-600 mb-4">On this page</h3>
+                <nav className="flex flex-col gap-3">
                   {tocItems.map(
                     (
                       item: { label?: string | null; anchor?: string | null },
@@ -106,7 +89,7 @@ const LegalPageView = async ({ params }: Args) => {
                       <a
                         key={item.anchor || index}
                         href={`#${item.anchor}`}
-                        className="text-sm text-ink/60 hover:text-brand-600 transition-colors py-1 border-l border-ink/10 pl-4 hover:border-brand-600"
+                        className="text-sm text-ink/55 hover:text-brand-600 transition-colors"
                       >
                         {item.label}
                       </a>
